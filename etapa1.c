@@ -39,9 +39,16 @@ int riscar (Matriz *m, Pos p){
 int escolheComandos (Matriz *m){
     int pl, pc; 
     char c; 
-    int r; 
+    int r=0; 
 
-    if (scanf(" %c" "%d" "%d", &c, &pl, &pc)!=3) r=1;
+    if (scanf(" %c", &c)!=1)r=1;        
+    if (c == 's') {
+        r=1; 
+        printf("Saindo do jogo.\n"); 
+        return r; 
+    }  
+
+    if (scanf("%d" "%d", &pl, &pc)!=2) r=1;
     else if (pl < 0 || pc < 0 || pl >= (m->L) || pc >= (m->C)) {
         r=1; 
     }
@@ -55,7 +62,7 @@ int escolheComandos (Matriz *m){
             riscar(m, p);
             r=0; 
         }
-        else r=1; 
+        else printf("Comando inválido\n"); 
     }
 
     return r; 
