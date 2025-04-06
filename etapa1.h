@@ -1,4 +1,7 @@
-#define MAX 10
+#pragma once
+
+
+#define MAX 26
 
 typedef struct pos {
     int l; 

@@ -1,5 +1,4 @@
-#include <stdlib.h>
-#include <time.h>
+#include "matrizRandom.h"
 #include "etapa1.h"
 
 int leTamanhoMatriz (Matriz *m) {

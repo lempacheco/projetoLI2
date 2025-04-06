@@ -1,11 +1,10 @@
 
 #include "etapa1.h"
+#include "matrizRandom.h"
 
 int main (){
 
     Matriz m;
-    matriz1.L = 5;
-    matriz1.C = 5;
 
     leTamanhoMatriz(&m); 
     matrizRandom(&m); 
