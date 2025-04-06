@@ -1,6 +1,7 @@
 
-#include "../include/etapa1.h"
+#include "../include/comandos.h"
 #include "../include/matrizRandom.h"
+#include "../include/output.h"
 
 int main (){
 

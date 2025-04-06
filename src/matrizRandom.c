@@ -1,5 +1,4 @@
 #include "../include/matrizRandom.h"
-#include "../include/etapa1.h"
 
 int leTamanhoMatriz (Matriz *m) {
     int r=0;  

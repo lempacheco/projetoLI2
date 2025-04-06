@@ -1,24 +1,6 @@
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include "../include/etapa1.h"
+#include "../include/comandos.h"
 
 // Problema com a posição (+1)
-
-int mostraMatriz (Matriz *m) {
-    int i, j; 
-
-    for(i=0; i<m->L; i++){
-        for (j=0; j<m->C; j++){
-            printf("%c",m->matriz[i][j]); 
-        }
-        printf("\n"); 
-    }
-    printf("\n");
-
-    return 0; 
-}
 
 int branco (Matriz *m, Pos p){
     
