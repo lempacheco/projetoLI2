@@ -30,7 +30,7 @@ int branco (Matriz *m, Pos p){
 
 int riscar (Matriz *m, Pos p){
     
-    if (!(isupper(m->matriz[p.l][p.c])))
+    if (m->matriz[p.l][p.c] == '#' && !(isupper(m->matriz[p.l][p.c])))
     m->matriz[p.l][p.c] = '#'; 
 
     return 0; 
