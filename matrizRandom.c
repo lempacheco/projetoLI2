@@ -1,41 +1,6 @@
-
-#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <ctype.h>
-
-
-#define MAX 26
-
-// Problema com a posição (+1)
-
-typedef struct pos {
-    int l; 
-    int c; 
-} Pos; 
-
-typedef struct matriz {
-    
-    int L; 
-    int C; 
-    char matriz [MAX][MAX]; 
-
-} Matriz;
-
-
-int mostraMatriz (Matriz *m) {
-    int i, j; 
-
-    for(i=0; i<m->L; i++){
-        for (j=0; j<m->C; j++){
-            printf("%c",m->matriz[i][j]); 
-        }
-        printf("\n"); 
-    }
-    printf("\n");
-
-    return 0; 
-}
+#include "etapa1.h"
 
 int leTamanhoMatriz (Matriz *m) {
     int r=0;  
@@ -54,15 +19,4 @@ void matrizRandom (Matriz *m) {
             m->matriz[i][j] = (char)(rand() % (122-97+1) + 97);
         }
     }
-}
-
-int main(){
-    
-    Matriz m; 
-
-    leTamanhoMatriz(&m); 
-    matrizRandom(&m); 
-    mostraMatriz(&m); 
-
-    return 0; 
 }
