@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include "etapa1.h"
+#include "../include/etapa1.h"
 
 // Problema com a posição (+1)
 
