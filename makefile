@@ -4,7 +4,7 @@ CFLAGS = -Wall -Wextra -pedantic -O1 -fsanitize=address -fno-omit-frame-pointer 
 SRC = src/*.c
 
 jogo:
-	$(CC) $(CFLAGS) $(SRC) -o bin/jogo
+	$(CC) $(CFLAGS) $(SRC) -o jogo
 
 clean:
-	rm -f bin/jogo
+	rm -f jogo
