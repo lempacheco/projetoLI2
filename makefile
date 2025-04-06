@@ -1,10 +1,10 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -pedantic -O1 -fsanitize=address -fno-omit-frame-pointer -g
 
-SRC = *.c 
+SRC = src/*.c
 
-jogo: $(OBJ)
-	$(CC) $(CFLAGS) $(SRC) -o jogo
+jogo:
+	$(CC) $(CFLAGS) $(SRC) -o bin/jogo
 
 clean:
-	rm -f *.o jogo
+	rm -f bin/jogo

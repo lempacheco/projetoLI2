@@ -1,6 +1,6 @@
 
-#include "etapa1.h"
-#include "matrizRandom.h"
+#include "../include/etapa1.h"
+#include "../include/matrizRandom.h"
 
 int main (){
 
