@@ -2,23 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-
-#define MAX 10
+#include "etapa1.h"
 
 // Problema com a posição (+1)
-
-typedef struct pos {
-    int l; 
-    int c; 
-} Pos; 
-
-typedef struct matriz {
-    
-    int L; 
-    int C; 
-    char matriz [MAX][MAX]; 
-
-} Matriz;
 
 int mostraMatriz (Matriz *m) {
     int i, j; 
