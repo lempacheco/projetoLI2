@@ -1,5 +1,6 @@
 #include "../include/comandos.h"
 
+
 // Problema com a posição (+1)
 
 int branco (Matriz *m, Pos p){
@@ -27,6 +28,7 @@ int escolheComandos (Matriz *m){
     int pc; 
     char c; 
     int r=0; 
+    char nomeFile[50];
 
     if (scanf(" %c", &c)!=1)r=1;        
     if (c == 's') {
@@ -34,6 +36,11 @@ int escolheComandos (Matriz *m){
         printf("Saindo do jogo.\n"); 
         return r; 
     }  
+    if (c == 'l') {
+        if (scanf(" %s", &nomeFile)!=1) r=1; 
+        leFicheiro(nomeFile, m); 
+        return r; 
+    }
 
     if (scanf(" %c" "%d", &(pl), &pc)!=2) r=1;
     else if (pl-'a' < 0 || pc < 0 || pl-'a' >= (m->L) || pc > (m->C)) {
