@@ -7,7 +7,7 @@
 #define MAX 26
 
 typedef struct pos {
-    int l; 
+    char l; 
     int c; 
 } Pos; 
 
