@@ -3,23 +3,28 @@
 // Problema com a posição (+1)
 
 int branco (Matriz *m, Pos p){
-    
-    if (m->matriz[p.l][p.c] != '#' && !(isupper(m->matriz[p.l][p.c])))
-    m->matriz[(p.l)-1][(p.c)-1] = toupper(m->matriz[(p.l)-1][(p.c)-1]); 
+    int l = p.l - 'a'; 
+    int c = p.c -1; 
+
+    if (m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c])))
+    m->matriz[l][c] = toupper(m->matriz[l][c]); 
 
     return 0; 
 }
 
 int riscar (Matriz *m, Pos p){
-    
-    if (!(isupper(m->matriz[p.l][p.c])))
-    m->matriz[(p.l)-1][(p.c)-1] = '#'; 
+    int l = p.l - 'a'; 
+    int c = p.c -1; 
+
+    if (!(isupper(m->matriz[l][c])))
+    m->matriz[l][c] = '#'; 
 
     return 0; 
 }
  
 int escolheComandos (Matriz *m){
-    int pl, pc; 
+    char pl;
+    int pc; 
     char c; 
     int r=0; 
 
@@ -30,8 +35,8 @@ int escolheComandos (Matriz *m){
         return r; 
     }  
 
-    if (scanf("%d" "%d", &pl, &pc)!=2) r=1;
-    else if (pl < 0 || pc < 0 || pl >= (m->L) || pc >= (m->C)) {
+    if (scanf(" %c" "%d", &(pl), &pc)!=2) r=1;
+    else if (pl-'a' < 0 || pc < 0 || pl-'a' >= (m->L) || pc > (m->C)) {
         r=1; 
     }
     else {
