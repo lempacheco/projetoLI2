@@ -3,7 +3,7 @@
 int leTamanhoMatriz (Matriz *m) {
     int r=0;  
 
-    if (scanf("%d %d", &m->L, &m->C) != 2 || m->L > MAX || m->C > MAX || m->L < 0 || m->C < 0) r=1;
+    if (scanf("%d %d", &m->L, &m->C) != 2 || m->L > 26 || m->C > 26 || m->L < 0 || m->C < 0) r=1;
 
     return r; 
 }

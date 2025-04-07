@@ -28,7 +28,8 @@ int escolheComandos (Matriz *m){
     int pc; 
     char c; 
     int r=0; 
-    char nomeFile[50];
+    char* nomeFile;
+    int i;
 
     if (scanf(" %c", &c)!=1)r=1;        
     if (c == 's') {
@@ -37,8 +38,15 @@ int escolheComandos (Matriz *m){
         return r; 
     }  
     if (c == 'l') {
-        if (scanf(" %s", &nomeFile)!=1) r=1; 
-        leFicheiro(nomeFile, m); 
+        nomeFile = malloc(sizeof(char));
+        nomeFile[0] = getchar(); //ignora o espaço
+        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
+            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
+        }
+        nomeFile[i] = '\0';
+
+        leFicheiro(nomeFile, i, m); 
+        free(nomeFile);
         return r; 
     }
 

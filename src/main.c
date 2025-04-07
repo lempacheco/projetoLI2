@@ -9,11 +9,14 @@ int main (){
 
     Matriz m;
 
-    
-
     while (escolheComandos(&m) != 1) {
         mostraMatriz(&m);
     }
+
+    for (int i=0; i<m.L; i++){
+        free(m.matriz[i]);
+    }
+    free(m.matriz);
 
     return 0; 
     
