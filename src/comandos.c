@@ -1,4 +1,6 @@
+#include <stdlib.h>
 #include "../include/comandos.h"
+
 
 
 // Problema com a posição (+1)
@@ -23,7 +25,7 @@ int riscar (Matriz *m, Pos p){
     return 0; 
 }
  
-int escolheComandos (Matriz *m){
+int escolheComandos (Matriz *m, Stack *s){
     char pl;
     int pc; 
     char c; 
@@ -33,11 +35,13 @@ int escolheComandos (Matriz *m){
 
     if (scanf(" %c", &c)!=1)r=1;        
     if (c == 's') {
+        push(s, 's'); 
         r=1; 
         printf("Saindo do jogo.\n"); 
         return r; 
     }  
     if (c == 'l') {
+        push(s, 'l');
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -50,6 +54,7 @@ int escolheComandos (Matriz *m){
         return r; 
     }
     if (c == 'g') {
+        push(s, 'g');
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -69,10 +74,12 @@ int escolheComandos (Matriz *m){
     else {
         Pos p = {pl, pc}; 
         if (c == 'b') {
+            push(s, 'b');
             branco(m, p);
             r=0; 
         } 
         else if (c == 'r') {
+            push(s, 'r');
             riscar(m, p);
             r=0; 
         }

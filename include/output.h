@@ -1,6 +1,6 @@
 #pragma once
 
 #include <stdio.h>
-#include "../include/tipos.h"
+#include "../include/dataStructs.h"
 
 int mostraMatriz (Matriz *m);

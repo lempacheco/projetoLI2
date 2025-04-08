@@ -8,8 +8,11 @@
 int main (){
 
     Matriz m;
+    Stack s; 
 
-    while (escolheComandos(&m) != 1) {
+    s.dados = malloc(sizeof(char)); 
+
+    while (escolheComandos(&m, &s) != 1) {
         mostraMatriz(&m);
     }
 
@@ -17,6 +20,7 @@ int main (){
         free(m.matriz[i]);
     }
     free(m.matriz);
+    free(s.dados); 
 
     return 0; 
     
