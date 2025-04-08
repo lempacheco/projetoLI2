@@ -9,22 +9,27 @@ int branco (Matriz *m, Pos p){
     int l = p.l - 'a'; 
     int c = p.c -1; 
 
-    if (m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c])))
-    m->matriz[l][c] = toupper(m->matriz[l][c]); 
-
+    if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
+        return 1;
+    } else if (m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c]))) {
+        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+    }
     return 0; 
 }
 
 int riscar (Matriz *m, Pos p){
     int l = p.l - 'a'; 
-    int c = p.c -1; 
+    int c = p.c - 1;
 
-    if (!(isupper(m->matriz[l][c])))
-    m->matriz[l][c] = '#'; 
+    if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
+        return 1;
+    } else if (!(isupper(m->matriz[l][c]))) {
+        m->matriz[l][c] = '#'; 
+    }
 
     return 0; 
 }
- 
+
 int escolheComandos (Matriz *m, Stack *s){
     char pl;
     int pc; 

@@ -16,6 +16,6 @@ typedef struct matriz {
 
 typedef struct {
     char *dados;
-    char cabeca;
+    int cabeca;
     int tam;
 } Stack;
