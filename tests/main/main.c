@@ -1,5 +1,5 @@
 #include <CUnit/CUnit.h>
-#include "include/leFicheiro_test.h"
+#include "../include/leFicheiro_test.h"
 #include <stdio.h>
 
 int main() {

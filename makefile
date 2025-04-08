@@ -13,4 +13,4 @@ clean:
 
 .PHONY: testar
 testar:
-	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) -o testar
+	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
