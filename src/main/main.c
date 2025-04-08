@@ -1,8 +1,8 @@
 
-#include "../include/comandos.h"
-#include "../include/matrizRandom.h"
-#include "../include/output.h"
-#include "../include/leFicheiro.h"
+#include "../../include/comandos.h"
+#include "../../include/matrizRandom.h"
+#include "../../include/output.h"
+#include "../../include/leFicheiro.h"
 
 
 int main (){
