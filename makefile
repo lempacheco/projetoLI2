@@ -3,6 +3,7 @@ CFLAGS = -Wall -Wextra -pedantic -O1 -fsanitize=address -fno-omit-frame-pointer 
 
 SRC = src/*.c
 
+.PHONY: jogo
 jogo:
 	$(CC) $(CFLAGS) $(SRC) -o jogo
 
