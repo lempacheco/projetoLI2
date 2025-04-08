@@ -3,3 +3,7 @@ jogo
 testar
 lib/*
 !lib/exemplo.txt
+!lib/teste1.txt
+!lib/teste2.txt
+!lib/teste3.txt
+!lib/teste4.txt
