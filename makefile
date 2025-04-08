@@ -6,10 +6,11 @@ TEST = tests/*.c
 
 .PHONY: jogo
 jogo:
-	$(CC) $(CFLAGS) $(SRC) -o jogo
+	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo
 
 clean:
-	rm -f jogo
+	rm -f jogo testes
 
+.PHONY: testar
 testar:
-	$(CC) $(CFLAGS) $(TEST) -o testes
+	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) -o testar
