@@ -49,6 +49,18 @@ int escolheComandos (Matriz *m){
         free(nomeFile);
         return r; 
     }
+    if (c == 'g') {
+        nomeFile = malloc(sizeof(char));
+        nomeFile[0] = getchar(); //ignora o espaço
+        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
+            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
+        }
+        nomeFile[i] = '\0';
+
+        gravaFicheiro(nomeFile, i, m); 
+        free(nomeFile);
+        return r; 
+    }
 
     if (scanf(" %c" "%d", &(pl), &pc)!=2) r=1;
     else if (pl-'a' < 0 || pc < 0 || pl-'a' >= (m->L) || pc > (m->C)) {

@@ -1,6 +1,6 @@
 #include "../include/leFicheiro.h"
 
-int leFicheiro(char nome[], int lenNome, Matriz *m) {
+int leFicheiro(char* nome, int lenNome, Matriz *m) {
     FILE* fp; 
     char temp;  
     int r=0;

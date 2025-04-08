@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include "../include/leFicheiro.h"
 #include "../include/tipos.h"
+#include "../include/gravaFicheiro.h"
 
 
 int mostraMatriz (Matriz *);
