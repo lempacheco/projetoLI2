@@ -10,6 +10,7 @@ int gravaFicheiro(char* nome, int lenNome, Matriz* m){
     strcat(caminho, nome);  
 
     fp = fopen(caminho, "w");
+    free(caminho);
     if (fp == NULL) {
         printf ("Erro ao abrir o ficheiro.");
         return 1; 
@@ -28,7 +29,6 @@ int gravaFicheiro(char* nome, int lenNome, Matriz* m){
             if (fputc('\n', fp) == EOF) return 1;
     }
 
-    fclose(fp); 
-    free(caminho);
+    fclose(fp);
     return r; 
 }

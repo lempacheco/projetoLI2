@@ -10,7 +10,8 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
     strcpy(caminho, "lib/");
     strcat(caminho, nome);  
 
-    fp = fopen(caminho, "r"); 
+    fp = fopen(caminho, "r");
+    free(caminho); 
     if (fp == NULL) {
         printf ("Erro ao abrir o ficheiro.");
         return 1; 
@@ -36,7 +37,5 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
     }
 
     fclose(fp); 
-    free(caminho);
     return r; 
-
 }
