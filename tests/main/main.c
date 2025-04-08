@@ -1,5 +1,6 @@
 #include <CUnit/CUnit.h>
 #include "../include/leFicheiro_test.h"
+#include "../include/gravaFicheiro_test.h"
 #include "../include/comandos_test.h"
 #include <stdio.h>
 
@@ -16,13 +17,17 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
-
+    
     if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
       CU_cleanup_registry();
       return CU_get_error();
     }
-  
-  
+
+    if (NULL == CU_add_test(pSuite, "testar_gravaFicheiro", testar_gravaFicheiro)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+     
     CU_basic_run_tests();
     return CU_get_error();
   }
