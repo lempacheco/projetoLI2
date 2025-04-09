@@ -177,15 +177,19 @@ void testar_gravaFicheiro() {
 
     // 5
     Matriz m5;
-    char matrizExpected5[5][5] = {
-        "ecAdc",
-        "dcd#c",
-        "bddce",
-        "cdeeb",
-        "accbb"
+    char matrizExpected5[9][9] = {
+        "idaeegfgb",
+        "hicidebgf",
+        "gbadhbafe",
+        "iafibhged",
+        "dggfabbhc",
+        "ecbgcfifd",
+        "dfefgibab",
+        "feghagcgi",
+        "bghedadib"
     };
-    m5.L = 5;
-    m5.C = 5;
+    m5.L = 9;
+    m5.C = 9;
     m5.matriz = malloc(sizeof(char*) * m5.L);
     for (i = 0; i < m5.L; i++) {
         m5.matriz[i] = malloc(sizeof(char) * m5.C);
@@ -207,8 +211,8 @@ void testar_gravaFicheiro() {
     free(m5.matriz);
 
     leFicheiro("teste5.txt", 10, &m5);
-    CU_ASSERT_EQUAL(m5.L, 5);
-    CU_ASSERT_EQUAL(m5.C, 5);
+    CU_ASSERT_EQUAL(m5.L, 9);
+    CU_ASSERT_EQUAL(m5.C, 9);
     for (i = 0; i < m5.L; i++) {
         for (j = 0; j < m5.C; j++) {
             CU_ASSERT_EQUAL(m5.matriz[i][j], matrizExpected5[i][j]);
