@@ -12,7 +12,7 @@ int main (){
 
     s.dados = malloc(sizeof(char)); 
 
-    while (escolheComandos(&m, &s) != 1) {
+    while (escolheComandos(&m) != 1) {
         mostraMatriz(&m);
     }
 

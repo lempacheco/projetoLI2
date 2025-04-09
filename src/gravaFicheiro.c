@@ -1,5 +1,12 @@
 #include "../include/gravaFicheiro.h"
 
+/* Guarda a matriz fornecida num ficheiro com nome especificado,
+   criando o caminho como "lib/<nome>". O ficheiro é escrito no seguinte formato:
+   
+   - Primeira linha: <L> <C> (número de linhas e colunas, como caracteres).
+   - Linhas seguintes: conteúdo da matriz, linha a linha. 
+*/
+
 int gravaFicheiro(char* nome, int lenNome, Matriz* m){
     FILE* fp; 
     int r=0;

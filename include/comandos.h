@@ -12,4 +12,4 @@
 int mostraMatriz (Matriz *);
 int branco (Matriz *, Pos);
 int riscar (Matriz *, Pos);
-int escolheComandos (Matriz *, Stack *);
+int escolheComandos (Matriz *);
