@@ -5,6 +5,10 @@
 
 // Problema com a posição (+1)
 
+/* Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
+   Isto é, coloca o caracter em maiúsculas. 
+*/
+
 int branco (Matriz *m, Pos p){
     int l = p.l - 'a'; 
     int c = p.c -1; 
@@ -16,6 +20,10 @@ int branco (Matriz *m, Pos p){
     }
     return 0; 
 }
+
+/* Recebe como argumentos uma matriz, e uma posição, e risca o elemento que esta na posição. 
+   Isto é, substitui o caracter para '#'. 
+*/
 
 int riscar (Matriz *m, Pos p){
     int l = p.l - 'a'; 
@@ -30,7 +38,17 @@ int riscar (Matriz *m, Pos p){
     return 0; 
 }
 
-int escolheComandos (Matriz *m, Stack *s){
+/* Interpreta comandos inseridos pelo utilizador via stdin
+  e executa a ação correspondente sobre a matriz fornecida.
+  
+  Comandos suportados:
+  - 's': Sai do jogo (imprime mensagem e retorna 1).
+  - 'l <nome>': Lê um ficheiro e carrega o conteúdo na matriz.
+  - 'g <nome>': Grava o conteúdo atual da matriz num ficheiro.
+  - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
+  - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
+*/
+int escolheComandos (Matriz *m){
     char pl;
     int pc; 
     char c; 
@@ -40,13 +58,11 @@ int escolheComandos (Matriz *m, Stack *s){
 
     if (scanf(" %c", &c)!=1)r=1;        
     if (c == 's') {
-        push(s, 's'); 
         r=1; 
         printf("Saindo do jogo.\n"); 
         return r; 
     }  
     if (c == 'l') {
-        push(s, 'l');
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -59,7 +75,6 @@ int escolheComandos (Matriz *m, Stack *s){
         return r; 
     }
     if (c == 'g') {
-        push(s, 'g');
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -79,12 +94,10 @@ int escolheComandos (Matriz *m, Stack *s){
     else {
         Pos p = {pl, pc}; 
         if (c == 'b') {
-            push(s, 'b');
             branco(m, p);
             r=0; 
         } 
         else if (c == 'r') {
-            push(s, 'r');
             riscar(m, p);
             r=0; 
         }

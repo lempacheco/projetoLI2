@@ -1,5 +1,12 @@
 #include "../include/leFicheiro.h"
 
+/*  Lê o conteúdo de um ficheiro e carrega-o na matriz fornecida.
+
+  O formato esperado do ficheiro é:
+  - Primeira linha: dois dígitos separados por espaço, representando o número de linhas (L) e colunas (C) da matriz.
+  - Linhas seguintes: caracteres da matriz, linha a linha.
+*/
+
 int leFicheiro(char* nome, int lenNome, Matriz *m) {
     FILE* fp; 
     char temp;  

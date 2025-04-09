@@ -1,5 +1,8 @@
 #include "../include/output.h"
 
+/* Percorre a matriz fornecida e imprime os seus elementos no terminal. 
+*/
+
 int mostraMatriz (Matriz *m) {
     int i, j; 
 

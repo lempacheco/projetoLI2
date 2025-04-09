@@ -11,8 +11,7 @@ int main() {
 
     CU_pSuite pSuite = NULL;
 
-    pSuite = CU_add_suite("test_suite", 0,
-                          0);
+    pSuite = CU_add_suite("test_suite", 0, 0);
     if (NULL == pSuite) {
       CU_cleanup_registry();
       return CU_get_error();
