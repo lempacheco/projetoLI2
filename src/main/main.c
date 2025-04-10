@@ -12,6 +12,8 @@ int main (){
 
     s.dados = malloc(sizeof(char)); 
 
+    printf(">>> ");
+
     while (escolheComandos(&m) != 1) {
         mostraMatriz(&m);
     }
