@@ -9,6 +9,8 @@ int main (){
 
     Matriz m;
 
+    printf(">>> ");
+
     while (escolheComandos(&m) != 1) {
         mostraMatriz(&m);
     }
