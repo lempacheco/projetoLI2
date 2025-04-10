@@ -47,20 +47,22 @@ void testar_riscar() {
     p2.c = 2;  // matriz[0][1]
 
     Matriz m2;
-    m2.L = 5;
-    m2.C = 5;
+    m2.L = 7;
+    m2.C = 6;
     
     m2.matriz = malloc(m2.L * sizeof(char*));
     for (int i = 0; i < m2.L; i++) {
         m2.matriz[i] = malloc(m2.C * sizeof(char));
     }
 
-    char matrizExpected2[5][5] = {
-        "e#adc",
-        "dcdec",
-        "bddce",
-        "cdeeb",
-        "accbb"
+    char matrizExpected2[7][6] = {
+        "e#adca",
+        "dcdeca",
+        "bddcea",
+        "cdeeba",
+        "accbba", 
+        "bddcea", 
+        "cdeeba"
     };
 
     for (int i = 0; i < m2.L; i++)
