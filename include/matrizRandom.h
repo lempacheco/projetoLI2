@@ -3,7 +3,7 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include <time.h>
-#include "../include/tipos.h"
+#include "../include/dataStructs.h"
 
 int leTamanhoMatriz (Matriz *m); 
 void matrizRandom (Matriz *m); 

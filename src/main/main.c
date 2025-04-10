@@ -8,6 +8,9 @@
 int main (){
 
     Matriz m;
+    Stack s; 
+
+    s.dados = malloc(sizeof(char)); 
 
     printf(">>> ");
 
@@ -19,6 +22,7 @@ int main (){
         free(m.matriz[i]);
     }
     free(m.matriz);
+    free(s.dados); 
 
     return 0; 
     

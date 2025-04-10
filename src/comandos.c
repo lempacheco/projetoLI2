@@ -1,28 +1,53 @@
+#include <stdlib.h>
 #include "../include/comandos.h"
 
 
+
 // Problema com a posição (+1)
+
+/* Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
+   Isto é, coloca o caracter em maiúsculas. 
+*/
 
 int branco (Matriz *m, Pos p){
     int l = p.l - 'a'; 
     int c = p.c -1; 
 
-    if (m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c])))
-    m->matriz[l][c] = toupper(m->matriz[l][c]); 
-
+    if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
+        return 1;
+    } else if (m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c]))) {
+        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+    }
     return 0; 
 }
+
+/* Recebe como argumentos uma matriz, e uma posição, e risca o elemento que esta na posição. 
+   Isto é, substitui o caracter para '#'. 
+*/
 
 int riscar (Matriz *m, Pos p){
     int l = p.l - 'a'; 
-    int c = p.c -1; 
+    int c = p.c - 1;
 
-    if (!(isupper(m->matriz[l][c])))
-    m->matriz[l][c] = '#'; 
+    if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
+        return 1;
+    } else if (!(isupper(m->matriz[l][c]))) {
+        m->matriz[l][c] = '#'; 
+    }
 
     return 0; 
 }
- 
+
+/* Interpreta comandos inseridos pelo utilizador via stdin
+  e executa a ação correspondente sobre a matriz fornecida.
+  
+  Comandos suportados:
+  - 's': Sai do jogo (imprime mensagem e retorna 1).
+  - 'l <nome>': Lê um ficheiro e carrega o conteúdo na matriz.
+  - 'g <nome>': Grava o conteúdo atual da matriz num ficheiro.
+  - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
+  - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
+*/
 int escolheComandos (Matriz *m){
     char pl;
     int pc; 

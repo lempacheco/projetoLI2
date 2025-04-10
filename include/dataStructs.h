@@ -12,3 +12,10 @@ typedef struct matriz {
     char** matriz;
 
 } Matriz;
+
+
+typedef struct {
+    char *dados;
+    int cabeca;
+    int tam;
+} Stack;
