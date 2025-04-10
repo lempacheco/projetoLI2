@@ -2,7 +2,6 @@
 #include "../include/comandos.h"
 
 
-
 // Problema com a posição (+1)
 
 /* Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
@@ -68,7 +67,7 @@ int escolheComandos (Matriz *m, StackMat *s){
         printf("Retrocedendo..."); 
     }
     if (c == 'l') {
-        copiaMatriz(&m, s->m); 
+        push(s, m); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -81,7 +80,7 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }
     if (c == 'g') {
-        copiaMatriz(&m, s->m); 
+        push(s, m); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -101,12 +100,12 @@ int escolheComandos (Matriz *m, StackMat *s){
     else {
         Pos p = {pl, pc}; 
         if (c == 'b') {
-            copiaMatriz(&m, s->m); 
+            push(s, m);  
             branco(m, p);
             r=0; 
         } 
         else if (c == 'r') {
-            copiaMatriz(&m, s->m); 
+            push(s, m);  
             riscar(m, p);
             r=0; 
         }
@@ -117,6 +116,8 @@ int escolheComandos (Matriz *m, StackMat *s){
 
 }
 
-int retroceder(Matriz *m, Stack *s) {
-    
+int retroceder(Matriz *m, StackMat *s) {
+    pop(s,m); 
+
+    return 0; 
 }

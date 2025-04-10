@@ -46,13 +46,17 @@ void push(StackMat *s, Matriz *m){
     copiaMatriz(m ,&(s->dados[++s->cabeca]));
 }
 
-void pop(StackMat *s, Matriz* r){
+int pop(StackMat *s, Matriz* r){
     if (isEmpty(s)) {
         printf("Não há mais comandos para retroceder.");
         return -1;
     }
 
     copiaMatriz(r, &(s->dados[s->cabeca--]));
+    s->tam--; 
+
+    return 0; 
+ 
 }
 
 //TODO: verify if dest has enough space for src
