@@ -46,7 +46,7 @@ void push(StackMat *s, Matriz *m){
     copiaMatriz(m ,&(s->dados[++s->cabeca]));
 }
 
-int pop(StackMat *s, Matriz *r){
+int pop(StackMat *s, Matriz* r){
     if (isEmpty(s)) {
         printf("Não há mais comandos para retroceder.");
         return -1;
