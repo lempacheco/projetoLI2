@@ -48,7 +48,8 @@ int riscar (Matriz *m, Pos p){
   - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
   - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
 */
-int escolheComandos (Matriz *m){
+
+int escolheComandos (Matriz *m, StackMat *s){
     char pl;
     int pc; 
     char c; 
@@ -57,12 +58,17 @@ int escolheComandos (Matriz *m){
     int i;
 
     if (scanf(" %c", &c)!=1)r=1;        
-    if (c == 's') {
+    if (c == 's') { 
         r=1; 
         printf("Saindo do jogo.\n"); 
         return r; 
     }  
+    if (c == 'd') {
+        retroceder(m, s); 
+        printf("Retrocedendo..."); 
+    }
     if (c == 'l') {
+        copiaMatriz(&m, s->m); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -75,6 +81,7 @@ int escolheComandos (Matriz *m){
         return r; 
     }
     if (c == 'g') {
+        copiaMatriz(&m, s->m); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -94,10 +101,12 @@ int escolheComandos (Matriz *m){
     else {
         Pos p = {pl, pc}; 
         if (c == 'b') {
+            copiaMatriz(&m, s->m); 
             branco(m, p);
             r=0; 
         } 
         else if (c == 'r') {
+            copiaMatriz(&m, s->m); 
             riscar(m, p);
             r=0; 
         }
@@ -108,4 +117,6 @@ int escolheComandos (Matriz *m){
 
 }
 
-
+int retroceder(Matriz *m, Stack *s) {
+    
+}
