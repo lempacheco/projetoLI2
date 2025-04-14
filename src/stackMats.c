@@ -21,7 +21,7 @@
     return 0;
 } */
 
-void init(StackMat *s){
+void initStackMat(StackMat *s){
     s->cabeca = -1;
     s->tam = 0;
 }
@@ -46,18 +46,26 @@ void push(StackMat *s, Matriz *m){
     copiaMatriz(m ,&(s->dados[++s->cabeca]));
 }
 
-void pop(StackMat *s, Matriz* r){
+int pop(StackMat *s, Matriz* r){
     if (isEmpty(s)) {
         printf("Não há mais comandos para retroceder.");
         return -1;
     }
 
     copiaMatriz(r, &(s->dados[s->cabeca--]));
+    s->tam--;
+    return 0;
 }
 
 //TODO: verify if dest has enough space for src
-void copiaMatriz(Matriz* dest, Matriz* src){
+void copiaMatriz(Matriz *dest, Matriz *src){
+    dest = malloc(sizeof(Matriz));
+    dest->matriz = malloc(sizeof(char**)*src->L);
+
+    dest->L = src->L;
+    dest->C = src->C;
     for (int i=0; i<src->L; i++){
+        dest->matriz[i] = malloc(sizeof(char*)*src->C);
         for (int j=0; j<src->C; j++){
             dest->matriz[i][j] = src->matriz[i][j];
         }
