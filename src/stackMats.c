@@ -34,16 +34,40 @@ int isEmpty(StackMat *s){
     return s->cabeca == -1;  
 }
 
+void liberaMatriz(Matriz *m){
+    for (int i = 0; i < m->L; i++) {
+        free(m->matriz[i]);
+    }
+    free(m->matriz);
+    m->matriz = NULL;
+}
+
+void liberaStackMat(StackMat *s){
+    for (int i = 0; i <= s->cabeca; i++) {
+        liberaMatriz(&s->dados[i]);
+    }
+    free(s->dados);
+    s->dados = NULL;
+    s->cabeca = -1;
+    s->tam = 0;
+}
+
 void push(StackMat *s, Matriz *m){
-    if (isEmpty(s)){
-        s->dados = malloc(sizeof(Matriz));
+    if (s->tam == 0) {
+        s->tam = 1;
+        s->dados = malloc(sizeof(Matriz) * s->tam);
+        s->cabeca = -1;
     }
 
-    if (isFull(s)){
-        s->dados = realloc(s->dados, sizeof(char)*(++s->tam));
+    if (s->cabeca + 1 >= s->tam) {
+        s->tam++;
+        s->dados = realloc(s->dados, sizeof(Matriz) * s->tam);
     }
 
-    copiaMatriz(m ,&(s->dados[++s->cabeca]));
+    s->cabeca++;
+
+    // Aloca espaço para a matriz interna e copia os dados
+    copiaMatriz(&s->dados[s->cabeca], m);
 }
 
 int pop(StackMat *s, Matriz* r){
@@ -52,21 +76,22 @@ int pop(StackMat *s, Matriz* r){
         return -1;
     }
 
-    copiaMatriz(r, &(s->dados[s->cabeca--]));
-    s->tam--;
+    copiaMatriz(r, &(s->dados[s->cabeca]));
+    liberaMatriz(&(s->dados[s->cabeca])); 
+    s->cabeca--;
     return 0;
 }
 
+
 //TODO: verify if dest has enough space for src
 void copiaMatriz(Matriz *dest, Matriz *src){
-    dest = malloc(sizeof(Matriz));
-    dest->matriz = malloc(sizeof(char**)*src->L);
-
     dest->L = src->L;
     dest->C = src->C;
-    for (int i=0; i<src->L; i++){
-        dest->matriz[i] = malloc(sizeof(char*)*src->C);
-        for (int j=0; j<src->C; j++){
+
+    dest->matriz = malloc(sizeof(char*) * src->L);
+    for (int i = 0; i < src->L; i++) {
+        dest->matriz[i] = malloc(sizeof(char) * src->C);
+        for (int j = 0; j < src->C; j++) {
             dest->matriz[i][j] = src->matriz[i][j];
         }
     }

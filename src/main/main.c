@@ -12,9 +12,7 @@ int main (){
     m.L = 0;
     m.C = 0;
     StackMat s; 
-    init(&s); 
-
-    s.dados = malloc(sizeof(char)); 
+    initStackMat(&s); 
 
     printf(">>> ");
 
@@ -22,11 +20,8 @@ int main (){
         mostraMatriz(&m);
     }
 
-    for (int i=0; i<m.L; i++){
-        free(m.matriz[i]);
-    }
-    free(m.matriz);
-    free(s.dados); 
+    liberaMatriz(&m);
+    liberaStackMat(&s); 
 
     return 0; 
     

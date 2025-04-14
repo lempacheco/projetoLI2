@@ -7,6 +7,8 @@
 void initStackMat(StackMat *s);
 int isFull(StackMat *s);
 int isEmpty(StackMat *s);
+void liberaMatriz(Matriz *m);
+void liberaStackMat(StackMat *s); 
 void push(StackMat *s, Matriz *m);
 int pop(StackMat *s, Matriz* r);
 void copiaMatriz(Matriz* dest, Matriz* src);

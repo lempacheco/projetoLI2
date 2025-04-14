@@ -14,6 +14,11 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
     int j=0,i=0;
     char* caminho = malloc(sizeof(char)*(lenNome+5));
 
+    if (m->matriz != NULL) {
+        liberaMatriz(m);
+    }
+    
+
     strcpy(caminho, "lib/");
     strcat(caminho, nome);  
 
