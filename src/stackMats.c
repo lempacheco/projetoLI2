@@ -87,10 +87,10 @@ int pop(StackMat *s, Matriz* m){
 }
 
 void copiaMatriz(Matriz *dest, Matriz *src){
+    if (dest->matriz != NULL) liberaMatriz(dest);
+
     dest->L = src->L;
     dest->C = src->C;
-
-    if (dest->matriz != NULL) liberaMatriz(dest);
 
     dest->matriz = malloc(sizeof(char*) * src->L);
     for (int i = 0; i < src->L; i++) {
