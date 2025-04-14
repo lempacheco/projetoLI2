@@ -71,6 +71,7 @@ void push(StackMat *s, Matriz *m){
     s->cabeca++;
 
     // Aloca espaço para a matriz interna e copia os dados
+    s->dados[s->cabeca].matriz = NULL;
     copiaMatriz(&s->dados[s->cabeca], m);
 }
 
