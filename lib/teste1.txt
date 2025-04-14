@@ -1,6 +1,6 @@
-5 5
-ecAdc
-dcd#c
-bddce
-cdeeb
-accbb
+10 10
+ecAdcacdac
+dcd#cacaca
+bddceccaca
+cdeebaacda
+accbbcddac

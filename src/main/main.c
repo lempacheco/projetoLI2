@@ -1,5 +1,5 @@
 
-#include "../../include/comandos.h"
+#include "../../include/stackMat.h"
 #include "../../include/matrizRandom.h"
 #include "../../include/output.h"
 #include "../../include/leFicheiro.h"

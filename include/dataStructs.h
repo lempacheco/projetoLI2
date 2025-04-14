@@ -20,7 +20,7 @@ typedef struct {
 } Stack;
 
 typedef struct StackMat{
-    Matriz *m;
+    Matriz *dados;
     int cabeca;
     int tam;
 } StackMat;
