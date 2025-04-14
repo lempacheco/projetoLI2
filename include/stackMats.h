@@ -12,3 +12,4 @@ void liberaStackMat(StackMat *s);
 void push(StackMat *s, Matriz *m);
 int pop(StackMat *s, Matriz* r);
 void copiaMatriz(Matriz* dest, Matriz* src);
+void initMatriz(Matriz* m);
