@@ -14,11 +14,6 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
     int j=0,i=0;
     char* caminho = malloc(sizeof(char)*(lenNome+5));
 
-    if (m->matriz != NULL) {
-        liberaMatriz(m);
-    }
-    
-
     strcpy(caminho, "lib/");
     strcat(caminho, nome);  
 
@@ -36,13 +31,13 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
     m->C = temp - '0'; 
     temp = fgetc(fp); 
     
-    m->matriz = malloc(sizeof(char)*m->L);
+    m->matriz = malloc(sizeof(char*)*m->L);
     m->matriz[0] = malloc(sizeof(char)*m->C);
     while ((temp=fgetc(fp))!=EOF){
          
         if (temp == '\n') {
             i++, j=0;
-            m->matriz[i] = malloc(sizeof(char*)*m->C);
+            m->matriz[i] = malloc(sizeof(char)*m->C);
         } else if (!(isspace(temp))) {
             m->matriz[i][j++] = temp;
         }

@@ -115,4 +115,3 @@ int escolheComandos (Matriz *m, StackMat *s){
     return r; 
 
 }
-
