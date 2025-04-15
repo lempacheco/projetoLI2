@@ -63,8 +63,7 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }  
     if (c == 'd') {
-        pop(s, m); 
-        printf("Retrocedendo..."); 
+        if (!pop(s, m)) printf("Retrocedendo..."); 
         return r; 
     }
     if (c == 'l') {
@@ -116,4 +115,3 @@ int escolheComandos (Matriz *m, StackMat *s){
     return r; 
 
 }
-

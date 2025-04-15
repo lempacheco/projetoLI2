@@ -10,8 +10,7 @@
 int main (){
 
     Matriz m;
-    m.L = 0;
-    m.C = 0;
+    initMatriz(&m);
     StackMat s; 
     initStackMat(&s); 
 
@@ -25,9 +24,8 @@ int main (){
     }
 
     liberaMatriz(&m);
-    liberaStackMat(&s); 
+    liberaStackMat(&s);
 
     return 0; 
     
 }
-

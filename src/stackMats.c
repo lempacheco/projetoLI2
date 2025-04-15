@@ -22,8 +22,16 @@
 } */
 
 void initStackMat(StackMat *s){
+    s->tam = 1;
+    s->dados = malloc(sizeof(Matriz) * s->tam);
+    initMatriz(&s->dados[0]);
     s->cabeca = -1;
-    s->tam = 0;
+}
+
+void initMatriz(Matriz* m){
+    m->L = 0;
+    m->C = 0;
+    m->matriz = NULL;
 }
 
 int isFull(StackMat *s){
@@ -40,6 +48,8 @@ void liberaMatriz(Matriz *m){
     }
     free(m->matriz);
     m->matriz = NULL;
+    m->L = 0;
+    m->C = 0;
 }
 
 void liberaStackMat(StackMat *s){
@@ -53,12 +63,6 @@ void liberaStackMat(StackMat *s){
 }
 
 void push(StackMat *s, Matriz *m){
-    if (s->tam == 0) {
-        s->tam = 1;
-        s->dados = malloc(sizeof(Matriz) * s->tam);
-        s->cabeca = -1;
-    }
-
     if (s->cabeca + 1 >= s->tam) {
         s->tam++;
         s->dados = realloc(s->dados, sizeof(Matriz) * s->tam);
@@ -67,24 +71,25 @@ void push(StackMat *s, Matriz *m){
     s->cabeca++;
 
     // Aloca espaço para a matriz interna e copia os dados
+    s->dados[s->cabeca].matriz = NULL;
     copiaMatriz(&s->dados[s->cabeca], m);
 }
 
-int pop(StackMat *s, Matriz* r){
+int pop(StackMat *s, Matriz* m){
     if (isEmpty(s)) {
         printf("Não há mais comandos para retroceder.");
         return -1;
     }
 
-    copiaMatriz(r, &(s->dados[s->cabeca]));
+    copiaMatriz(m, &(s->dados[s->cabeca]));
     liberaMatriz(&(s->dados[s->cabeca])); 
     s->cabeca--;
     return 0;
 }
 
-
-//TODO: verify if dest has enough space for src
 void copiaMatriz(Matriz *dest, Matriz *src){
+    if (dest->matriz != NULL) liberaMatriz(dest);
+
     dest->L = src->L;
     dest->C = src->C;
 
