@@ -45,4 +45,4 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
 
     fclose(fp); 
     return r; 
-}
+}  

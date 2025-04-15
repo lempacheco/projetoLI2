@@ -63,8 +63,8 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }  
     if (c == 'd') {
-        retroceder(m, s); 
-        printf("Retrocedendo..."); 
+        if (!pop(s, m)) printf("Retrocedendo..."); 
+        return r; 
     }
     if (c == 'l') {
         push(s, m); 
@@ -93,7 +93,7 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }
 
-    if (scanf(" %c" "%d", &(pl), &pc)!=2) r=1;
+    if (scanf(" %c" "%d", &pl, &pc)!=2) r=1;
     else if (pl-'a' < 0 || pc < 0 || pl-'a' >= (m->L) || pc > (m->C)) {
         r=1; 
     }
@@ -114,10 +114,4 @@ int escolheComandos (Matriz *m, StackMat *s){
 
     return r; 
 
-}
-
-int retroceder(Matriz *m, StackMat *s) {
-    pop(s,m); 
-
-    return 0; 
 }

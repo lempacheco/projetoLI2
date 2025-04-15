@@ -1,5 +1,6 @@
 
-#include "../../include/stackMat.h"
+#include "../../include/comandos.h"
+#include "../../include/condicoes.h"
 #include "../../include/matrizRandom.h"
 #include "../../include/output.h"
 #include "../../include/leFicheiro.h"
@@ -9,26 +10,22 @@
 int main (){
 
     Matriz m;
-    m.L = 0;
-    m.C = 0;
+    initMatriz(&m);
     StackMat s; 
-    init(&s); 
-
-    s.dados = malloc(sizeof(char)); 
+    initStackMat(&s); 
 
     printf(">>> ");
 
-    while (escolheComandos(&m, &s) != 1) {
+    while (escolheComandos(&m, &s) != 1) { 
+        if (!(verificar(&m))){
+            pop(&s,&m); 
+        };
         mostraMatriz(&m);
     }
 
-    for (int i=0; i<m.L; i++){
-        free(m.matriz[i]);
-    }
-    free(m.matriz);
-    free(s.dados); 
+    liberaMatriz(&m);
+    liberaStackMat(&s);
 
     return 0; 
     
 }
-
