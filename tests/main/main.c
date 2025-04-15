@@ -2,6 +2,7 @@
 #include "../include/leFicheiro_test.h"
 #include "../include/gravaFicheiro_test.h"
 #include "../include/comandos_test.h"
+#include "../include/condicoes_test.h"
 #include <stdio.h>
 
 int main() {
@@ -33,6 +34,16 @@ int main() {
     }
 
     if (NULL == CU_add_test(pSuite, "testar_branco", testar_branco)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_verifRiscadaOrt", testar_verifRiscadaOrt)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_verifBranco", testar_verifBranco)) {
       CU_cleanup_registry();
       return CU_get_error();
     }
