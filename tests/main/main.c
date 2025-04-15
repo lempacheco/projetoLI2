@@ -49,7 +49,7 @@ int main() {
       return CU_get_error();
     }
 
-    if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_gravaFicheiro)) {
+    if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
       CU_cleanup_registry();
       return CU_get_error();
     }
