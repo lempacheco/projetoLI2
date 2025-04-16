@@ -88,6 +88,7 @@ int pop(StackMat *s, Matriz* m){
 }
 
 void copiaMatriz(Matriz *dest, Matriz *src){
+
     if (dest->matriz != NULL) liberaMatriz(dest);
 
     dest->L = src->L;
@@ -99,5 +100,13 @@ void copiaMatriz(Matriz *dest, Matriz *src){
         for (int j = 0; j < src->C; j++) {
             dest->matriz[i][j] = src->matriz[i][j];
         }
+    }
+    if (src->matriz == NULL) {
+        if (dest->matriz != NULL) liberaMatriz(dest);
+
+        dest->L = 0;
+        dest->C = 0;
+        dest->matriz = NULL;
+        return;
     }
 }

@@ -4,6 +4,7 @@
 #include "../include/comandos_test.h"
 #include "../include/copiaMatriz_test.h"
 #include "../include/condicoes_test.h"
+#include "../include/isStack_test.h"
 #include <stdio.h>
 
 int main() {
@@ -50,6 +51,16 @@ int main() {
     }
 
     if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_isFull", testar_isFull)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_isEmpty", testar_isEmpty)) {
       CU_cleanup_registry();
       return CU_get_error();
     }
