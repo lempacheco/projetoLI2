@@ -24,3 +24,17 @@ typedef struct StackMat{
     int cabeca;
     int tam;
 } StackMat;
+
+// Lista interna: posições
+typedef struct NodePosicao {
+    Pos p;
+    struct NodePosicao* prox;
+} NodePosicao;
+
+// Lista externa: lista de posições
+typedef struct NodeGrupo {
+    int m; 
+    NodePosicao* cabeca;       // Cabeça da sublista
+    struct NodeGrupo* prox;      // Próximo grupo
+} NodeGrupo;
+
