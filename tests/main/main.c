@@ -4,6 +4,7 @@
 #include "../include/comandos_test.h"
 #include "../include/copiaMatriz_test.h"
 #include "../include/condicoes_test.h"
+#include "../include/stackMats_test.h"
 #include <stdio.h>
 
 int main() {
@@ -50,6 +51,26 @@ int main() {
     }
 
     if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_initStackMat", testar_initStackMat)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_initMatriz", testar_initMatriz)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_push", testar_push)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_pop", testar_pop)) {
       CU_cleanup_registry();
       return CU_get_error();
     }

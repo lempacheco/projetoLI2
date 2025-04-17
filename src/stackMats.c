@@ -1,26 +1,5 @@
 #include "../include/stackMats.h"
 
-/* int push(Stack *s, char c) {
-    if (s->cabeca < s->tam) {
-        s->dados[s->cabeca++] = c;
-        return 0;
-    }
-
-    int novoTam = s->tam + 1;
-    char *novoDados = realloc(s->dados, sizeof(char) * novoTam);
-
-    if (novoDados == NULL) {
-        return -1; // erro de alocação
-    }
-
-    s->dados = novoDados;
-    s->tam = novoTam;
-
-    s->dados[s->cabeca++] = c;
-
-    return 0;
-} */
-
 void initStackMat(StackMat *s){
     s->tam = 1;
     s->dados = malloc(sizeof(Matriz) * s->tam);
@@ -47,9 +26,7 @@ void liberaMatriz(Matriz *m){
         free(m->matriz[i]);
     }
     free(m->matriz);
-    m->matriz = NULL;
-    m->L = 0;
-    m->C = 0;
+    initMatriz(m);
 }
 
 void liberaStackMat(StackMat *s){
@@ -70,7 +47,6 @@ void push(StackMat *s, Matriz *m){
 
     s->cabeca++;
 
-    // Aloca espaço para a matriz interna e copia os dados
     s->dados[s->cabeca].matriz = NULL;
     copiaMatriz(&s->dados[s->cabeca], m);
 }
