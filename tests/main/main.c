@@ -5,6 +5,7 @@
 #include "../include/copiaMatriz_test.h"
 #include "../include/condicoes_test.h"
 #include "../include/stackMats_test.h"
+#include "../include/isStack_test.h"
 #include <stdio.h>
 
 int main() {
@@ -60,6 +61,11 @@ int main() {
       return CU_get_error();
     }
 
+    if (NULL == CU_add_test(pSuite, "testar_isFull", testar_isFull)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
     if (NULL == CU_add_test(pSuite, "testar_initMatriz", testar_initMatriz)) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -75,7 +81,11 @@ int main() {
       return CU_get_error();
     }
 
+    if (NULL == CU_add_test(pSuite, "testar_isEmpty", testar_isEmpty)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
     CU_basic_run_tests();
     return CU_get_error();
   }
-  

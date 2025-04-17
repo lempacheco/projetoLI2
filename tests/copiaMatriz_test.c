@@ -27,13 +27,11 @@ void testar_copiaMatriz () {
 
     // 2
     Matriz m2i ,m2f;
-    m2i.C=0;
-    m2i.L=0;
-    m2i.matriz=NULL;
+    m2i=criaMatriz(0,0,matriz1i);
     copiaMatriz(&m2f,&m2i);
     CU_ASSERT_EQUAL(m2f.L, 0);
     CU_ASSERT_EQUAL(m2f.C, 0);
-    CU_ASSERT_EQUAL(m2f.matriz, NULL);
+    CU_ASSERT_PTR_NULL(m2f.matriz);
     liberaMatriz(&m2i);
     liberaMatriz(&m2f);
 
@@ -114,7 +112,7 @@ void testar_copiaMatriz () {
         "cdeeb",
         "accbb"
     };
-    m5i=criaMatriz(5,5,matriz5i);
+    m5i=criaMatriz(6,6,matriz5i);
     m5f=criaMatriz(5,5,matriz5f);
     copiaMatriz(&m5f,&m5i);
     CU_ASSERT_EQUAL(m5f.L, 6);
@@ -127,4 +125,33 @@ void testar_copiaMatriz () {
     liberaMatriz(&m5i);
     liberaMatriz(&m5f);
 
+    // 6
+    Matriz m6i,m6f;
+    char matriz6i[5][5] = {
+        "ecAdc",
+        "dcd#c",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+    
+    char matriz6f[5][5] = {
+        "ecAdc",
+        "dcd#c",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+    m6i=criaMatriz(5,5,matriz6i);
+    m6f=criaMatriz(5,5,matriz6f);
+    copiaMatriz(&m6f,&m6i);
+    CU_ASSERT_EQUAL(m6f.L, 5);
+    CU_ASSERT_EQUAL(m6f.C, 5);
+    for (i = 0; i < m6f.L; i++) {
+        for (j = 0; j < m6f.C; j++) {
+            CU_ASSERT_EQUAL(m6f.matriz[i][j], m6i.matriz[i][j]);
+        }
+    }
+    liberaMatriz(&m6i);
+    liberaMatriz(&m6f);
 }
