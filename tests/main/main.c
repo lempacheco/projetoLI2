@@ -2,10 +2,8 @@
 #include "../include/leFicheiro_test.h"
 #include "../include/gravaFicheiro_test.h"
 #include "../include/comandos_test.h"
-#include "../include/copiaMatriz_test.h"
 #include "../include/condicoes_test.h"
 #include "../include/stackMats_test.h"
-#include "../include/isStack_test.h"
 #include <stdio.h>
 
 int main() {
