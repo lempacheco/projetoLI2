@@ -5,6 +5,6 @@
 #include <ctype.h>
 #include "../include/dataStructs.h"
 
-int verifRiscadaOrt (Matriz *m, int J, int I); 
-int verifBranco (Matriz *m, int J, int I); 
-int verificar (Matriz *m); 
+int verifRiscadaOrt (Matriz *m, int J, int I, NodeGrupo** grupo); 
+int verifBranco (Matriz *m, int J, int I, NodeGrupo** grupo); 
+int verificar (Matriz *m, NodeGrupo** grupo); 

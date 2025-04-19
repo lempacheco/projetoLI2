@@ -16,13 +16,11 @@ int main (){
 
     printf(">>> ");
 
-    while (escolheComandos(&m, &s) != 1) { 
-        if (!(verificar(&m))){
-            pop(&s,&m); 
-        };
+    while (escolheComandos(&m, &s) != 1) {
         mostraMatriz(&m);
-    }
 
+    }
+    
     liberaMatriz(&m);
     liberaStackMat(&s);
 

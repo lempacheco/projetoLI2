@@ -1,4 +1,6 @@
 #include <stdlib.h>
+#include "../include/condicoes.h"
+#include "../include/listasFunc.h"
 #include "../include/comandos.h"
 
 
@@ -65,6 +67,14 @@ int escolheComandos (Matriz *m, StackMat *s){
     if (c == 'd') {
         if (!pop(s, m)) printf("Retrocedendo..."); 
         return r; 
+    }
+    if (c == 'v') {
+        NodeGrupo* grupos = NULL;
+        verificar(m, &grupos);
+        imprimeGrupos(grupos);
+        liberaGrupos(grupos); 
+        return r; 
+        
     }
     if (c == 'l') {
         push(s, m); 
