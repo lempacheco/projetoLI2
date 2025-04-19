@@ -12,5 +12,5 @@
 int mostraMatriz (Matriz *);
 int branco (Matriz *, Pos);
 int riscar (Matriz *, Pos);
-int escolheComandos (Matriz *, StackMat *);
+int escolheComandos (Matriz *, StackMat *, StackG*);
 int retroceder(Matriz *, StackMat *); 

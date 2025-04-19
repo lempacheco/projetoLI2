@@ -7,18 +7,13 @@
   - Linhas seguintes: caracteres da matriz, linha a linha.
 */
 
-int leFicheiro(char* nome, int lenNome, Matriz *m) {
+int leFicheiro(char* nome, Matriz *m) {
     FILE* fp; 
     char temp;  
     int r=0;
     int j=0,i=0;
-    char* caminho = malloc(sizeof(char)*(lenNome+5));
 
-    strcpy(caminho, "lib/");
-    strcat(caminho, nome);  
-
-    fp = fopen(caminho, "r");
-    free(caminho); 
+    fp = fopen(nome, "r");
     if (fp == NULL) {
         printf ("Erro ao abrir o ficheiro.");
         return 1; 
@@ -30,6 +25,12 @@ int leFicheiro(char* nome, int lenNome, Matriz *m) {
     temp = fgetc(fp);
     m->C = temp - '0'; 
     temp = fgetc(fp); 
+
+    if (m->L <= 0 || m->C <= 0){
+        m->matriz = NULL;
+        printf ("Erro: ficheiro não contém uma matriz válida.");
+        return -1;
+    }
     
     m->matriz = malloc(sizeof(char*)*m->L);
     m->matriz[0] = malloc(sizeof(char)*m->C);

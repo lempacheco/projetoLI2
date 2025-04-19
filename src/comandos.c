@@ -48,7 +48,7 @@ int riscar (Matriz *m, Pos p){
   - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
 */
 
-int escolheComandos (Matriz *m, StackMat *s){
+int escolheComandos (Matriz *m, StackMat *s, StackG* sg){
     char pl;
     int pc; 
     char c; 
@@ -63,33 +63,46 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }  
     if (c == 'd') {
-        if (!pop(s, m)) printf("Retrocedendo..."); 
-        return r; 
+        if (s->cabeca > -1 && s->comandos[s->cabeca] == 'g'){
+            retrocedeG(sg);
+        }
+
+        if (!pop(s, m)) printf("Retrocedendo...");  
+        return r;
     }
     if (c == 'l') {
-        push(s, m); 
+        push(s, m, c); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
             nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
         }
         nomeFile[i] = '\0';
+        char* caminho = malloc(sizeof(char)*(i+5));
+        strcpy(caminho, "lib/");
+        strcat(caminho, nomeFile); 
 
-        leFicheiro(nomeFile, i, m); 
+        leFicheiro(caminho, m);
         free(nomeFile);
+        free(caminho);
         return r; 
     }
     if (c == 'g') {
-        push(s, m); 
+        push(s, m, c); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
             nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
         }
         nomeFile[i] = '\0';
+        char* caminho = malloc(sizeof(char)*(i+5));
+        strcpy(caminho, "lib/");
+        strcat(caminho, nomeFile); 
 
-        gravaFicheiro(nomeFile, i, m); 
+        existeFicheiro(caminho, i+5, sg);
+        gravaFicheiro(caminho, m); 
         free(nomeFile);
+        free(caminho);
         return r; 
     }
 
@@ -100,12 +113,12 @@ int escolheComandos (Matriz *m, StackMat *s){
     else {
         Pos p = {pl, pc}; 
         if (c == 'b') {
-            push(s, m);  
+            push(s, m, c);  
             branco(m, p);
             r=0; 
         } 
         else if (c == 'r') {
-            push(s, m);  
+            push(s, m, c);  
             riscar(m, p);
             r=0; 
         }

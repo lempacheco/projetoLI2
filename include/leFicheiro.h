@@ -8,4 +8,4 @@
 #include "../include/stackMats.h"
 
 
-int leFicheiro(char* nome, int lenNome, Matriz *m);
+int leFicheiro(char* nome, Matriz *m);
