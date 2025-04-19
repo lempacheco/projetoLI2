@@ -21,6 +21,7 @@ typedef struct {
 
 typedef struct StackMat{
     Matriz *dados;
+    char *comandos;
     int cabeca;
     int tam;
 } StackMat;
@@ -38,3 +39,11 @@ typedef struct NodeGrupo {
     struct NodeGrupo* prox;      // Próximo grupo
 } NodeGrupo;
 
+typedef struct stackG{
+    Matriz* matrizes;
+    int* jaExistia; //0 = não existia, 1 = existia mas não tinha nada lá dentro, 2 = existia e tinha uma matriz lá dentro
+    char** nomesFicheiros;
+    int* lenNomes;
+    int cabeca;
+    int tam;
+} StackG;

@@ -12,17 +12,20 @@ int main (){
     Matriz m;
     initMatriz(&m);
     StackMat s; 
-    initStackMat(&s); 
+    initStackMat(&s);
+    StackG sg;
+    initStackG(&sg);
 
     printf(">>> ");
 
-    while (escolheComandos(&m, &s) != 1) {
+    while (escolheComandos(&m, &s, &sg) != 1) { 
         mostraMatriz(&m);
 
     }
     
     liberaMatriz(&m);
     liberaStackMat(&s);
+    liberaStackG(&sg);
 
     return 0; 
     
