@@ -1,5 +1,4 @@
 #include "../include/gravaFicheiro.h"
-#include <errno.h>
 
 /* Guarda a matriz fornecida num ficheiro com nome especificado,
    criando o caminho como "lib/<nome>". O ficheiro é escrito no seguinte formato:
@@ -42,18 +41,14 @@ void existeFicheiro(char* nomeFile, int lenNome, StackG* sg){
     if ((fp = fopen(nomeFile, "r")) != NULL){//o ficheiro existe
         if (fgets(temp, 1, fp) != NULL){//tinha algo dentro do ficheiro
             pushG(sg, 2, nomeFile, lenNome);//esta funçao já incrementa o sg->cabeca
-            printf("2");
             leFicheiro(nomeFile, &sg->matrizes[sg->cabeca]); //guarda a matriz que estava no ficheiro
         }/* else{//não tinha nada dentro do ficheiro
             pushG(sg, 1, nomeFile, lenNome);//esta funçao já incrementa o sg->cabeca
-            printf("1");
             initMatriz(&sg->matrizes[sg->cabeca]);
         } */
         fclose(fp);
     }else{//o ficheiro não existe
-        printf("Erro: %s\n", strerror(errno));
         pushG(sg, 0, nomeFile, lenNome);
-        printf("0");
         initMatriz(&sg->matrizes[sg->cabeca]);
     }
 
