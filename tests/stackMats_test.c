@@ -28,6 +28,89 @@ void testar_initMatriz(){
     liberaMatriz(&m1);
 }
 
+void testar_initStackG(){
+    //1
+    StackG s1;
+
+    initStackG(&s1);
+    CU_ASSERT_PTR_NOT_NULL(s1.jaExistia);
+    CU_ASSERT_PTR_NOT_NULL(s1.lenNomes);
+    CU_ASSERT_PTR_NOT_NULL(s1.nomesFicheiros);
+    CU_ASSERT_EQUAL(s1.cabeca,-1);
+    CU_ASSERT_EQUAL(s1.tam,1);
+
+    liberaStackG(&s1);
+}
+void testar_pushG(){
+    //1 - stack com elementos e matriz com elementos
+    char dadosMatrizes1[2][5][5] = {
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "cedeb",
+        "accbb"
+        },
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "c#deb",
+        "accbb"
+        }
+    };
+    char dadosMatrizes2[3][5][5] = {
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "cedeb",
+        "accbb"
+        },
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "c#deb",
+        "accbb"
+        },
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "cedeb",
+        "accbb"
+        }
+    };
+    int dadosjaExistia1[2]={1,2};
+
+    int dadosjaExistia2[3]={1,2,0};
+
+    int dadoslenNomes1[2]={3,4};
+
+    int dadoslenNomes2[3]={3,4,2};
+
+    char* dadosNomesFicheiros1[2]={
+        "abc",
+        "abcd"
+    };
+    char* dadosNomesFicheiros2[3]={
+        "abc",
+        "abcd",
+        "sa"
+    };
+
+    StackG s1 = criaStackG(1, 2, dadosjaExistia1, dadoslenNomes1, dadosNomesFicheiros1, 5, 5, dadosMatrizes1);
+    StackG s2 = criaStackG(2, 3, dadosjaExistia2, dadoslenNomes2, dadosNomesFicheiros2, 5, 5, dadosMatrizes2);
+
+    pushG(&s1, 0,"sa",2);
+    comparaStackG(&s1,&s2);
+    
+
+    liberaStackG(&s1);
+    liberaStackG(&s2);
+}
+
 void testar_push(){
     //1 - stack com elementos e matriz com elementos
     char dadosMatrizes[2][5][5] = {
@@ -47,8 +130,10 @@ void testar_push(){
         }
     };
 
-    StackMat s1 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
-    StackMat s2 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
+    char comandos[2]={'b','r'};
+
+    StackMat s1 = criaStackMat(1, 2, 5, 5, dadosMatrizes,comandos);
+    StackMat s2 = criaStackMat(1, 2, 5, 5, dadosMatrizes,comandos);
 
     char matriz1[5][5] = {
         "ecadc",
@@ -59,11 +144,14 @@ void testar_push(){
     };
     Matriz m1 = criaMatriz(5, 5, matriz1);
 
-    push(&s1, &m1);
+    push(&s1, &m1,'b');
 
     comparaMatrizes(&s1.dados[0], &s2.dados[0]);
     comparaMatrizes(&s1.dados[1], &s2.dados[1]);
     comparaMatrizes(&s1.dados[2], &m1);
+    CU_ASSERT_EQUAL(s1.comandos[0],'b');
+    CU_ASSERT_EQUAL(s1.comandos[1],'r');
+    CU_ASSERT_EQUAL(s1.comandos[2],'b');
     CU_ASSERT_EQUAL(s1.cabeca, 2);
     CU_ASSERT_EQUAL(s1.tam, 3);
 
@@ -74,9 +162,10 @@ void testar_push(){
     StackMat s3;
     initStackMat(&s3);
 
-    push(&s3, &m1);
+    push(&s3, &m1,'b');
 
     comparaMatrizes(&s3.dados[0], &m1);
+    CU_ASSERT_EQUAL(s3.comandos[0],'b');
     CU_ASSERT_EQUAL(s3.cabeca, 0);
     CU_ASSERT_EQUAL(s3.tam, 1);
 
@@ -84,15 +173,16 @@ void testar_push(){
     liberaStackMat(&s3);
 
     //3 - stack com elementos e matriz vazia
-    StackMat s4 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
-    StackMat s5 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
+    StackMat s4 = criaStackMat(1, 2, 5, 5, dadosMatrizes, comandos);
+    StackMat s5 = criaStackMat(1, 2, 5, 5, dadosMatrizes, comandos);
 
     Matriz m2;
     initMatriz(&m2);
 
-    push(&s4, &m2);
+    push(&s4, &m2,'b');
 
     comparaMatrizes(&s4.dados[2], &m2);
+    CU_ASSERT_EQUAL(s4.comandos[2],'b');
     CU_ASSERT_EQUAL(s4.cabeca, 2);
     CU_ASSERT_EQUAL(s4.tam, 3);
 
@@ -103,15 +193,18 @@ void testar_push(){
     StackMat s6;
     initStackMat(&s6);
 
-    push(&s6, &m2);
+    push(&s6, &m2,'b');
 
     comparaMatrizes(&s6.dados[0], &m2);
+    CU_ASSERT_EQUAL(s6.comandos[0],'b');
     CU_ASSERT_EQUAL(s6.cabeca, 0);
     CU_ASSERT_EQUAL(s6.tam, 1);
 
     liberaMatriz(&m2);
     liberaStackMat(&s6);
 }
+
+
 
 void testar_pop(){
     //1 - stack com elementos e matriz com elementos
@@ -132,14 +225,17 @@ void testar_pop(){
         }
     };
 
-    StackMat s1 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
-    StackMat s2 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
+    char comandos[2]={'b', 'r'};
+
+    StackMat s1 = criaStackMat(1, 2, 5, 5, dadosMatrizes, comandos);
+    StackMat s2 = criaStackMat(1, 2, 5, 5, dadosMatrizes, comandos);
 
     Matriz m1;
     int r1 = pop(&s1, &m1);
 
     comparaMatrizes(&s1.dados[0], &s2.dados[0]);
     comparaMatrizes(&m1, &s2.dados[1]);
+    CU_ASSERT_EQUAL(s1.comandos[0], 'b');
     CU_ASSERT_EQUAL(s1.cabeca, 0);
     CU_ASSERT_EQUAL(s1.tam, 2);
     CU_ASSERT_EQUAL(r1, 0);
@@ -149,13 +245,13 @@ void testar_pop(){
     liberaStackMat(&s2);
 
     //2 - stack com elementos e matriz vazia
-    StackMat s3 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
-    StackMat s4 = criaStackMat(1, 2, 5, 5, dadosMatrizes);
+    StackMat s3 = criaStackMat(1, 2, 5, 5, dadosMatrizes, comandos);
+    StackMat s4 = criaStackMat(1, 2, 5, 5, dadosMatrizes, comandos);
 
     Matriz m2;
     initMatriz(&m2);
 
-    push(&s3, &m2);
+    push(&s3, &m2,'b');
 
     Matriz m3;
     int r2 = pop(&s3, &m3);
@@ -163,6 +259,8 @@ void testar_pop(){
     comparaMatrizes(&s3.dados[0], &s4.dados[0]);
     comparaMatrizes(&s3.dados[1], &s4.dados[1]);
     comparaMatrizes(&m3, &m2);
+    CU_ASSERT_EQUAL(s3.comandos[0],s4.comandos[0]);
+    CU_ASSERT_EQUAL(s3.comandos[1],s4.comandos[1]);
     CU_ASSERT_EQUAL(s3.cabeca, 1);
     CU_ASSERT_EQUAL(s3.tam, 3);
     CU_ASSERT_EQUAL(r2, 0);
@@ -183,8 +281,50 @@ void testar_pop(){
     CU_ASSERT_EQUAL(s5.tam, 1);
     CU_ASSERT_EQUAL(r3, -1);
 
-    liberaStackMat(&s4);
     liberaStackMat(&s5);
+}
+
+void testar_popG(){
+    //1 - stack com elementos e matriz com elementos
+    char dadosMatrizes[2][5][5] = {
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "cedeb",
+        "accbb"
+        },
+        {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "c#deb",
+        "accbb"
+        }
+    };
+    int dadosjaExistia1[2]={1,2};
+
+    int dadosjaExistia2[1]={1};
+
+    int dadoslenNomes1[2]={3,4};
+
+    int dadoslenNomes2[1]={3};
+
+    char* dadosNomesFicheiros1[2]={
+        "abc",
+        "abcd"
+    };
+    char* dadosNomesFicheiros2[3]={
+        "abc",
+    };
+    StackG s1 = criaStackG(1, 2, dadosjaExistia1, dadoslenNomes1, dadosNomesFicheiros1, 5, 5, dadosMatrizes);
+    StackG s2 = criaStackG(0, 1, dadosjaExistia2, dadoslenNomes2, dadosNomesFicheiros2, 5, 5, dadosMatrizes);
+    popG(&s1);
+
+    comparaStackG(&s1, &s2);
+
+    liberaStackG(&s1);
+    liberaStackG(&s2);
 }
 
 void testar_isFull () {
@@ -201,7 +341,7 @@ void testar_isFull () {
     };
     m1=criaMatriz(5,5,matriz1);
     initStackMat(&S1);
-    push(&S1,&m1);
+    push(&S1,&m1,'b');
     r1=isFull(&S1);
     CU_ASSERT_EQUAL(r1, 1);
     liberaMatriz(&m1);
@@ -230,7 +370,7 @@ void testar_isEmpty () {
     };
     m1=criaMatriz(5,5,matriz1);
     initStackMat(&S1);
-    push(&S1,&m1);
+    push(&S1,&m1,'b');
     r1=isEmpty(&S1);
     CU_ASSERT_EQUAL(r1, 0);
     liberaMatriz(&m1);
@@ -244,9 +384,6 @@ void testar_isEmpty () {
     CU_ASSERT_EQUAL(r2, 1);
     liberaStackMat(&S2);
 }
-
-#include "include/copiaMatriz_test.h"
-
 
 void testar_copiaMatriz () {
     int i, j;

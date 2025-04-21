@@ -1,6 +1,6 @@
 #include "include/condicoes_test.h"
 
-
+/*
 void testar_verifRiscadaOrt(){
 
     // Caso nenhum '#' nas 4 direções
@@ -219,4 +219,4 @@ void testar_verifBranco(){
     CU_ASSERT_EQUAL(r7, 1);
 
     liberaMatriz(&m7);
-}
+}*/

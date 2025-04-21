@@ -24,7 +24,7 @@ void testar_gravaFicheiro() {
     }
 
 
-    int r1 = gravaFicheiro("teste1.txt", 10, &m1);
+    int r1 = gravaFicheiro("teste1.txt", &m1);
     CU_ASSERT_EQUAL(r1, 0);
     
     for (i = 0; i < m1.L; i++) {
@@ -35,7 +35,7 @@ void testar_gravaFicheiro() {
     }
     free(m1.matriz);
     
-    leFicheiro("teste1.txt", 10, &m1);
+    leFicheiro("teste1.txt", &m1);
     CU_ASSERT_EQUAL(m1.L, 5);
     CU_ASSERT_EQUAL(m1.C, 5);
     for (i = 0; i < m1.L; i++) {
@@ -67,7 +67,7 @@ void testar_gravaFicheiro() {
     }
 
 
-    int r2 = gravaFicheiro("teste2.txt", 10, &m2);
+    int r2 = gravaFicheiro("teste2.txt", &m2);
     CU_ASSERT_EQUAL(r2, 0);
     
     for (i = 0; i < m2.L; i++) {
@@ -78,7 +78,7 @@ void testar_gravaFicheiro() {
     }
     free(m2.matriz);
     
-    leFicheiro("teste2.txt", 10, &m2);
+    leFicheiro("teste2.txt", &m2);
     CU_ASSERT_EQUAL(m2.L, 5);
     CU_ASSERT_EQUAL(m2.C, 5);
     for (i = 0; i < m2.L; i++) {
@@ -110,7 +110,7 @@ void testar_gravaFicheiro() {
     }
 
 
-    int r3 = gravaFicheiro("teste3.txt", 10, &m3);
+    int r3 = gravaFicheiro("teste3.txt", &m3);
     CU_ASSERT_EQUAL(r3, 0);
     
     for (i = 0; i < m3.L; i++) {
@@ -121,7 +121,7 @@ void testar_gravaFicheiro() {
     }
     free(m3.matriz);
     
-    leFicheiro("teste3.txt", 10, &m3);
+    leFicheiro("teste3.txt", &m3);
     CU_ASSERT_EQUAL(m3.L, 5);
     CU_ASSERT_EQUAL(m3.C, 5);
     for (i = 0; i < m3.L; i++) {
@@ -152,7 +152,7 @@ void testar_gravaFicheiro() {
     }
 
 
-    int r4 = gravaFicheiro("teste4.txt", 10, &m4);
+    int r4 = gravaFicheiro("teste4.txt", &m4);
     CU_ASSERT_EQUAL(r4, 0);
     
     for (i = 0; i < m4.L; i++) {
@@ -163,7 +163,7 @@ void testar_gravaFicheiro() {
     }
     free(m4.matriz);
     
-    leFicheiro("teste4.txt", 10, &m4);
+    leFicheiro("teste4.txt", &m4);
     CU_ASSERT_EQUAL(m4.L, 5);
     CU_ASSERT_EQUAL(m4.C, 5);
     for (i = 0; i < m4.L; i++) {
@@ -199,7 +199,7 @@ void testar_gravaFicheiro() {
     }
 
 
-    int r5 = gravaFicheiro("teste5.txt", 10, &m5);
+    int r5 = gravaFicheiro("teste5.txt", &m5);
     CU_ASSERT_EQUAL(r5, 0);
     
     for (i = 0; i < m5.L; i++) {
@@ -210,7 +210,7 @@ void testar_gravaFicheiro() {
     }
     free(m5.matriz);
 
-    leFicheiro("teste5.txt", 10, &m5);
+    leFicheiro("teste5.txt", &m5);
     CU_ASSERT_EQUAL(m5.L, 9);
     CU_ASSERT_EQUAL(m5.C, 9);
     for (i = 0; i < m5.L; i++) {

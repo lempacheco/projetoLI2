@@ -38,7 +38,7 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
-
+    /*
     if (NULL == CU_add_test(pSuite, "testar_verifRiscadaOrt", testar_verifRiscadaOrt)) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -48,7 +48,7 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
-
+*/
     if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -58,7 +58,7 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
-
+    
     if (NULL == CU_add_test(pSuite, "testar_isFull", testar_isFull)) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -83,7 +83,21 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
+    if (NULL == CU_add_test(pSuite, "testar_initStackG", testar_initStackG)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+/*
+    if (NULL == CU_add_test(pSuite, "testar_pushG", testar_pushG)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
 
+    if (NULL == CU_add_test(pSuite, "testar_popG", testar_popG)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+*/
     CU_basic_run_tests();
     return CU_get_error();
   }

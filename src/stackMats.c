@@ -11,6 +11,7 @@ void initStackMat(StackMat *s){
 void initStackG(StackG* sg){
     sg->tam = 1;
     sg->matrizes = malloc(sizeof(Matriz) * sg->tam);
+    initMatriz(&sg->matrizes[0]);
     sg->jaExistia = malloc(sizeof(int) * sg->tam);
     sg->nomesFicheiros = malloc(sizeof(char*) * sg->tam);
     sg->lenNomes = malloc(sizeof(int) * sg->tam);

@@ -5,7 +5,7 @@ void testar_leFicheiro() {
 
     //1
     Matriz m1;
-    int r1 = leFicheiro("exemplo.txt", 11, &m1);
+    int r1 = leFicheiro("exemplo.txt", &m1);
     char matrizExpected1[5][5] = {  "ecadc",
                                     "dcdec",
                                     "bddce",
@@ -28,7 +28,7 @@ void testar_leFicheiro() {
 
     //2
     Matriz m2;
-    int r2 = leFicheiro("elfjeiofheifhewofj.txt", 22, &m2);
+    int r2 = leFicheiro("elfjeiofheifhewofj.txt", &m2);
 
     CU_ASSERT_EQUAL(r2, 1);
 }

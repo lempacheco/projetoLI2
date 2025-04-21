@@ -10,7 +10,6 @@
 int leFicheiro(char* nome, Matriz *m) {
     FILE* fp; 
     char temp;  
-    int r=0;
     int j=0,i=0;
 
     fp = fopen(nome, "r");
@@ -45,5 +44,5 @@ int leFicheiro(char* nome, Matriz *m) {
     }
 
     fclose(fp); 
-    return r; 
+    return 0; 
 }  
