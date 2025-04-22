@@ -53,7 +53,7 @@ int riscar (Matriz *m, Pos p){
   - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
 */
 
-int escolheComandos (Matriz *m, StackMat *s){
+int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     char pl;
     int pc; 
     char c; 
@@ -74,8 +74,15 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r;
     }
     if (c == 'v') {
+        int t = 0; 
         NodeGrupo* grupos = NULL;
         verificar(m, &grupos);
+        t=verificaCaminho(m, q);
+        if (t==1){
+            printf("\n ExisteCaminho\n"); 
+        } else {
+            printf("\nNão existe\n"); 
+        }
         imprimeGrupos(grupos);
         liberaGrupos(grupos); 
         return r; 

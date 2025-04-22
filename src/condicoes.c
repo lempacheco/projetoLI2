@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "../include/listasFunc.h"
 #include "../include/condicoes.h"
+
 
 
 int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
@@ -103,3 +103,57 @@ int verificar(Matriz *m, NodeGrupo** grupo) {
 
     return valido;
 }
+
+int verificaCaminho (Matriz *m, Queue *q){
+    int casasVisitadas = 0; 
+    Pos temp; 
+    
+    for(int i=0; i<m->L; i++){
+        for(int j=0; j<m->C; j++){
+            if (m->matriz[i][j] != '#'){
+                char pl = i+'a'; 
+                int pc = j; 
+                Pos p = {pl,pc};
+                enqueue(q, p); 
+            }
+        }
+    }
+    while(!(isEmptyQ(q))){
+
+        dequeue(q, &temp); 
+        printf("%c %d\n", temp.l, temp.c); 
+        if (m->visitada[temp.l-'a'][temp.c] == 0){
+            
+            casasVisitadas++; 
+            m->visitada[temp.l-'a'][temp.c] = 1; 
+            if( m->matriz[temp.l-'a'][temp.c] != '#'){
+                Pos p1 = {temp.l +1, temp.c};
+                Pos p2 = {temp.l, temp.c+1};
+                Pos p3 = {temp.l-1, temp.c};
+                Pos p4 = {temp.l, temp.c-1};
+                if (p1.l < m->L+'a'){
+                    enqueue(q, p1); 
+                }
+                if (p2.c < m->C){
+                    enqueue(q, p2);
+                }
+                if (p3.l >= 'a'){
+                    enqueue(q, p3);
+                }
+                if (p4.c >= 0){
+                    enqueue(q, p4);
+                }
+                
+
+            }
+        }
+    }
+    for(int i=0; i<m->L; i++){
+        for(int j=0; j<m->C; j++){
+            m->visitada[i][j] = 0; 
+        }
+    }
+
+    return (casasVisitadas == (m->L * m->C)); 
+}
+

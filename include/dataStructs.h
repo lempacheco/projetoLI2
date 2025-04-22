@@ -1,7 +1,7 @@
 #pragma once
 
 typedef struct pos {
-    char l; 
+    int l; 
     int c; 
 } Pos; 
 
@@ -9,6 +9,7 @@ typedef struct matriz {
     
     int L; 
     int C; 
+    int** visitada; 
     char** matriz;
 
 } Matriz;
@@ -38,3 +39,10 @@ typedef struct NodeGrupo {
     NodePosicao* cabeca;       // Cabeça da sublista
     struct NodeGrupo* prox;      // Próximo grupo
 } NodeGrupo;
+
+typedef struct queue { 
+    int cap; 
+    int tam; 
+    int inicio;  
+    Pos *valores; 
+} Queue; 
