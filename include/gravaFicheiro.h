@@ -4,5 +4,6 @@
 #include <string.h>
 #include <stdlib.h>
 
-int gravaFicheiro(char*, Matriz*, StackMat*);
+int gravaFicheiro(char*, char*, Matriz*, StackMat*);
 int gravaMatriz(Matriz* m, FILE* fp);
+int gravaStackMat(StackMat* s, FILE* fp);

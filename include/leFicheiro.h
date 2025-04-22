@@ -9,5 +9,6 @@
 #include "../include/stackMats.h"
 
 
-int leFicheiro(char* nome, Matriz *m, StackMat* s);
+int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s);
 void leMatriz(Matriz* m, FILE* fp);
+void leStackMat(StackMat* s, FILE* fp);
