@@ -46,6 +46,7 @@ int leFicheiro(char* nome, Matriz *m, StackMat* s) {
     }
 
     s->comandos = realloc(s->comandos, sizeof(char)*s->tam);
+    s->dados = realloc(s->dados, sizeof(Matriz) * s->tam);
     for (i=0; i<=s->cabeca; i++){
         //comando
         temp = fgetc(fp);

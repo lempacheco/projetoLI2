@@ -96,7 +96,6 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }
     if (c == 'g') {
-        push(s, m, c); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
