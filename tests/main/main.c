@@ -1,9 +1,9 @@
 #include <CUnit/CUnit.h>
-#include "../include/leFicheiro_test.h"
+/* #include "../include/leFicheiro_test.h"
 #include "../include/gravaFicheiro_test.h"
-#include "../include/comandos_test.h"
+#include "../include/comandos_test.h" */
 #include "../include/condicoes_test.h"
-#include "../include/stackMats_test.h"
+/* #include "../include/stackMats_test.h" */
 #include <stdio.h>
 
 int main() {
@@ -19,7 +19,7 @@ int main() {
       return CU_get_error();
     }
     
-    if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
+/*     if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
       CU_cleanup_registry();
       return CU_get_error();
     }
@@ -37,8 +37,13 @@ int main() {
     if (NULL == CU_add_test(pSuite, "testar_branco", testar_branco)) {
       CU_cleanup_registry();
       return CU_get_error();
+<<<<<<< HEAD
     }
     /*
+=======
+    } */
+
+>>>>>>> leticia
     if (NULL == CU_add_test(pSuite, "testar_verifRiscadaOrt", testar_verifRiscadaOrt)) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -48,8 +53,18 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
+<<<<<<< HEAD
 */
     if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
+=======
+
+    if (NULL == CU_add_test(pSuite, "testar_verificar", testar_verificar)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+/*     if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
+>>>>>>> leticia
       CU_cleanup_registry();
       return CU_get_error();
     }
@@ -83,6 +98,7 @@ int main() {
       CU_cleanup_registry();
       return CU_get_error();
     }
+<<<<<<< HEAD
     if (NULL == CU_add_test(pSuite, "testar_initStackG", testar_initStackG)) {
       CU_cleanup_registry();
       return CU_get_error();
@@ -98,6 +114,9 @@ int main() {
       return CU_get_error();
     }
 */
+=======
+ */
+>>>>>>> leticia
     CU_basic_run_tests();
     return CU_get_error();
   }

@@ -160,7 +160,7 @@ void liberaGrupos(NodeGrupo* lista) {
         NodeGrupo* grupoAtual = lista;
         lista = lista->prox;
 
-        // Libera a lista de posições dentro deste grupo
+        // Corrigido: usar "cabeca" em vez de "lista"
         NodePosicao* pos = grupoAtual->cabeca;
         while (pos != NULL) {
             NodePosicao* tempPos = pos;
@@ -168,7 +168,16 @@ void liberaGrupos(NodeGrupo* lista) {
             free(tempPos);
         }
 
-        // Libera o grupo em si
         free(grupoAtual);
     }
 }
+
+void liberaListaPos(NodePosicao* lista) {
+    while (lista != NULL) {
+        NodePosicao* temp = lista;
+        lista = lista->prox;
+        free(temp);
+    }
+}
+
+

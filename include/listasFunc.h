@@ -15,3 +15,4 @@ NodePosicao* ordenaLista (NodePosicao* lista);
 void imprimeLista (NodePosicao* lista); 
 void imprimeGrupos (NodeGrupo* lista); 
 void liberaGrupos(NodeGrupo* lista);
+void liberaListaPos(NodePosicao* lista); 

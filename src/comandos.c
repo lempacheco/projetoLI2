@@ -16,7 +16,10 @@ int branco (Matriz *m, Pos p){
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if (m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c]))) {
+    } else if(m->matriz[l][c] == '#' || isupper(m->matriz[l][c])){
+        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+        return -1;
+    } else if(m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c]))){
         m->matriz[l][c] = toupper(m->matriz[l][c]); 
     }
     return 0; 
@@ -32,9 +35,9 @@ int riscar (Matriz *m, Pos p){
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if (!(isupper(m->matriz[l][c]))) {
-        m->matriz[l][c] = '#'; 
-    }
+    } else if(m->matriz[l][c]=='#' || isupper(m->matriz[l][c])) {
+        return -1; 
+    } else m->matriz[l][c] = '#'; 
 
     return 0; 
 }
@@ -120,15 +123,14 @@ int escolheComandos (Matriz *m, StackMat *s){
     else {
         Pos p = {pl, pc}; 
         if (c == 'b') {
-            push(s, m, c);  
-            branco(m, p);
-            r=0; 
+            push(s, m, c);
+            r = branco(m, p);
         } 
         else if (c == 'r') {
-            push(s, m, c);  
-            riscar(m, p);
-            r=0; 
+            push(s, m, c);
+            r = riscar(m, p);
         }
+        
         else printf("Comando inválido\n"); 
     }
 

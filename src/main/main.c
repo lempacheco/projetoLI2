@@ -14,13 +14,23 @@ int main (){
     StackMat s; 
     initStackMat(&s);
 
+    int resultado = 0; 
+
     printf(">>> ");
 
-    while (escolheComandos(&m, &s) != 1) { 
-        mostraMatriz(&m);
-
+    while (resultado != 1) { 
+        resultado = escolheComandos(&m, &s); 
+    
+        if (resultado == -1) {
+            pop(&s, &m);
+        }
+    
+        if (resultado == 0 || resultado == -1) {
+            mostraMatriz(&m); 
+        }
     }
     
+
     liberaMatriz(&m);
     liberaStackMat(&s);
 
