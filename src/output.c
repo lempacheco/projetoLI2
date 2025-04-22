@@ -10,7 +10,7 @@ int mostraMatriz (Matriz *m) {
     
     for(i=0; i<m->L; i++){
         for (j=0; j<m->C; j++){
-            printf("%c",m->matriz[i][j]); 
+            printf("%c ",m->matriz[i][j]); 
         }
         printf("\n"); 
     }
