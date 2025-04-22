@@ -35,7 +35,7 @@ int riscar (Matriz *m, Pos p){
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if(m->matriz[l][c]=='#' || isupper(m->matriz[l][c])) {
+    } else if(m->matriz[l][c]== '#' || isupper(m->matriz[l][c])) {
         return -1; 
     } else m->matriz[l][c] = '#'; 
 
@@ -99,6 +99,7 @@ int escolheComandos (Matriz *m, StackMat *s){
         return r; 
     }
     if (c == 'g') {
+        r=-1; 
         push(s, m, c); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
