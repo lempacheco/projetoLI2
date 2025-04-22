@@ -4,4 +4,3 @@ dcd#c
 bddce
 cdeeb
 accbb
--1 0

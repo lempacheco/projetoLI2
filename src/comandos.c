@@ -89,13 +89,18 @@ int escolheComandos (Matriz *m, StackMat *s){
             nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
         }
         nomeFile[i] = '\0';
-        char* caminho = malloc(sizeof(char)*(i+5));
-        strcpy(caminho, "lib/");
-        strcat(caminho, nomeFile); 
+        char* caminhoM = malloc(sizeof(char)*(i+5));
+        strcpy(caminhoM, "lib/");
+        strcat(caminhoM, nomeFile); 
 
-        leFicheiro(caminho, m, s);
+        char* caminhoS = malloc(sizeof(char)*(i+14));
+        strcpy(caminhoS, "lib/history/");
+        strcat(caminhoS, nomeFile); 
+
+        leFicheiro(caminhoM, caminhoS, m, s);
         free(nomeFile);
-        free(caminho);
+        free(caminhoM);
+        free(caminhoS);
         return r; 
     }
     if (c == 'g') {
@@ -107,13 +112,18 @@ int escolheComandos (Matriz *m, StackMat *s){
             nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
         }
         nomeFile[i] = '\0';
-        char* caminho = malloc(sizeof(char)*(i+5));
-        strcpy(caminho, "lib/");
-        strcat(caminho, nomeFile); 
+        char* caminhoM = malloc(sizeof(char)*(i+5));
+        strcpy(caminhoM, "lib/");
+        strcat(caminhoM, nomeFile); 
 
-        gravaFicheiro(caminho, m, s); 
+        char* caminhoS = malloc(sizeof(char)*(i+14));
+        strcpy(caminhoS, "lib/history/");
+        strcat(caminhoS, nomeFile); 
+
+        gravaFicheiro(caminhoM, caminhoS, m, s); 
         free(nomeFile);
-        free(caminho);
+        free(caminhoM);
+        free(caminhoS);
         return r; 
     }
 
