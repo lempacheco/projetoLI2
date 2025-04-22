@@ -11,7 +11,6 @@ void initStackMat(StackMat *s){
 void initMatriz(Matriz* m){
     m->L = 0;
     m->C = 0;
-    m->visitada = NULL; 
     m->matriz = NULL;
 }
 
@@ -26,11 +25,8 @@ int isEmpty(StackMat *s){
 void liberaMatriz(Matriz *m){
     for (int i = 0; i < m->L; i++) {
         free(m->matriz[i]);
-        if(m->visitada != NULL) free(m->visitada[i]); 
-
     }
-    free(m->matriz);
-    if(m->visitada != NULL) free(m->visitada); 
+    free(m->matriz); 
     initMatriz(m);
 }
 

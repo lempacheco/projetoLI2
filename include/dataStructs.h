@@ -1,7 +1,7 @@
 #pragma once
 
 typedef struct pos {
-    int l; 
+    char l; 
     int c; 
 } Pos; 
 
