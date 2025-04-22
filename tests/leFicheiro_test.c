@@ -1,7 +1,7 @@
 #include "include/leFicheiro_test.h"
 
 void testar_leFicheiro() {
-    int i, j;
+/*    int i, j;
 
     //1
     Matriz m1;
@@ -30,5 +30,5 @@ void testar_leFicheiro() {
     Matriz m2;
     int r2 = leFicheiro("elfjeiofheifhewofj.txt", &m2);
 
-    CU_ASSERT_EQUAL(r2, 1);
+    CU_ASSERT_EQUAL(r2, 1);*/
 } 

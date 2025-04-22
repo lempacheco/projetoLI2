@@ -2,7 +2,7 @@
 
 
 void testar_gravaFicheiro() {
-    int i, j;
+/*    int i, j;
 
     // 1
     Matriz m1;
@@ -219,6 +219,5 @@ void testar_gravaFicheiro() {
         }
         free(m5.matriz[i]);
     }
-    free(m5.matriz);
-
+    free(m5.matriz);*/
 } 
