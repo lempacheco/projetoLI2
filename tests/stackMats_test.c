@@ -1,5 +1,6 @@
 #include "include/stackMats_test.h"
 
+
 void testar_initStackMat() {
     Matriz mExpected = {0,0,NULL};
 
@@ -245,7 +246,7 @@ void testar_isEmpty () {
     liberaStackMat(&S2);
 }
 
-#include "include/copiaMatriz_test.h"
+
 
 
 void testar_copiaMatriz () {
@@ -401,4 +402,4 @@ void testar_copiaMatriz () {
     }
     liberaMatriz(&m6i);
     liberaMatriz(&m6f);
-}
+} 

@@ -31,4 +31,4 @@ void testar_leFicheiro() {
     int r2 = leFicheiro("elfjeiofheifhewofj.txt", 22, &m2);
 
     CU_ASSERT_EQUAL(r2, 1);
-}
+} 

@@ -3,65 +3,81 @@
 #include "../include/condicoes.h"
 
 
- int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
+int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
     NodePosicao* lista = NULL;
 
-    // Verifica cada vizinho ortogonal e adiciona se for #
     if (J < m->L - 1 && m->matriz[J + 1][I] == '#')
         lista = adicionarPos(lista, J + 1, I);
-
     if (J > 0 && m->matriz[J - 1][I] == '#')
         lista = adicionarPos(lista, J - 1, I);
-
     if (I < m->C - 1 && m->matriz[J][I + 1] == '#')
         lista = adicionarPos(lista, J, I + 1);
-
     if (I > 0 && m->matriz[J][I - 1] == '#')
         lista = adicionarPos(lista, J, I - 1);
 
-    // Só adiciona grupo se houver pelo menos 1 vizinho #
     if (lista != NULL) {
-        lista = adicionarPos(lista, J, I);  // Adiciona a posição original
-        *grupo = adicionarLista(*grupo, ordenaLista(lista), 0);
+        lista = adicionarPos(lista, J, I);
+        NodePosicao* listaOrdenada = ordenaLista(lista);
+
+        // Só verifica se já pertence antes de liberar qualquer coisa
+        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
+            liberaListaPos(listaOrdenada);  
+        } else {
+            *grupo = adicionarLista(*grupo, listaOrdenada, 0);
+        }
+
         return 0;
     }
 
-    return 1; // nenhum vizinho #
+    return 1;
 }
 
-int verifBranco (Matriz *m, int J, int I, NodeGrupo** grupo){
-    int r=1;    
-    //linha
-    NodePosicao* listaLinha = NULL; 
-    for (int j=0; j<m->L; j++){
-        if (j!=J && m->matriz[j][I] == m->matriz[J][I]){
-            listaLinha = adicionarPos(listaLinha, j, I); 
-            listaLinha = adicionarPos(listaLinha, J, I);
-            r = 0; 
-        } 
-    }
+int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
+    int r = 1;
 
-    if (listaLinha != NULL && listaLinha->prox != NULL) {
-        *grupo = adicionarLista(*grupo, ordenaLista(listaLinha), 1); 
-    }
-
-    // coluna
-    NodePosicao* listaColuna = NULL; 
-    for (int i=0; i<m->C; i++){
-        if (i!=I && m->matriz[J][i] == m->matriz[J][I]) {
-   
-            listaColuna = adicionarPos(listaColuna, J, i); 
-            listaColuna = adicionarPos(listaColuna, J, I);
-            r = 0; 
+    // Verificação na linha
+    NodePosicao* listaLinha = NULL;
+    for (int j = 0; j < m->L; j++) {
+        if (j != J && m->matriz[j][I] == m->matriz[J][I]) {
+            listaLinha = adicionarPos(listaLinha, j, I);
         }
     }
 
-    if (listaColuna != NULL && listaColuna->prox != NULL){
-        *grupo = adicionarLista(*grupo, ordenaLista(listaColuna), 1); 
+    if (listaLinha != NULL) {
+        listaLinha = adicionarPos(listaLinha, J, I);
+        NodePosicao* listaOrdenada = ordenaLista(listaLinha);
+
+        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
+            liberaListaPos(listaOrdenada);  // segura: só libera depois de verificar
+        } else {
+            *grupo = adicionarLista(*grupo, listaOrdenada, 1);
+            r = 0;
+        }
     }
 
-    return r; 
+    // Verificação na coluna
+    NodePosicao* listaColuna = NULL;
+    for (int i = 0; i < m->C; i++) {
+        if (i != I && m->matriz[J][i] == m->matriz[J][I]) {
+            listaColuna = adicionarPos(listaColuna, J, i);
+        }
+    }
+
+    if (listaColuna != NULL) {
+        listaColuna = adicionarPos(listaColuna, J, I);
+        NodePosicao* listaOrdenada = ordenaLista(listaColuna);
+
+        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
+            liberaListaPos(listaOrdenada);  // mesma lógica
+        } else {
+            *grupo = adicionarLista(*grupo, listaOrdenada, 1);
+            r = 0;
+        }
+    }
+
+    return r;
 }
+
 
 int verificar(Matriz *m, NodeGrupo** grupo) {
     int valido = 1;  
