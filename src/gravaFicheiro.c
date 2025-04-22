@@ -7,10 +7,10 @@
    - Linhas seguintes: conteúdo da matriz, linha a linha. 
 */
 
-int gravaFicheiro(char* nome, Matriz* m){
+int gravaFicheiro(char* nome, Matriz* m, StackMat* s){
     FILE* fp; 
     int r=0;
-    int j=0,i=0; 
+    int i=0; 
 
     fp = fopen(nome, "w");
     if (fp == NULL) {
@@ -18,6 +18,35 @@ int gravaFicheiro(char* nome, Matriz* m){
         return 1; 
     }
     
+    //matriz m
+    if (gravaMatriz(m, fp)) return 1;
+
+    //s->cabeca e s->tam
+    if (fputc('\n', fp) == EOF) return 1;
+
+    if (fputc(s->cabeca+'0', fp) == EOF) return 1;
+    if (fputc(' ', fp) == EOF) return 1;
+    if (fputc(s->tam+'0', fp) == EOF) return 1;
+    if (fputc('\n', fp) == EOF) return 1;
+
+    for (i=0; i<=s->cabeca; i++){
+        //comando
+        if (fputc(s->comandos[i], fp) == EOF) return 1;
+
+        //matriz
+        if (fputc('\n', fp) == EOF) return 1;
+        if (gravaMatriz(&s->dados[i], fp)) return 1;
+
+        if (fputc('\n', fp) == EOF) return 1;
+    }
+
+    fclose(fp);
+    return r; 
+}
+
+int gravaMatriz(Matriz* m, FILE* fp){
+    int i, j;
+
     if (fputc(m->L+'0', fp) == EOF) return 1;
     if (fputc(' ', fp) == EOF) return 1;
     if (fputc(m->C+'0', fp) == EOF) return 1;
@@ -31,41 +60,5 @@ int gravaFicheiro(char* nome, Matriz* m){
             if (fputc('\n', fp) == EOF) return 1;
     }
 
-    fclose(fp);
-    return r; 
-}
-
-void existeFicheiro(char* nomeFile, int lenNome, StackG* sg){
-    FILE* fp;
-    char* temp = malloc(sizeof(char));
-    if ((fp = fopen(nomeFile, "r")) != NULL){//o ficheiro existe
-        if (fgets(temp, 1, fp) != NULL){//tinha algo dentro do ficheiro
-            pushG(sg, 2, nomeFile, lenNome);//esta funçao já incrementa o sg->cabeca
-            leFicheiro(nomeFile, &sg->matrizes[sg->cabeca]); //guarda a matriz que estava no ficheiro
-        }/* else{//não tinha nada dentro do ficheiro
-            pushG(sg, 1, nomeFile, lenNome);//esta funçao já incrementa o sg->cabeca
-            initMatriz(&sg->matrizes[sg->cabeca]);
-        } */
-        fclose(fp);
-    }else{//o ficheiro não existe
-        pushG(sg, 0, nomeFile, lenNome);
-        initMatriz(&sg->matrizes[sg->cabeca]);
-    }
-
-    free(temp);
-}
-
-void retrocedeG(StackG* sg){    
-    if (sg->jaExistia[sg->cabeca] == 2){
-        gravaFicheiro(sg->nomesFicheiros[sg->cabeca], &sg->matrizes[sg->cabeca]);
-    }/* else if (sg->jaExistia[sg->cabeca] == 1){
-        FILE* fp = fopen(sg->nomesFicheiros[sg->cabeca], "w"); //automaticamente apaga os conteudos do ficheiro
-        fclose(fp);
-    } */else{
-        if (remove(sg->nomesFicheiros[sg->cabeca])){
-            printf("Erro: ficheiro não removido.");
-        }
-    }
-
-    popG(sg);
+    return 0;
 }

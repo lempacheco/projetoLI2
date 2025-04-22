@@ -8,16 +8,6 @@ void initStackMat(StackMat *s){
     s->cabeca = -1;
 }
 
-void initStackG(StackG* sg){
-    sg->tam = 1;
-    sg->matrizes = malloc(sizeof(Matriz) * sg->tam);
-    initMatriz(&sg->matrizes[0]);
-    sg->jaExistia = malloc(sizeof(int) * sg->tam);
-    sg->nomesFicheiros = malloc(sizeof(char*) * sg->tam);
-    sg->lenNomes = malloc(sizeof(int) * sg->tam);
-    sg->cabeca = -1;
-}
-
 void initMatriz(Matriz* m){
     m->L = 0;
     m->C = 0;
@@ -51,23 +41,6 @@ void liberaStackMat(StackMat *s){
     s->tam = 0;
 }
 
-void liberaStackG(StackG *sg){
-    for (int i = 0; i <= sg->cabeca; i++) {
-        liberaMatriz(&sg->matrizes[i]);
-        free(sg->nomesFicheiros[i]);
-    }
-    free(sg->matrizes);
-    free(sg->nomesFicheiros);
-    free(sg->jaExistia);
-    free(sg->lenNomes);
-    sg->matrizes = NULL;
-    sg->nomesFicheiros = NULL;
-    sg->jaExistia = NULL;
-    sg->lenNomes = NULL;
-    sg->cabeca = -1;
-    sg->tam = 0;
-}
-
 void push(StackMat *s, Matriz *m, char comando){
     if (s->cabeca + 1 >= s->tam) {
         s->tam++;
@@ -82,22 +55,6 @@ void push(StackMat *s, Matriz *m, char comando){
     copiaMatriz(&s->dados[s->cabeca], m);
 }
 
-void pushG(StackG *sg, int b, char* nomeFile, int lenNome){
-    if (sg->cabeca + 1 >= sg->tam) {
-        sg->tam++;
-        sg->matrizes = realloc(sg->matrizes, sizeof(Matriz) * sg->tam);
-        sg->jaExistia = realloc(sg->jaExistia, sizeof(int) * sg->tam);
-        sg->nomesFicheiros = realloc(sg->nomesFicheiros, sizeof(char*) * sg->tam);
-        sg->lenNomes = realloc(sg->lenNomes, sizeof(int) * sg->tam);
-    }
-
-    sg->cabeca++;
-    sg->jaExistia[sg->cabeca] = b;
-    sg->lenNomes[sg->cabeca] = lenNome;
-    sg->nomesFicheiros[sg->cabeca] = malloc((sizeof(char)*lenNome)+1);
-    strcpy(sg->nomesFicheiros[sg->cabeca], nomeFile);
-}
-
 int pop(StackMat *s, Matriz* m){
     if (isEmpty(s)) {
         printf("Não há mais comandos para retroceder.");
@@ -109,14 +66,6 @@ int pop(StackMat *s, Matriz* m){
     s->comandos[s->cabeca] = '\0';
     s->cabeca--;
     return 0;
-}
-
-void popG(StackG* sg){
-    liberaMatriz(&(sg->matrizes[sg->cabeca]));
-    free(sg->nomesFicheiros[sg->cabeca]);
-    sg->lenNomes[sg->cabeca] = -1;
-    sg->jaExistia[sg->cabeca] = -1;
-    sg->cabeca--;
 }
 
 void copiaMatriz(Matriz *dest, Matriz *src){

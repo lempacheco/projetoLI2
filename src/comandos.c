@@ -50,7 +50,7 @@ int riscar (Matriz *m, Pos p){
   - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
 */
 
-int escolheComandos (Matriz *m, StackMat *s, StackG* sg){
+int escolheComandos (Matriz *m, StackMat *s){
     char pl;
     int pc; 
     char c; 
@@ -58,17 +58,15 @@ int escolheComandos (Matriz *m, StackMat *s, StackG* sg){
     char* nomeFile;
     int i;
 
-    if (scanf(" %c", &c)!=1)r=1;        
+    c = fgetc(stdin);
+    while (c == ' ' || c == '\n') c = fgetc(stdin);
+    if (c == 0)r=1; 
     if (c == 's') { 
         r=1; 
         printf("Saindo do jogo.\n"); 
         return r; 
     }  
     if (c == 'd') {
-        if (s->cabeca > -1 && s->comandos[s->cabeca] == 'g'){
-            retrocedeG(sg);
-        }
-
         if (!pop(s, m)) printf("Retrocedendo...");  
         return r;
     }
@@ -92,13 +90,12 @@ int escolheComandos (Matriz *m, StackMat *s, StackG* sg){
         strcpy(caminho, "lib/");
         strcat(caminho, nomeFile); 
 
-        leFicheiro(caminho, m);
+        leFicheiro(caminho, m, s);
         free(nomeFile);
         free(caminho);
         return r; 
     }
     if (c == 'g') {
-        push(s, m, c); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -109,8 +106,7 @@ int escolheComandos (Matriz *m, StackMat *s, StackG* sg){
         strcpy(caminho, "lib/");
         strcat(caminho, nomeFile); 
 
-        existeFicheiro(caminho, i+5, sg);
-        gravaFicheiro(caminho, m); 
+        gravaFicheiro(caminho, m, s); 
         free(nomeFile);
         free(caminho);
         return r; 
