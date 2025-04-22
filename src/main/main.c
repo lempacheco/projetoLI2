@@ -13,13 +13,15 @@ int main (){
     initMatriz(&m);
     StackMat s; 
     initStackMat(&s);
+    Queue q; 
+    initQueue(&q); 
 
     int resultado = 0; 
 
     printf(">>> ");
 
     while (resultado != 1) { 
-        resultado = escolheComandos(&m, &s); 
+        resultado = escolheComandos(&m, &s, &q); 
     
         if (resultado == -1) {
             pop(&s, &m);
@@ -33,6 +35,7 @@ int main (){
 
     liberaMatriz(&m);
     liberaStackMat(&s);
+    liberaQueue(&q);
 
     return 0; 
     

@@ -61,15 +61,18 @@ void leMatriz(Matriz* m, FILE* fp){
         printf ("Erro: ficheiro não contém uma matriz válida.");
     }
     
+    m->visitada = malloc(sizeof(int*)*m->L);
     m->matriz = malloc(sizeof(char*)*m->L);
     for (i=0; i<m->L; i++){
         m->matriz[i] = malloc(sizeof(char)*m->C);
+        m->visitada[i] = malloc(sizeof(int)*m->C);
         for (j=0; j<m->C; j++){
             temp = fgetc(fp); 
             while (temp == ' ' || temp == '\n'){//ignora espacos e newlines
                 temp = fgetc(fp);
             }
             m->matriz[i][j] = temp;
+            m->visitada[i][j] = 0; 
         }
     }
 
