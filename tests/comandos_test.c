@@ -233,7 +233,7 @@ void testar_branco() {
             m1.matriz[i][j] = matrizExpected1[i][j];
             m1I.matriz[i][j] = matrizExpected1[i][j];
             }
-    int r1 = branco(&m1, p1, m1I);
+    int r1 = branco(&m1, p1, &m1I);
 
     CU_ASSERT_EQUAL(r1, 0);
     CU_ASSERT_EQUAL(m1.matriz[0][1], 'C');
@@ -271,7 +271,7 @@ void testar_branco() {
         for (int j = 0; j < m2.C; j++)
             m2.matriz[i][j] = matrizExpected2[i][j];
 
-    int r2 = branco(&m2, p2, m1I);
+    int r2 = branco(&m2, p2, &m1I);
 
     CU_ASSERT_EQUAL(r2, 0);
     CU_ASSERT_EQUAL(m2.matriz[0][1], 'C');
@@ -309,7 +309,7 @@ void testar_branco() {
         for (int j = 0; j < m3.C; j++)
             m3.matriz[i][j] = matrizExpected3[i][j];
 
-    int r3 = branco(&m3, p3, m1I);
+    int r3 = branco(&m3, p3, &m1I);
 
     CU_ASSERT_EQUAL(r3, 0);
     CU_ASSERT_EQUAL(m3.matriz[0][4], 'C');
@@ -347,7 +347,7 @@ void testar_branco() {
         for (int j = 0; j < m4.C; j++)
             m4.matriz[i][j] = matrizExpected4[i][j];
     
-    int r4 = branco(&m4, p4, m1I);
+    int r4 = branco(&m4, p4, &m1I);
     
     CU_ASSERT_EQUAL(r4, 1);
     
@@ -384,7 +384,7 @@ void testar_branco() {
         for (int j = 0; j < m5.C; j++)
             m5.matriz[i][j] = matrizExpected5[i][j];
 
-    int r5 = branco(&m5, p5, m1I);
+    int r5 = branco(&m5, p5, &m1I);
 
     CU_ASSERT_EQUAL(r5, 0);
     CU_ASSERT_EQUAL(m5.matriz[0][1], 'C');
