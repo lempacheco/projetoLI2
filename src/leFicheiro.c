@@ -12,7 +12,7 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
     FILE* fpS;   
     int r=0;
 
-    //matriz
+    //matriz atual
     fpM = fopen(nomeMatriz, "r");
     if (fpM == NULL) {
         printf ("Erro ao abrir o ficheiro.");
@@ -24,7 +24,7 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
     leMatriz(m, fpM);
     fclose(fpM); 
 
-      //stackMat
+    //stackMat
 
     if (s->tam != 0){
         liberaStackMat(s);
@@ -37,6 +37,9 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
         leStackMat(s, fpS);
         fclose(fpS);
     }
+
+    //matriz inicial na stackMat
+    copiaMatriz(&s->mInicial, m);
 
     return r; 
 }  

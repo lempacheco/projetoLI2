@@ -1,6 +1,7 @@
 .vscode
 jogo
 testar
+debug
 lib/*
 !lib/exemplo.txt
 !lib/teste1.txt

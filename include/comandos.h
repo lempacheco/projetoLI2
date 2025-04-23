@@ -10,7 +10,7 @@
 
 
 int mostraMatriz (Matriz *);
-int branco (Matriz *, Pos);
+int branco (Matriz *, Pos, Matriz*);
 int riscar (Matriz *, Pos);
 int escolheComandos (Matriz *, StackMat *, Queue *q);
 int retroceder(Matriz *, StackMat *); 
