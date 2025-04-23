@@ -4,5 +4,6 @@
 #include <CUnit/Basic.h>
 #include "../../include/leFicheiro.h"
 #include "../../include/stackMats.h"
+#include "../include/criaMatriz.h"
 
 void testar_leFicheiro();
