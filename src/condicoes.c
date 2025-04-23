@@ -172,5 +172,3 @@ int verificaCaminho (Matriz *m, Queue *q){
 
     return (casasVisitadas == casasLivres); 
 }
-
-  

@@ -6,7 +6,7 @@ void testar_riscar() {
     // 1 Caso normal
 
     Pos p1;
-    p1.l = 'a'; 
+    p1.l = 1; 
     p1.c = 2;  // matriz[0][1]
 
     Matriz m1;
@@ -43,7 +43,7 @@ void testar_riscar() {
 
     // 2 Caso casa já esta riscada
     Pos p2;
-    p2.l = 'a'; 
+    p2.l = 1; 
     p2.c = 2;  // matriz[0][1]
 
     Matriz m2;
@@ -83,7 +83,7 @@ void testar_riscar() {
     // 3 Caso para o limite da matriz. 
 
     Pos p3;
-    p3.l = 'a'; 
+    p3.l = 1; 
     p3.c = 5;  // matriz[0][4]
 
     Matriz m3;
@@ -121,7 +121,7 @@ void testar_riscar() {
     // 4 Caso fora do limite da matriz
 
     Pos p4;
-    p4.l = 'a'; 
+    p4.l = 1; 
     p4.c = 6;  // matriz[0][5]
 
     Matriz m4;
@@ -158,7 +158,7 @@ void testar_riscar() {
     // 5 Caso a casa esta em branco
 
     Pos p5;
-    p5.l = 'a'; 
+    p5.l = 1; 
     p5.c = 2;  // matriz[0][1]
 
     Matriz m5;
@@ -185,7 +185,7 @@ void testar_riscar() {
     int r5 = riscar(&m5, p5);
 
     CU_ASSERT_EQUAL(r5, 0);
-    CU_ASSERT_EQUAL(m5.matriz[0][1], 'C');
+    CU_ASSERT_EQUAL(m5.matriz[0][1], '#');
 
     
     for (int i = 0; i < m5.L; i++) {
@@ -199,7 +199,7 @@ void testar_branco() {
     // 1 Caso normal
 
     Pos p1;
-    p1.l = 'a'; 
+    p1.l = 1; 
     p1.c = 2;  // matriz[0][1]
 
     Matriz m1;
@@ -209,6 +209,15 @@ void testar_branco() {
     m1.matriz = malloc(m1.L * sizeof(char*));
     for (int i = 0; i < m1.L; i++) {
         m1.matriz[i] = malloc(m1.C * sizeof(char));
+    }
+    
+    Matriz m1I;
+    m1I.L = 5;
+    m1I.C = 5;
+    
+    m1I.matriz = malloc(m1I.L * sizeof(char*));
+    for (int i = 0; i < m1I.L; i++) {
+        m1I.matriz[i] = malloc(m1I.C * sizeof(char));
     }
 
     char matrizExpected1[5][5] = {
@@ -220,10 +229,11 @@ void testar_branco() {
     };
 
     for (int i = 0; i < m1.L; i++)
-        for (int j = 0; j < m1.C; j++)
+        for (int j = 0; j < m1.C; j++) {
             m1.matriz[i][j] = matrizExpected1[i][j];
-
-    int r1 = branco(&m1, p1);
+            m1I.matriz[i][j] = matrizExpected1[i][j];
+            }
+    int r1 = branco(&m1, p1, &m1I);
 
     CU_ASSERT_EQUAL(r1, 0);
     CU_ASSERT_EQUAL(m1.matriz[0][1], 'C');
@@ -237,7 +247,7 @@ void testar_branco() {
     // 2 Caso em que a posição está riscada
 
     Pos p2;
-    p2.l = 'a'; 
+    p2.l = 1; 
     p2.c = 2;  // matriz[0][1]
 
     Matriz m2;
@@ -261,10 +271,10 @@ void testar_branco() {
         for (int j = 0; j < m2.C; j++)
             m2.matriz[i][j] = matrizExpected2[i][j];
 
-    int r2 = branco(&m2, p2);
+    int r2 = branco(&m2, p2, &m1I);
 
     CU_ASSERT_EQUAL(r2, 0);
-    CU_ASSERT_EQUAL(m2.matriz[0][1], '#');
+    CU_ASSERT_EQUAL(m2.matriz[0][1], 'C');
 
     
     for (int i = 0; i < m2.L; i++) {
@@ -275,7 +285,7 @@ void testar_branco() {
     // 3 Caso para o limite da matriz. 
 
     Pos p3;
-    p3.l = 'a'; 
+    p3.l = 1; 
     p3.c = 5;  // matriz[0][4]
 
     Matriz m3;
@@ -299,7 +309,7 @@ void testar_branco() {
         for (int j = 0; j < m3.C; j++)
             m3.matriz[i][j] = matrizExpected3[i][j];
 
-    int r3 = branco(&m3, p3);
+    int r3 = branco(&m3, p3, &m1I);
 
     CU_ASSERT_EQUAL(r3, 0);
     CU_ASSERT_EQUAL(m3.matriz[0][4], 'C');
@@ -313,7 +323,7 @@ void testar_branco() {
     // 4 Caso para fora do limite da matriz
 
     Pos p4;
-    p4.l = 'a'; 
+    p4.l = 1; 
     p4.c = 6;  // matriz[0][5]
     
     Matriz m4;
@@ -337,7 +347,7 @@ void testar_branco() {
         for (int j = 0; j < m4.C; j++)
             m4.matriz[i][j] = matrizExpected4[i][j];
     
-    int r4 = branco(&m4, p4);
+    int r4 = branco(&m4, p4, &m1I);
     
     CU_ASSERT_EQUAL(r4, 1);
     
@@ -350,7 +360,7 @@ void testar_branco() {
     // 5 Caso para casa já em branco
 
     Pos p5;
-    p5.l = 'a'; 
+    p5.l = 1; 
     p5.c = 2;  // matriz[0][1]
 
     Matriz m5;
@@ -374,7 +384,7 @@ void testar_branco() {
         for (int j = 0; j < m5.C; j++)
             m5.matriz[i][j] = matrizExpected5[i][j];
 
-    int r5 = branco(&m5, p5);
+    int r5 = branco(&m5, p5, &m1I);
 
     CU_ASSERT_EQUAL(r5, 0);
     CU_ASSERT_EQUAL(m5.matriz[0][1], 'C');
@@ -384,4 +394,6 @@ void testar_branco() {
         free(m5.matriz[i]);
     }
     free(m5.matriz);
+
+    free(m1I.matriz);
 }
