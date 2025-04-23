@@ -12,6 +12,7 @@
 #include "../include/condicoes.h"
 #include "../include/listasFunc.h"
 #include "../include/resolve.h"
+#include "../include/ajuda.h"
 
 
 int mostraMatriz (Matriz *);

@@ -22,10 +22,10 @@ int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
         /* NodePosicao* listaOrdenada = ordenaLista(lista); */
 
         // Só verifica se já pertence antes de liberar qualquer coisa
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  
+        if (pertenceAoGrupo(lista, *grupo)) {
+            liberaListaPos(lista);  
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 0);
+            *grupo = adicionarLista(*grupo, lista, 0);
         }
 
         return 0;
@@ -47,7 +47,7 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaLinha != NULL) {
         listaLinha = adicionarPos(listaLinha, J, I);
-        /*NodePosicao* listaOrdenada = ordenaLista(listaLinha);*/
+        /* NodePosicao* listaOrdenada = ordenaLista(listaLinha); */
 
         if (pertenceAoGrupo(listaLinha, *grupo)) {
             liberaListaPos(listaLinha);  // segura: só libera depois de verificar
@@ -174,4 +174,3 @@ int verificaCaminho (Matriz *m, Queue *q){
 }
 
   
-
