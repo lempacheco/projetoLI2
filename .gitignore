@@ -9,3 +9,4 @@ lib/*
 !lib/teste3.txt
 !lib/teste4.txt
 !lib/history
+lib/history/*
