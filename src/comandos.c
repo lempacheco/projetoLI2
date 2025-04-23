@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include "../include/condicoes.h"
-#include "../include/listasFunc.h"
 #include "../include/comandos.h"
 
 
@@ -11,8 +8,8 @@
 */
 
 int branco (Matriz *m, Pos p){
-    int l = p.l - 'a'; 
-    int c = p.c -1; 
+    int l = p.l - 1; 
+    int c = p.c - 1; 
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
@@ -30,7 +27,7 @@ int branco (Matriz *m, Pos p){
 */
 
 int riscar (Matriz *m, Pos p){
-    int l = p.l - 'a'; 
+    int l = p.l - 1; 
     int c = p.c - 1;
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
@@ -134,24 +131,23 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         return r; 
     }
 
-    if (scanf(" %c" "%d", &pl, &pc)!=2) r=1;
-    else if (pl-'a' < 0 || pc < 0 || pl-'a' >= (m->L) || pc > (m->C)) {
-        r=1; 
-    }
-    else {
-        Pos p = {pl, pc}; 
+    if (scanf(" %c%d", &pl, &pc) != 2) {
+        r = 1;
+    } else if (pl - 'a' < 0 || pl - 'a' >= m->L || pc <= 0 || pc > m->C) {
+        r = 1;
+    } else {
+        Pos p = {pl - 'a' + 1, pc}; 
         if (c == 'b') {
             push(s, m, c);
             r = branco(m, p);
-        } 
-        else if (c == 'r') {
+        } else if (c == 'r') {
             push(s, m, c);
             r = riscar(m, p);
+        } else {
+            printf("Comando inválido\n");
         }
-        
-        else printf("Comando inválido\n"); 
     }
-
+    
     return r; 
 
 }

@@ -6,7 +6,7 @@
 int posPertence (NodePosicao* lista, int linha, int coluna){
     
     while(lista != NULL) {
-        if (lista->p.l == linha + 'a' && lista->p.c == coluna + 1) {
+        if (lista->p.l == linha && lista->p.c == coluna + 1) {
             return 1; 
         }
 
@@ -21,14 +21,14 @@ int listasIguais(NodePosicao* a, NodePosicao* b) {
     NodePosicao* pa = a;
     while (pa != NULL) {
         cA++;
-        if (!posPertence(b, pa->p.l - 'a', pa->p.c - 1)) return 0;
+        if (!posPertence(b, pa->p.l , pa->p.c - 1)) return 0;
         pa = pa->prox;
     }
 
     NodePosicao* pb = b;
     while (pb != NULL) {
         cB++;
-        if (!posPertence(a, pb->p.l - 'a', pb->p.c - 1)) return 0;
+        if (!posPertence(a, pb->p.l, pb->p.c - 1)) return 0;
         pb = pb->prox;
     }
 
@@ -43,7 +43,7 @@ int pertenceAoGrupo(NodePosicao* lista, NodeGrupo* grupo) {
     return 0;
 }
 
-
+// deve adicionar no final 
 NodePosicao* adicionarPos (NodePosicao* lista, int linha, int coluna) {
     
     if (posPertence(lista, linha, coluna) == 1){
@@ -52,7 +52,7 @@ NodePosicao* adicionarPos (NodePosicao* lista, int linha, int coluna) {
 
     NodePosicao* novaPos = malloc(sizeof(NodePosicao));
 
-    novaPos->p.l = 'a' + linha; 
+    novaPos->p.l = linha; 
     novaPos->p.c = coluna + 1;
     novaPos->prox = NULL; 
 
@@ -90,7 +90,7 @@ NodeGrupo* adicionarLista (NodeGrupo* grupo, NodePosicao* lista, int mensagem) {
     return grupo; 
 }
 
-NodePosicao* ordenaLista (NodePosicao* lista) {
+/* NodePosicao* ordenaLista (NodePosicao* lista) {
     if (lista == NULL) return lista; 
     
     int trocou = 1; 
@@ -117,39 +117,55 @@ NodePosicao* ordenaLista (NodePosicao* lista) {
     } 
 
     return lista; 
-}
+} */
 
-void imprimeLista (NodePosicao* lista) {
+void imprimeCauda (NodePosicao* lista) {
     if (lista == NULL) {
         printf("  (nenhuma posição)\n");
         return;
     }
 
-    NodePosicao* atual = lista; 
+    NodePosicao* atual = lista->prox; 
+  
     while (atual != NULL) {
-        printf(" (%c, %d)\n", atual->p.l, atual->p.c); 
+        printf(" (%c, %d)\n", (atual->p.l)+'a', atual->p.c); 
         atual = atual->prox; 
     }
 }
 
-void imprimeGrupos (NodeGrupo* lista) {
-    if (lista == NULL) {
+
+void imprimeCabeca (NodePosicao* lista){
+    if (lista != NULL)
+        printf(" (%c, %d) ", (lista->p.l) + 'a', lista->p.c); 
+}
+    
+
+void imprimeGrupos (NodeGrupo* grupo) {
+    
+    if (grupo == NULL) {
         printf("Não houve quaisquer posições inválidas atingidas.\n"); 
-        return;
     }
 
-    NodeGrupo* atualGrupo = lista;
+    NodeGrupo* atualGrupo = grupo;
 
     while (atualGrupo != NULL) {
         if (atualGrupo->m == 0) {
-            printf("As seguintes posições estão riscadas na ortogonal:\n");
+            printf("A posicão");
+            imprimeCabeca(atualGrupo->cabeca);
+            printf("tem as seguintes posições riscadas na ortogonal:\n");
+            imprimeCauda(atualGrupo->cabeca);
+
         } else if (atualGrupo->m == 1) {
             printf("As seguintes posições estão brancas duplicadas na mesma linha/coluna:\n");
+            imprimeCabeca(atualGrupo->cabeca);
+            printf("\n"); 
+            imprimeCauda(atualGrupo->cabeca); 
+
         } else {
             printf("Tipo de restrição desconhecido:\n");
         }
 
-        imprimeLista(atualGrupo->cabeca);
+        
         atualGrupo = atualGrupo->prox;
         printf("\n");
     }
