@@ -5,6 +5,7 @@ void initStackMat(StackMat *s){
     s->dados = malloc(sizeof(Matriz) * s->tam);
     s->comandos = malloc(sizeof(char) * s->tam);
     initMatriz(&s->dados[0]);
+    initMatriz(&s->mInicial);
     s->cabeca = -1;
 }
 
@@ -39,6 +40,7 @@ void liberaStackMat(StackMat *s){
     s->dados = NULL;
     s->cabeca = -1;
     s->tam = 0;
+    liberaMatriz(&s->mInicial);
 }
 
 void push(StackMat *s, Matriz *m, char comando){

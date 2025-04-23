@@ -7,17 +7,19 @@
    Isto é, coloca o caracter em maiúsculas. 
 */
 
-int branco (Matriz *m, Pos p){
+int branco (Matriz *m, Pos p, Matriz* mInicial){
     int l = p.l - 1; 
     int c = p.c - 1; 
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if(m->matriz[l][c] == '#' || isupper(m->matriz[l][c])){
-        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+    } else if(isupper(m->matriz[l][c])){
+        printf("Casa já está branca.\n"); 
         return -1;
-    } else if(m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c]))){
-        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+    } else if(m->matriz[l][c] == '#'){
+        m->matriz[l][c] = toupper(mInicial->matriz[l][c]); 
+    }else{
+        m->matriz[l][c] = toupper(m->matriz[l][c]);
     }
     return 0; 
 }
@@ -32,7 +34,8 @@ int riscar (Matriz *m, Pos p){
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if(m->matriz[l][c]== '#' || isupper(m->matriz[l][c])) {
+    } else if(m->matriz[l][c]== '#') {
+        printf("Casa já está riscada.\n");
         return -1; 
     } else m->matriz[l][c] = '#'; 
 
@@ -130,6 +133,11 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         free(caminhoS);
         return r; 
     }
+    if (c == 'R') {
+        r=-1; 
+        resolveTabuleiro(&s->mInicial);
+        return r; 
+    }
 
     if (scanf(" %c%d", &pl, &pc) != 2) {
         r = 1;
@@ -139,8 +147,9 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         Pos p = {pl - 'a' + 1, pc}; 
         if (c == 'b') {
             push(s, m, c);
-            r = branco(m, p);
-        } else if (c == 'r') {
+            r = branco(m, p, &s->mInicial);
+        } 
+        else if (c == 'r') {
             push(s, m, c);
             r = riscar(m, p);
         } else {
