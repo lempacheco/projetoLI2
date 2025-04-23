@@ -7,6 +7,9 @@
 #include "../include/dataStructs.h"
 #include "../include/gravaFicheiro.h"
 #include "../include/stackMats.h"
+#include "../include/condicoes.h"
+#include "../include/listasFunc.h"
+#include "../include/resolve.h"
 
 
 int mostraMatriz (Matriz *);

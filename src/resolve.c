@@ -16,6 +16,8 @@ void resolveTabuleiro(Matriz* m){//matrizinicial
     repC[0].j = malloc(sizeof(int));
 
     encontraRep(m, repC, m->C, m->L);
+
+    //
 }
 
 void encontraRep(Matriz* m, Rep* rep, int a, int b){
@@ -29,7 +31,7 @@ void encontraRep(Matriz* m, Rep* rep, int a, int b){
                 rep[temp].freq++;
                 rep[temp].i[rep[temp].freq] = i;
                 rep[temp].j[rep[temp].freq] = j;
-                realocaIJ(rep, temp);
+                realocaIJ(rep, rep[temp].freq+1);
             }else{
                 rep[tamRep-1].freq = 1;
                 rep[tamRep-1].simbolo = m->matriz[i][j];
@@ -45,7 +47,8 @@ void encontraRep(Matriz* m, Rep* rep, int a, int b){
 
 void realocaRep(Rep* rep, int tamRep){
     rep = realloc(rep, sizeof(Rep)*tamRep);
-    realocaIJ(rep, tamRep-1);
+    rep[tamRep-1].i = malloc(sizeof(int));
+    rep[tamRep-1].j = malloc(sizeof(int));
 }
 
 void realocaIJ(Rep* rep, int i){

@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include "../include/condicoes.h"
-#include "../include/listasFunc.h"
 #include "../include/comandos.h"
 
 
@@ -134,6 +131,11 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         free(nomeFile);
         free(caminhoM);
         free(caminhoS);
+        return r; 
+    }
+    if (c == 'R') {
+        r=-1; 
+        resolveTabuleiro(&s->mInicial);
         return r; 
     }
 
