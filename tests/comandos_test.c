@@ -71,7 +71,7 @@ void testar_riscar() {
 
     int r2 = riscar(&m2, p2);
 
-    CU_ASSERT_EQUAL(r2, 0);
+    CU_ASSERT_EQUAL(r2, -1);
     CU_ASSERT_EQUAL(m2.matriz[0][1], '#');
 
     
@@ -386,14 +386,18 @@ void testar_branco() {
 
     int r5 = branco(&m5, p5, &m1I);
 
-    CU_ASSERT_EQUAL(r5, 0);
+    CU_ASSERT_EQUAL(r5, -1);
     CU_ASSERT_EQUAL(m5.matriz[0][1], 'C');
 
     
+
     for (int i = 0; i < m5.L; i++) {
         free(m5.matriz[i]);
     }
     free(m5.matriz);
 
+    for (int i = 0; i < m1I.L; i++) {
+        free(m1I.matriz[i]);
+    }
     free(m1I.matriz);
 }

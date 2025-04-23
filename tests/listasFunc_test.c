@@ -78,13 +78,3 @@ void testar_adicionarLista() {
     liberaGrupos(grupo);
 }
 
-void testar_ordenaLista() {
-    Pos posicoes[] = {{'c',3}, {'a',1}, {'b',2}};
-    NodePosicao* lista = criarListaCom(posicoes, 3);
-    lista = ordenaLista(lista);
-    printf("\n%c \n%c \n%c",lista->p.l,lista->prox->p.l,lista->prox->prox->p.l);
-    CU_ASSERT_EQUAL(lista->p.l, 'a');
-    CU_ASSERT_EQUAL(lista->prox->p.l, 'b');
-    CU_ASSERT_EQUAL(lista->prox->prox->p.l, 'c');
-    liberaListaPos(lista);
-}

@@ -1,8 +1,11 @@
 #include "../include/listasFunc.h"
 
-// node* lista = NULL; 
+
 //TODO: verificar se o elemento já esta na lista, e não adicionar.
 
+/*
+ Verifica se se uma determindada posição pertence a lista. 
+*/
 int posPertence (NodePosicao* lista, int linha, int coluna){
     
     while(lista != NULL) {
@@ -14,6 +17,10 @@ int posPertence (NodePosicao* lista, int linha, int coluna){
     }
     return 0; 
 }
+
+/*
+ Verifica se duas listas são iguais. 
+*/
 
 int listasIguais(NodePosicao* a, NodePosicao* b) {
     int cA = 0, cB = 0;
@@ -35,6 +42,10 @@ int listasIguais(NodePosicao* a, NodePosicao* b) {
     return cA == cB;  // 1 se são iguais, 0 se diferentes
 }
 
+/*
+ Verifica se uma determinada lista pertence a um grupo.  
+*/
+
 int pertenceAoGrupo(NodePosicao* lista, NodeGrupo* grupo) {
     while (grupo != NULL) {
         if (listasIguais(grupo->cabeca, lista)) return 1;
@@ -43,7 +54,11 @@ int pertenceAoGrupo(NodePosicao* lista, NodeGrupo* grupo) {
     return 0;
 }
 
-// deve adicionar no final 
+
+/*
+ Adiciona uma determinada posição na lista. 
+ Nesta função a posição é adicionada no final da lista.  
+*/
 NodePosicao* adicionarPos (NodePosicao* lista, int linha, int coluna) {
     
     if (posPertence(lista, linha, coluna) == 1){
@@ -70,6 +85,11 @@ NodePosicao* adicionarPos (NodePosicao* lista, int linha, int coluna) {
     return lista; 
 }
 
+/*
+ A função adiciona uma lista a um grupo, caso esta lista já não pertença ao grupo. 
+ Atribui uma menasagem a cada lista.   
+*/
+
 NodeGrupo* adicionarLista (NodeGrupo* grupo, NodePosicao* lista, int mensagem) {
     
     if (pertenceAoGrupo(lista,grupo)==1) {return grupo;}
@@ -90,35 +110,9 @@ NodeGrupo* adicionarLista (NodeGrupo* grupo, NodePosicao* lista, int mensagem) {
     return grupo; 
 }
 
-/* NodePosicao* ordenaLista (NodePosicao* lista) {
-    if (lista == NULL) return lista; 
-    
-    int trocou = 1; 
-
-    while (trocou) {
-        trocou=0; 
-        NodePosicao* atual = lista; 
-
-        for(; atual->prox !=NULL && trocou; atual=atual->prox) {
-
-            NodePosicao* prox = atual->prox;
-
-            // Comparar: primeiro por linha (char), depois por coluna (int)
-            if (atual->p.l > prox->p.l || (atual->p.l == prox->p.l && atual->p.c > prox->p.c)) {
-                
-                Pos temp = atual->p; 
-                atual->p = prox->p;
-                prox->p = temp;  
-                
-                trocou=1; 
-            }
-        }
-        atual=NULL; 
-    } 
-
-    return lista; 
-} */
-
+/*
+ Imprime no terminal a cauda de uma lista.  
+*/
 void imprimeCauda (NodePosicao* lista) {
     if (lista == NULL) {
         printf("  (nenhuma posição)\n");
@@ -128,18 +122,22 @@ void imprimeCauda (NodePosicao* lista) {
     NodePosicao* atual = lista->prox; 
   
     while (atual != NULL) {
-        printf(" (%c, %d)\n", (atual->p.l)+'a', atual->p.c); 
+        printf(" (%c, %d)\n", (atual->p.l) + 'a', atual->p.c); 
         atual = atual->prox; 
     }
 }
 
-
+/*
+ Imprime no terminal a cabeça de uma lista.  
+*/
 void imprimeCabeca (NodePosicao* lista){
     if (lista != NULL)
         printf(" (%c, %d) ", (lista->p.l) + 'a', lista->p.c); 
 }
     
-
+/*
+ Imprime no terminal um grupo, ou seja um conjunto de listas.  
+*/
 void imprimeGrupos (NodeGrupo* grupo) {
     
     if (grupo == NULL) {

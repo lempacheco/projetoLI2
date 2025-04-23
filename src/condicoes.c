@@ -138,8 +138,7 @@ int verificaCaminho (Matriz *m, Queue *q){
         int i = temp.l; 
         int j = temp.c; 
 
-        if (i >= 0 && i < m->L && j >= 0 && j < m->C) {
-            printf("%d %d\n", i, j); 
+        if (i >= 0 && i < m->L && j >= 0 && j < m->C) { 
             if (m->matriz[i][j] != '#' && m->visitada[i][j] == 0) {
                 casasVisitadas++; 
                 m->visitada[i][j] = 1;

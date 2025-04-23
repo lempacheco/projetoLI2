@@ -79,9 +79,9 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         verificar(m, &grupos);
         t=verificaCaminho(m, q);
         if (t==1){
-            printf("\n ExisteCaminho\n"); 
+            printf("\nExiste um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
         } else {
-            printf("\nNão existe\n"); 
+            printf("\nNão existe um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
         }
         imprimeGrupos(grupos);
         liberaGrupos(grupos); 
@@ -111,8 +111,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         return r; 
     }
     if (c == 'g') {
-        r=-1; 
-        push(s, m, c); 
+
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
         for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
@@ -127,7 +126,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         strcpy(caminhoS, "lib/history/");
         strcat(caminhoS, nomeFile); 
 
-        gravaFicheiro(caminhoM, caminhoS, m, s); 
+        r = gravaFicheiro(caminhoM, caminhoS, m, s); 
         free(nomeFile);
         free(caminhoM);
         free(caminhoS);

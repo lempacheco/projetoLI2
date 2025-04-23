@@ -115,11 +115,6 @@ int main() {
       return CU_get_error();
     }
 
-    if (NULL == CU_add_test(pSuite, "testar_ordenaLista", testar_ordenaLista)) {
-      CU_cleanup_registry();
-      return CU_get_error();
-    }
-
     CU_basic_run_tests();
     return CU_get_error();
   }

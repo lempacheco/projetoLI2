@@ -46,19 +46,10 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
 
 void leMatriz(Matriz* m, FILE* fp){
     int i, j;
-    char temp = fgetc(fp);
-
-    m->L = 0;
-    m->C = 0;
-    for (i=0; temp != ' ' && temp != '\n'; i++){
-        m->L += (temp-'0')*myPow(10,i);
-        temp = fgetc(fp);
-    }
-    temp = fgetc(fp);
-    for (i=0; temp != ' ' && temp != '\n'; i++){
-        m->C += (temp-'0')*myPow(10,i);
-        temp = fgetc(fp);
-    }
+    char temp;
+    
+    leNumero(&m->L, fp);
+    leNumero(&m->C, fp);
 
     if (m->L <= 0 || m->C <= 0){
         m->matriz = NULL;
@@ -88,23 +79,13 @@ void leStackMat(StackMat* s, FILE* fp){
     int i;
 
     //s->cabeca e s->tam
-    s->cabeca = 0;
-    s->tam = 0;
-    temp = fgetc(fp);
-    for (i=0; temp != ' ' && temp != '\n'; i++){
-        if (temp == '-'){
-            s->cabeca = -1;
-            temp = ' '; //cabeca fica com o valor -1
-        }
-        else {
-            s->cabeca += (temp-'0')*myPow(10,i);
-            temp = fgetc(fp);
-        }
-    }
-    temp = fgetc(fp);
-    for (i=0; temp != ' ' && temp != '\n'; i++){
-        s->tam += (temp-'0')*myPow(10,i);
-        temp = fgetc(fp);
+    leNumero(&s->cabeca, fp);
+    leNumero(&s->tam, fp);
+
+    if (s->cabeca <= -1 || s->tam <= 0){
+        s->dados = NULL;
+        s->comandos = NULL; 
+        printf ("Erro: ficheiro não contém um histórico válido.");
     }
 
     s->comandos = realloc(s->comandos, sizeof(char)*s->tam);
@@ -120,10 +101,26 @@ void leStackMat(StackMat* s, FILE* fp){
     }
 }
 
-int myPow(int x, int n){
-    x=1;
-    for (int i=0; i<n; i++){
-        x*=x;
+void leNumero(int *x, FILE* fp) {
+    *x = 0;
+    int negativo = 0;
+    char c = fgetc(fp);
+
+    while (c == ' ' || c == '\n') {
+        c = fgetc(fp);
     }
-    return x;
+
+    if (c == '-') {
+        negativo = 1;
+        c = fgetc(fp);
+    }
+
+    while (c >= '0' && c <= '9') {
+        *x = (*x * 10) + (c - '0');
+        c = fgetc(fp);
+    }
+
+    if (negativo) {
+        *x = -*x;
+    }
 }
