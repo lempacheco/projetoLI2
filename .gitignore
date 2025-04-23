@@ -10,3 +10,7 @@ lib/*
 !lib/teste4.txt
 !lib/history
 lib/history/*
+!lib/history/teste1.txt
+!lib/history/teste2.txt
+!lib/history/teste3.txt
+!lib/history/teste4.txt
