@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -pedantic -O1 -fsanitize=address -fno-omit-frame-pointer -g -lm
-CFLAGS_DEBUG = -Wall -Wextra -pedantic -O0 -fsanitize=address -fno-omit-frame-pointer -g -lm
+CFLAGS = -Wall -Wextra -pedantic -O1 -fsanitize=address -fno-omit-frame-pointer -g
+CFLAGS_DEBUG = -Wall -Wextra -pedantic -O0 -fsanitize=address -fno-omit-frame-pointer -g
 
 SRC = src/*.c
 TEST = tests/*.c
