@@ -17,13 +17,13 @@ int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (lista != NULL) {
         lista = adicionarPos(lista, J, I);
-        NodePosicao* listaOrdenada = ordenaLista(lista);
+        /*NodePosicao* listaOrdenada = ordenaLista(lista);*/
 
         // Só verifica se já pertence antes de liberar qualquer coisa
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  
+        if (pertenceAoGrupo(lista, *grupo)) {
+            liberaListaPos(lista);  
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 0);
+            *grupo = adicionarLista(*grupo, lista, 0);
         }
 
         return 0;
@@ -45,12 +45,12 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaLinha != NULL) {
         listaLinha = adicionarPos(listaLinha, J, I);
-        NodePosicao* listaOrdenada = ordenaLista(listaLinha);
+        /*NodePosicao* listaOrdenada = ordenaLista(listaLinha);*/
 
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  // segura: só libera depois de verificar
+        if (pertenceAoGrupo(listaLinha, *grupo)) {
+            liberaListaPos(listaLinha);  // segura: só libera depois de verificar
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 1);
+            *grupo = adicionarLista(*grupo, listaLinha, 1);
             r = 0;
         }
     }
@@ -65,12 +65,12 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaColuna != NULL) {
         listaColuna = adicionarPos(listaColuna, J, I);
-        NodePosicao* listaOrdenada = ordenaLista(listaColuna);
+        /*NodePosicao* listaOrdenada = ordenaLista(listaColuna);*/
 
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  // mesma lógica
+        if (pertenceAoGrupo(listaColuna, *grupo)) {
+            liberaListaPos(listaColuna);  // mesma lógica
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 1);
+            *grupo = adicionarLista(*grupo, listaColuna, 1);
             r = 0;
         }
     }

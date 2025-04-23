@@ -20,8 +20,8 @@ void testar_listasIguais() {
     NodePosicao* listaB = criarListaCom(posB, 3);
     NodePosicao* listaC = criarListaCom(posC, 2);
 
-    CU_ASSERT_TRUE(listasIguais(listaA, listaB));
-    CU_ASSERT_FALSE(listasIguais(listaA, listaC));
+    CU_ASSERT_EQUAL(listasIguais(listaA, listaB),1);
+    CU_ASSERT_EQUAL(listasIguais(listaA, listaC),0);
     liberaListaPos(listaA);
     liberaListaPos(listaB);
     liberaListaPos(listaC);
@@ -37,8 +37,8 @@ void testar_pertenceAoGrupo() {
     NodeGrupo* grupo = NULL;
     grupo = adicionarLista(grupo, listaA, 1);
 
-    CU_ASSERT_TRUE(pertenceAoGrupo(listaA, grupo));
-    CU_ASSERT_FALSE(pertenceAoGrupo(listaB, grupo));
+    CU_ASSERT_EQUAL(pertenceAoGrupo(listaA, grupo),1);
+    CU_ASSERT_EQUAL(pertenceAoGrupo(listaB, grupo),0);
 
     liberaListaPos(listaB);
     liberaGrupos(grupo);
@@ -82,7 +82,7 @@ void testar_ordenaLista() {
     Pos posicoes[] = {{'c',3}, {'a',1}, {'b',2}};
     NodePosicao* lista = criarListaCom(posicoes, 3);
     lista = ordenaLista(lista);
-
+    printf("\n%c \n%c \n%c",lista->p.l,lista->prox->p.l,lista->prox->prox->p.l);
     CU_ASSERT_EQUAL(lista->p.l, 'a');
     CU_ASSERT_EQUAL(lista->prox->p.l, 'b');
     CU_ASSERT_EQUAL(lista->prox->prox->p.l, 'c');
