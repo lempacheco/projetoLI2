@@ -16,14 +16,16 @@ int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
         lista = adicionarPos(lista, J, I - 1);
 
     if (lista != NULL) {
-        lista = adicionarPos(lista, J, I);
-        NodePosicao* listaOrdenada = ordenaLista(lista);
+        NodePosicao* novaLista = adicionarPos(NULL, J, I);
+        novaLista->prox = lista;
+        lista = novaLista;
+        /* NodePosicao* listaOrdenada = ordenaLista(lista); */
 
         // Só verifica se já pertence antes de liberar qualquer coisa
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  
+        if (pertenceAoGrupo(lista, *grupo)) {
+            liberaListaPos(lista);  
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 0);
+            *grupo = adicionarLista(*grupo, lista, 0);
         }
 
         return 0;
@@ -45,12 +47,12 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaLinha != NULL) {
         listaLinha = adicionarPos(listaLinha, J, I);
-        NodePosicao* listaOrdenada = ordenaLista(listaLinha);
+        /*NodePosicao* listaOrdenada = ordenaLista(listaLinha);*/
 
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  // segura: só libera depois de verificar
+        if (pertenceAoGrupo(listaLinha, *grupo)) {
+            liberaListaPos(listaLinha);  // segura: só libera depois de verificar
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 1);
+            *grupo = adicionarLista(*grupo, listaLinha, 1);
             r = 0;
         }
     }
@@ -65,12 +67,12 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaColuna != NULL) {
         listaColuna = adicionarPos(listaColuna, J, I);
-        NodePosicao* listaOrdenada = ordenaLista(listaColuna);
+        /* NodePosicao* listaOrdenada = ordenaLista(listaColuna); */
 
-        if (pertenceAoGrupo(listaOrdenada, *grupo)) {
-            liberaListaPos(listaOrdenada);  // mesma lógica
+        if (pertenceAoGrupo(listaColuna, *grupo)) {
+            liberaListaPos(listaColuna);  // mesma lógica
         } else {
-            *grupo = adicionarLista(*grupo, listaOrdenada, 1);
+            *grupo = adicionarLista(*grupo, listaColuna, 1);
             r = 0;
         }
     }
@@ -105,55 +107,71 @@ int verificar(Matriz *m, NodeGrupo** grupo) {
 }
 
 int verificaCaminho (Matriz *m, Queue *q){
-    int casasVisitadas = 0; 
+    int casasVisitadas = 0;
+    int casasLivres = 0;  
     Pos temp; 
     
+    m->visitada = malloc(sizeof(int*)*m->L); 
     for(int i=0; i<m->L; i++){
-        for(int j=0; j<m->C; j++){
-            if (m->matriz[i][j] != '#'){
-                char pl = i+'a'; 
-                int pc = j; 
-                Pos p = {pl,pc};
-                enqueue(q, p); 
-            }
-        }
-    }
-    while(!(isEmptyQ(q))){
-
-        dequeue(q, &temp); 
-        printf("%c %d\n", temp.l, temp.c); 
-        if (m->visitada[temp.l-'a'][temp.c] == 0){
-            
-            casasVisitadas++; 
-            m->visitada[temp.l-'a'][temp.c] = 1; 
-            if( m->matriz[temp.l-'a'][temp.c] != '#'){
-                Pos p1 = {temp.l +1, temp.c};
-                Pos p2 = {temp.l, temp.c+1};
-                Pos p3 = {temp.l-1, temp.c};
-                Pos p4 = {temp.l, temp.c-1};
-                if (p1.l < m->L+'a'){
-                    enqueue(q, p1); 
-                }
-                if (p2.c < m->C){
-                    enqueue(q, p2);
-                }
-                if (p3.l >= 'a'){
-                    enqueue(q, p3);
-                }
-                if (p4.c >= 0){
-                    enqueue(q, p4);
-                }
-                
-
-            }
-        }
-    }
-    for(int i=0; i<m->L; i++){
+        m->visitada[i] = malloc(sizeof(int)*m->C); 
         for(int j=0; j<m->C; j++){
             m->visitada[i][j] = 0; 
         }
     }
 
-    return (casasVisitadas == (m->L * m->C)); 
+    int encontrada = 0; 
+    for (int i = 0; i < m->L; i++) {
+        for (int j = 0; j < m->C; j++) {
+            if (m->matriz[i][j] != '#') {
+                casasLivres++;
+                if (!encontrada) {
+                    Pos pInicial = {i, j};
+                    enqueue(q, pInicial);
+                    encontrada = 1;
+                }
+            }
+        }
+    }
+
+    while (!isEmptyQ(q)) {
+        dequeue(q, &temp); 
+        int i = temp.l; 
+        int j = temp.c; 
+
+        if (i >= 0 && i < m->L && j >= 0 && j < m->C) {
+            printf("%d %d\n", i, j); 
+            if (m->matriz[i][j] != '#' && m->visitada[i][j] == 0) {
+                casasVisitadas++; 
+                m->visitada[i][j] = 1;
+
+                Pos p1 = {i + 1 , j};
+                Pos p2 = {i, j + 1};
+                Pos p3 = {i - 1, j};
+                Pos p4 = {i, j - 1};
+
+                if (i + 1 < m->L) {
+                    enqueue(q, p1); 
+                }
+                if (j + 1 < m->C) {
+                    enqueue(q, p2);
+                }
+                if (i - 1 >= 0) {
+                    enqueue(q, p3);
+                }
+                if (j - 1 >= 0) {
+                    enqueue(q, p4);
+                }
+            }
+        }
+    }
+
+    for (int i = 0; i < m->L; i++) {
+            free (m->visitada[i]); 
+    }
+    free(m->visitada); 
+
+    return (casasVisitadas == casasLivres); 
 }
+
+  
 

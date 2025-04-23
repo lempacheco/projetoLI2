@@ -12,7 +12,7 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
     FILE* fpS;   
     int r=0;
 
-    //matriz
+    //matriz atual
     fpM = fopen(nomeMatriz, "r");
     if (fpM == NULL) {
         printf ("Erro ao abrir o ficheiro.");
@@ -25,17 +25,21 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
     fclose(fpM); 
 
     //stackMat
-    if ((fpS = fopen(nomeStackMat, "r"))) //o ficheiro já existe
-    {
-        if (s->tam != 0){
-            liberaStackMat(s);
-            initStackMat(s);
-        }
-        leStackMat(s, fpS);
-        fclose(fpS);
-    }else{//o ficheiro não existe
+
+    if (s->tam != 0){
+        liberaStackMat(s);
         initStackMat(s);
     }
+  
+    if ((fpS = fopen(nomeStackMat, "r"))) //o ficheiro já existe
+    {
+
+        leStackMat(s, fpS);
+        fclose(fpS);
+    }
+
+    //matriz inicial na stackMat
+    copiaMatriz(&s->mInicial, m);
 
     return r; 
 }  
@@ -61,18 +65,18 @@ void leMatriz(Matriz* m, FILE* fp){
         printf ("Erro: ficheiro não contém uma matriz válida.");
     }
     
-    m->visitada = malloc(sizeof(int*)*m->L);
+   
     m->matriz = malloc(sizeof(char*)*m->L);
     for (i=0; i<m->L; i++){
         m->matriz[i] = malloc(sizeof(char)*m->C);
-        m->visitada[i] = malloc(sizeof(int)*m->C);
+        
         for (j=0; j<m->C; j++){
             temp = fgetc(fp); 
             while (temp == ' ' || temp == '\n'){//ignora espacos e newlines
                 temp = fgetc(fp);
             }
             m->matriz[i][j] = temp;
-            m->visitada[i][j] = 0; 
+             
         }
     }
 

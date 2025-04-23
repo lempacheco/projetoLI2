@@ -58,8 +58,6 @@ int gravaStackMat(StackMat* s, FILE* fp){
     int i;
 
     //s->cabeca e s->tam
-    if (fputc('\n', fp) == EOF) return 1;
-
     if (fputc(s->cabeca+'0', fp) == EOF) return 1;
     if (fputc(' ', fp) == EOF) return 1;
     if (fputc(s->tam+'0', fp) == EOF) return 1;

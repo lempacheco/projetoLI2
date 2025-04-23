@@ -25,6 +25,7 @@ typedef struct StackMat{
     char *comandos;
     int cabeca;
     int tam;
+    Matriz mInicial;
 } StackMat;
 
 // Lista interna: posições

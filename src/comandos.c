@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include "../include/condicoes.h"
-#include "../include/listasFunc.h"
 #include "../include/comandos.h"
 
 
@@ -10,17 +7,19 @@
    Isto é, coloca o caracter em maiúsculas. 
 */
 
-int branco (Matriz *m, Pos p){
-    int l = p.l - 'a'; 
-    int c = p.c -1; 
+int branco (Matriz *m, Pos p, Matriz* mInicial){
+    int l = p.l - 1; 
+    int c = p.c - 1; 
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if(m->matriz[l][c] == '#' || isupper(m->matriz[l][c])){
-        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+    } else if(isupper(m->matriz[l][c])){
+        printf("Casa já está branca.\n"); 
         return -1;
-    } else if(m->matriz[l][c] != '#' && !(isupper(m->matriz[l][c]))){
-        m->matriz[l][c] = toupper(m->matriz[l][c]); 
+    } else if(m->matriz[l][c] == '#'){
+        m->matriz[l][c] = toupper(mInicial->matriz[l][c]); 
+    }else{
+        m->matriz[l][c] = toupper(m->matriz[l][c]);
     }
     return 0; 
 }
@@ -30,12 +29,13 @@ int branco (Matriz *m, Pos p){
 */
 
 int riscar (Matriz *m, Pos p){
-    int l = p.l - 'a'; 
+    int l = p.l - 1; 
     int c = p.c - 1;
 
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
-    } else if(m->matriz[l][c]== '#' || isupper(m->matriz[l][c])) {
+    } else if(m->matriz[l][c]== '#') {
+        printf("Casa já está riscada.\n");
         return -1; 
     } else m->matriz[l][c] = '#'; 
 
@@ -133,25 +133,30 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         free(caminhoS);
         return r; 
     }
-
-    if (scanf(" %c" "%d", &pl, &pc)!=2) r=1;
-    else if (pl-'a' < 0 || pc < 0 || pl-'a' >= (m->L) || pc > (m->C)) {
-        r=1; 
+    if (c == 'R') {
+        r=-1; 
+        resolveTabuleiro(&s->mInicial);
+        return r; 
     }
-    else {
-        Pos p = {pl, pc}; 
+
+    if (scanf(" %c%d", &pl, &pc) != 2) {
+        r = 1;
+    } else if (pl - 'a' < 0 || pl - 'a' >= m->L || pc <= 0 || pc > m->C) {
+        r = 1;
+    } else {
+        Pos p = {pl - 'a' + 1, pc}; 
         if (c == 'b') {
             push(s, m, c);
-            r = branco(m, p);
+            r = branco(m, p, &s->mInicial);
         } 
         else if (c == 'r') {
             push(s, m, c);
             r = riscar(m, p);
+        } else {
+            printf("Comando inválido\n");
         }
-        
-        else printf("Comando inválido\n"); 
     }
-
+    
     return r; 
 
 }
