@@ -51,12 +51,12 @@ void leMatriz(Matriz* m, FILE* fp){
     m->L = 0;
     m->C = 0;
     for (i=0; temp != ' ' && temp != '\n'; i++){
-        m->L += (temp-'0')*pow(10,i);
+        m->L += (temp-'0')*myPow(10,i);
         temp = fgetc(fp);
     }
     temp = fgetc(fp);
     for (i=0; temp != ' ' && temp != '\n'; i++){
-        m->C += (temp-'0')*pow(10,i);
+        m->C += (temp-'0')*myPow(10,i);
         temp = fgetc(fp);
     }
 
@@ -97,13 +97,13 @@ void leStackMat(StackMat* s, FILE* fp){
             temp = ' '; //cabeca fica com o valor -1
         }
         else {
-            s->cabeca += (temp-'0')*pow(10,i);
+            s->cabeca += (temp-'0')*myPow(10,i);
             temp = fgetc(fp);
         }
     }
     temp = fgetc(fp);
     for (i=0; temp != ' ' && temp != '\n'; i++){
-        s->tam += (temp-'0')*pow(10,i);
+        s->tam += (temp-'0')*myPow(10,i);
         temp = fgetc(fp);
     }
 
@@ -118,4 +118,12 @@ void leStackMat(StackMat* s, FILE* fp){
         //matriz
         leMatriz(&s->dados[i], fp);
     }
+}
+
+int myPow(int x, int n){
+    x=1;
+    for (int i=0; i<n; i++){
+        x*=x;
+    }
+    return x;
 }

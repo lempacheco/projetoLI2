@@ -104,7 +104,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         strcpy(caminhoS, "lib/history/");
         strcat(caminhoS, nomeFile); 
 
-        leFicheiro(caminhoM, caminhoS, m, s);
+        r = leFicheiro(caminhoM, caminhoS, m, s);
         free(nomeFile);
         free(caminhoM);
         free(caminhoS);
@@ -133,9 +133,9 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         free(caminhoS);
         return r; 
     }
-    if (c == 'R') {
-        r=-1; 
-        resolveTabuleiro(&s->mInicial);
+    if (c == 'a') { 
+        push(s,m,c);
+        r = ajuda(m, q);
         return r; 
     }
 
