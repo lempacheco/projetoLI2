@@ -5,7 +5,7 @@ int ajuda(Matriz* m, Queue* q){
     int r;
     Matriz t;
     initMatriz(&t);
-    copiaMatriz(&t, &m);
+    copiaMatriz(&t, m);
 
     if (verificar(m, &grupos)){
         riscarIguaisDeLetraBranca(m, &grupos);
@@ -18,10 +18,10 @@ int ajuda(Matriz* m, Queue* q){
     }
 
     if (!verificar(m, &grupos)){
-        copiaMatriz(&m, &t);
+        copiaMatriz(m, &t);
     }
 
-    liberaMatriz(&m);
+    liberaMatriz(m);
     liberaGrupos(grupos);
 
     return r;
