@@ -2,7 +2,6 @@
 #include "../include/condicoes.h"
 
 
-
 int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
     NodePosicao* lista = NULL;
 
@@ -19,9 +18,8 @@ int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
         NodePosicao* novaLista = adicionarPos(NULL, J, I);
         novaLista->prox = lista;
         lista = novaLista;
-        /* NodePosicao* listaOrdenada = ordenaLista(lista); */
 
-        // Só verifica se já pertence antes de liberar qualquer coisa
+        //só verifica se já pertence antes de liberar qualquer coisa
         if (pertenceAoGrupo(lista, *grupo)) {
             liberaListaPos(lista);  
         } else {
@@ -37,7 +35,7 @@ int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
 int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
     int r = 1;
 
-    // Verificação na linha
+    // verificação na linha
     NodePosicao* listaLinha = NULL;
     for (int j = 0; j < m->L; j++) {
         if (j != J && m->matriz[j][I] == m->matriz[J][I]) {
@@ -47,17 +45,16 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaLinha != NULL) {
         listaLinha = adicionarPos(listaLinha, J, I);
-        /* NodePosicao* listaOrdenada = ordenaLista(listaLinha); */
 
         if (pertenceAoGrupo(listaLinha, *grupo)) {
-            liberaListaPos(listaLinha);  // segura: só libera depois de verificar
+            liberaListaPos(listaLinha);  //só libera depois de verificar
         } else {
             *grupo = adicionarLista(*grupo, listaLinha, 1);
             r = 0;
         }
     }
 
-    // Verificação na coluna
+    // verificação na coluna
     NodePosicao* listaColuna = NULL;
     for (int i = 0; i < m->C; i++) {
         if (i != I && m->matriz[J][i] == m->matriz[J][I]) {
@@ -67,10 +64,9 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     if (listaColuna != NULL) {
         listaColuna = adicionarPos(listaColuna, J, I);
-        /* NodePosicao* listaOrdenada = ordenaLista(listaColuna); */
 
         if (pertenceAoGrupo(listaColuna, *grupo)) {
-            liberaListaPos(listaColuna);  // mesma lógica
+            liberaListaPos(listaColuna);  
         } else {
             *grupo = adicionarLista(*grupo, listaColuna, 1);
             r = 0;
