@@ -3,6 +3,9 @@
 int ajuda(Matriz* m, Queue* q){
     NodeGrupo* grupos = NULL;
     int r;
+    Matriz t;
+    initMatriz(&t);
+    copiaMatriz(&t, &m);
 
     if (verificar(m, &grupos)){
         riscarIguaisDeLetraBranca(m, &grupos);
@@ -13,6 +16,12 @@ int ajuda(Matriz* m, Queue* q){
         printf("O tabuleiro atual é inválido.\n");
         r = -1;
     }
+
+    if (!verificar(m, &grupos)){
+        copiaMatriz(&m, &t);
+    }
+
+    liberaMatriz(&m);
     liberaGrupos(grupos);
 
     return r;
@@ -21,7 +30,7 @@ int ajuda(Matriz* m, Queue* q){
 void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos){
     for(int i=0; i<m->L; i++){
         for(int j=0; j<m->C; j++){
-            if (isupper(m->matriz[i][j])){
+            if (isupper(m->matriz[i][j]) && m->matriz[i][j]!='#'){
                 for(int l=0; l<m->L; l++){
                     if(tolower(m->matriz[i][j]) == m->matriz[l][j]){
                         char t = m->matriz[l][j];

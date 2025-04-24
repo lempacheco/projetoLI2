@@ -10,7 +10,7 @@ jogo:
 	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo
 
 clean:
-	rm -f jogo testar lib/teste5.txt
+	rm -f jogo testar lib/teste5.txt lib/history/teste5.txt
 
 .PHONY: testar
 testar:
