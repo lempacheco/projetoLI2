@@ -1,0 +1,130 @@
+        -:    0:Source:src/leFicheiro.c
+        -:    0:Graph:coverage/leFicheiro.gcno
+        -:    0:Data:coverage/leFicheiro.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/leFicheiro.h"
+        -:    2:
+        -:    3:/*  Lê o conteúdo de um ficheiro e carrega-o na matriz fornecida.
+        -:    4:
+        -:    5:  O formato esperado do ficheiro é:
+        -:    6:  - Primeira linha: dois dígitos separados por espaço, representando o número de linhas (L) e colunas (C) da matriz.
+        -:    7:  - Linhas seguintes: caracteres da matriz, linha a linha.
+        -:    8:*/
+        -:    9:
+        8:   10:int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
+        8:   11:    FILE* fpM;
+        8:   12:    FILE* fpS;   
+        8:   13:    int r=0;
+        -:   14:
+        -:   15:    //matriz atual
+        8:   16:    fpM = fopen(nomeMatriz, "r");
+        8:   17:    if (fpM == NULL) {
+        1:   18:        printf ("Erro ao abrir o ficheiro.");
+        1:   19:        return 1; 
+        -:   20:    }
+        -:   21:
+       7*:   22:    if (m->matriz != NULL) liberaMatriz(m);
+        -:   23:    
+        7:   24:    leMatriz(m, fpM);
+        7:   25:    fclose(fpM); 
+        -:   26:
+        -:   27:    //stackMat
+        -:   28:
+        7:   29:    if (s->tam != 0){
+        5:   30:        liberaStackMat(s);
+        5:   31:        initStackMat(s);
+        -:   32:    }
+        -:   33:  
+        7:   34:    if ((fpS = fopen(nomeStackMat, "r"))) //o ficheiro já existe
+        -:   35:    {
+        -:   36:
+        7:   37:        leStackMat(s, fpS);
+        7:   38:        fclose(fpS);
+        -:   39:    }
+        -:   40:
+        -:   41:    //matriz inicial na stackMat
+        7:   42:    copiaMatriz(&s->mInicial, m);
+        -:   43:
+        7:   44:    return r; 
+        -:   45:}  
+        -:   46:
+       14:   47:void leMatriz(Matriz* m, FILE* fp){
+       14:   48:    int i, j;
+       14:   49:    char temp;
+        -:   50:    
+       14:   51:    leNumero(&m->L, fp);
+       14:   52:    leNumero(&m->C, fp);
+        -:   53:
+       14:   54:    if (m->L <= 0 || m->C <= 0){
+    #####:   55:        m->matriz = NULL;
+    #####:   56:        printf ("Erro: ficheiro não contém uma matriz válida.");
+        -:   57:    }
+        -:   58:    
+        -:   59:   
+       14:   60:    m->matriz = malloc(sizeof(char*)*m->L);
+      124:   61:    for (i=0; i<m->L; i++){
+      110:   62:        m->matriz[i] = malloc(sizeof(char)*m->C);
+        -:   63:        
+     1404:   64:        for (j=0; j<m->C; j++){
+     1294:   65:            temp = fgetc(fp); 
+     1390:   66:            while (temp == ' ' || temp == '\n'){//ignora espacos e newlines
+       96:   67:                temp = fgetc(fp);
+        -:   68:            }
+     1294:   69:            m->matriz[i][j] = temp;
+        -:   70:             
+        -:   71:        }
+        -:   72:    }
+        -:   73:
+       14:   74:    temp = fgetc(fp);
+       14:   75:}
+        -:   76:
+        7:   77:void leStackMat(StackMat* s, FILE* fp){
+        7:   78:    char temp;
+        7:   79:    int i;
+        -:   80:
+        -:   81:    //s->cabeca e s->tam
+        7:   82:    leNumero(&s->cabeca, fp);
+        7:   83:    leNumero(&s->tam, fp);
+        -:   84:
+        7:   85:    if (s->cabeca <= -1 || s->tam <= 0){
+    #####:   86:        s->dados = NULL;
+    #####:   87:        s->comandos = NULL; 
+    #####:   88:        printf ("Erro: ficheiro não contém um histórico válido.");
+        -:   89:    }
+        -:   90:
+        7:   91:    s->comandos = realloc(s->comandos, sizeof(char)*s->tam);
+        7:   92:    s->dados = realloc(s->dados, sizeof(Matriz) * s->tam);
+       14:   93:    for (i=0; i<=s->cabeca; i++){
+        -:   94:        //comando
+        7:   95:        temp = fgetc(fp);
+        7:   96:        s->comandos[i] = temp;
+        7:   97:        temp = fgetc(fp);
+        -:   98:
+        -:   99:        //matriz
+        7:  100:        leMatriz(&s->dados[i], fp);
+        -:  101:    }
+        7:  102:}
+        -:  103:
+       42:  104:void leNumero(int *x, FILE* fp) {
+       42:  105:    *x = 0;
+       42:  106:    int negativo = 0;
+       42:  107:    char c = fgetc(fp);
+        -:  108:
+       42:  109:    while (c == ' ' || c == '\n') {
+    #####:  110:        c = fgetc(fp);
+        -:  111:    }
+        -:  112:
+       42:  113:    if (c == '-') {
+    #####:  114:        negativo = 1;
+    #####:  115:        c = fgetc(fp);
+        -:  116:    }
+        -:  117:
+       88:  118:    while (c >= '0' && c <= '9') {
+       46:  119:        *x = (*x * 10) + (c - '0');
+       46:  120:        c = fgetc(fp);
+        -:  121:    }
+        -:  122:
+       42:  123:    if (negativo) {
+    #####:  124:        *x = -*x;
+        -:  125:    }
+       42:  126:}

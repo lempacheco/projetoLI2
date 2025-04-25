@@ -10,50 +10,29 @@ TEST = tests/*.c
 jogo:
 	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo -lncurses -ltinfo
 
-.PHONY: jogogcov
 jogogcov:
+	rm -r coverage
 	mkdir -p coverage
-	$(CC) $(CFLAGS_GCOV) $(SRC) src/main/main.c -o jogo
+	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
 	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
-	./jogo
+	./testar
 	find . -maxdepth 1 -name '*.gcda' -exec mv {} coverage/ \;
 
 	cd coverage && \
 	for f in *; do \
 		if [ -f "$$f" ]; then \
-			nome_corrigido=$$(echo "$$f" | cut -c6-); \
+			nome_corrigido=$$(echo "$$f" | cut -c8-); \
 			mv "$$f" "$$nome_corrigido"; \
 		fi; \
 	done
 
 
 	find src -name '*.c' | while read file; do \
-		gcov -o coverage "$$file" > /dev/null; \
+		gcov -f -o coverage "$$file" >> coverage/output; \
 	done
 
 	mv *.gcov coverage/
-
-.PHONY: limparNomes
-limparNomes:
-	@echo "Limpando nomes dos ficheiros na pasta coverage/..."
-	@cd coverage && \
-	for f in *; do \
-		if [ -f "$$f" ]; then \
-			nome_corrigido=$$(echo "$$f" | cut -c6-); \
-			mv "$$f" "$$nome_corrigido"; \
-		fi; \
-	done
-	@echo "Renomeação concluída!"
-
-.PHONY: coverageJogo
-coverageJogo:
-	mkdir -p coverage
-
-	find src -name '*.c' | while read file; do \
-		gcov -o coverage "$$file" > /dev/null; \
-	done
-
-	mv *.gcov coverage/
+	rm coverage/*.gcno coverage/*.gcda
 
 .PHONY: testar
 testar:
@@ -65,7 +44,6 @@ testargcov:
 	@find tests -name '*.gcno' -exec mv {} coverage/ \;
 
 
-.PHONY: coverageTestar
 coverageTestar:
 	@mkdir -p coverage
 	@rm -f coverage/tests_*.gcov

@@ -1,0 +1,124 @@
+        -:    0:Source:tests/main/main.c
+        -:    0:Graph:coverage/main.gcno
+        -:    0:Data:coverage/main.gcda
+        -:    0:Runs:1
+        -:    1:#include <CUnit/CUnit.h>
+        -:    2:#include "../include/leFicheiro_test.h"
+        -:    3:#include "../include/gravaFicheiro_test.h"
+        -:    4:#include "../include/comandos_test.h" 
+        -:    5:#include "../include/condicoes_test.h"
+        -:    6:#include "../include/stackMats_test.h" 
+        -:    7:#include "../include/listasFunc_test.h" 
+        -:    8:#include <stdio.h>
+        -:    9:
+        1:   10:int main() {
+        1:   11:    if (CUE_SUCCESS != CU_initialize_registry())
+    #####:   12:      return CU_get_error();
+        1:   13:    CU_basic_set_mode(CU_BRM_VERBOSE);
+        -:   14:
+        1:   15:    CU_pSuite pSuite = NULL;
+        -:   16:
+        1:   17:    pSuite = CU_add_suite("test_suite", 0, 0);
+        1:   18:    if (NULL == pSuite) {
+    #####:   19:      CU_cleanup_registry();
+    #####:   20:      return CU_get_error();
+        -:   21:    }
+        -:   22:
+        1:   23:    if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
+    #####:   24:      CU_cleanup_registry();
+    #####:   25:      return CU_get_error();
+        -:   26:    }
+        -:   27:    
+        1:   28:    if (NULL == CU_add_test(pSuite, "testar_gravaFicheiro", testar_gravaFicheiro)) {
+    #####:   29:      CU_cleanup_registry();
+    #####:   30:      return CU_get_error();
+        -:   31:    }
+        -:   32:     
+        1:   33:    if (NULL == CU_add_test(pSuite, "testar_riscar", testar_riscar)) {
+    #####:   34:      CU_cleanup_registry();
+    #####:   35:      return CU_get_error();
+        -:   36:    }
+        -:   37:
+        1:   38:    if (NULL == CU_add_test(pSuite, "testar_branco", testar_branco)) {
+    #####:   39:      CU_cleanup_registry();
+    #####:   40:      return CU_get_error();
+        -:   41:    }
+        -:   42:
+        1:   43:    if (NULL == CU_add_test(pSuite, "testar_verifRiscadaOrt", testar_verifRiscadaOrt)) {
+    #####:   44:      CU_cleanup_registry();
+    #####:   45:      return CU_get_error();
+        -:   46:    }
+        -:   47:
+        1:   48:    if (NULL == CU_add_test(pSuite, "testar_verifBranco", testar_verifBranco)) {
+    #####:   49:      CU_cleanup_registry();
+    #####:   50:      return CU_get_error();
+        -:   51:    }
+        -:   52:
+        1:   53:    if (NULL == CU_add_test(pSuite, "testar_verificar", testar_verificar)) {
+    #####:   54:      CU_cleanup_registry();
+    #####:   55:      return CU_get_error();
+        -:   56:    }
+        -:   57:
+        1:   58:    if (NULL == CU_add_test(pSuite, "testar_copiaMatriz", testar_copiaMatriz)) {
+    #####:   59:      CU_cleanup_registry();
+    #####:   60:      return CU_get_error();
+        -:   61:    }
+        -:   62:
+        1:   63:    if (NULL == CU_add_test(pSuite, "testar_initStackMat", testar_initStackMat)) {
+    #####:   64:      CU_cleanup_registry();
+    #####:   65:      return CU_get_error();
+        -:   66:    }
+        -:   67:    
+        1:   68:    if (NULL == CU_add_test(pSuite, "testar_isFull", testar_isFull)) {
+    #####:   69:      CU_cleanup_registry();
+    #####:   70:      return CU_get_error();
+        -:   71:    }
+        -:   72:
+        1:   73:    if (NULL == CU_add_test(pSuite, "testar_initMatriz", testar_initMatriz)) {
+    #####:   74:      CU_cleanup_registry();
+    #####:   75:      return CU_get_error();
+        -:   76:    }
+        -:   77:
+        1:   78:    if (NULL == CU_add_test(pSuite, "testar_push", testar_push)) {
+    #####:   79:      CU_cleanup_registry();
+    #####:   80:      return CU_get_error();
+        -:   81:    }
+        -:   82:
+        1:   83:    if (NULL == CU_add_test(pSuite, "testar_pop", testar_pop)) {
+    #####:   84:      CU_cleanup_registry();
+    #####:   85:      return CU_get_error();
+        -:   86:    }
+        -:   87:
+        1:   88:    if (NULL == CU_add_test(pSuite, "testar_isEmpty", testar_isEmpty)) {
+    #####:   89:      CU_cleanup_registry();
+    #####:   90:      return CU_get_error();
+        -:   91:    }
+        -:   92:    
+        1:   93:    if (NULL == CU_add_test(pSuite, "testar_posPertencente", testar_posPertence)) {
+    #####:   94:      CU_cleanup_registry();
+    #####:   95:      return CU_get_error();
+        -:   96:    }
+        -:   97:    
+        1:   98:    if (NULL == CU_add_test(pSuite, "testar_listasIguais", testar_listasIguais)) {
+    #####:   99:      CU_cleanup_registry();
+    #####:  100:      return CU_get_error();
+        -:  101:    }
+        -:  102:
+        1:  103:    if (NULL == CU_add_test(pSuite, "testar_pertenceAoGrupo", testar_pertenceAoGrupo)) {
+    #####:  104:      CU_cleanup_registry();
+    #####:  105:      return CU_get_error();
+        -:  106:    }
+        -:  107:
+        1:  108:    if (NULL == CU_add_test(pSuite, "testar_adicionarPos", testar_adicionarPos)) {
+    #####:  109:      CU_cleanup_registry();
+    #####:  110:      return CU_get_error();
+        -:  111:    }
+        -:  112:
+        1:  113:    if (NULL == CU_add_test(pSuite, "testar_adicionarLista", testar_adicionarLista)) {
+    #####:  114:      CU_cleanup_registry();
+    #####:  115:      return CU_get_error();
+        -:  116:    }
+        -:  117:
+        1:  118:    CU_basic_run_tests();
+        1:  119:    return CU_get_error();
+        -:  120:  }

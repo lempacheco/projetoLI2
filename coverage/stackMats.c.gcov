@@ -1,0 +1,96 @@
+        -:    0:Source:src/stackMats.c
+        -:    0:Graph:coverage/stackMats.gcno
+        -:    0:Data:coverage/stackMats.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/stackMats.h"
+        -:    2:
+       33:    3:void initStackMat(StackMat *s){
+       33:    4:    s->tam = 1;
+       33:    5:    s->dados = malloc(sizeof(Matriz) * s->tam);
+       33:    6:    s->comandos = malloc(sizeof(char) * s->tam);
+       33:    7:    initMatriz(&s->dados[0]);
+       33:    8:    initMatriz(&s->mInicial);
+       33:    9:    s->cabeca = -1;
+       33:   10:}
+        -:   11:
+      216:   12:void initMatriz(Matriz* m){
+      216:   13:    m->L = 0;
+      216:   14:    m->C = 0;
+      216:   15:    m->matriz = NULL;
+      216:   16:}
+        -:   17:
+        2:   18:int isFull(StackMat *s){
+        2:   19:    return s->cabeca == s->tam - 1;
+        -:   20:}
+        -:   21:
+        5:   22:int isEmpty(StackMat *s){
+        5:   23:    return s->cabeca == -1;  
+        -:   24:}
+        -:   25:
+      135:   26:void liberaMatriz(Matriz *m){
+      739:   27:    for (int i = 0; i < m->L; i++) {
+      604:   28:        free(m->matriz[i]);
+        -:   29:    }
+      135:   30:    free(m->matriz); 
+      135:   31:    initMatriz(m);
+      135:   32:}
+        -:   33:
+       35:   34:void liberaStackMat(StackMat *s){
+       70:   35:    for (int i = 0; i <= s->cabeca; i++) {
+       35:   36:        liberaMatriz(&s->dados[i]);
+        -:   37:    }
+       35:   38:    free(s->dados);
+       35:   39:    free(s->comandos);
+       35:   40:    s->dados = NULL;
+       35:   41:    s->cabeca = -1;
+       35:   42:    s->tam = 0;
+       35:   43:    liberaMatriz(&s->mInicial);
+       35:   44:}
+        -:   45:
+       12:   46:void push(StackMat *s, Matriz *m, char comando){
+       12:   47:    if (s->cabeca + 1 >= s->tam) {
+        3:   48:        s->tam++;
+        3:   49:        s->dados = realloc(s->dados, sizeof(Matriz) * s->tam);
+        3:   50:        s->comandos = realloc(s->comandos, sizeof(char) * s->tam);
+        -:   51:    }
+        -:   52:
+       12:   53:    s->cabeca++;
+        -:   54:
+       12:   55:    s->comandos[s->cabeca] = comando;
+       12:   56:    initMatriz(&s->dados[s->cabeca]);
+       12:   57:    copiaMatriz(&s->dados[s->cabeca], m);
+       12:   58:}
+        -:   59:
+        3:   60:int pop(StackMat *s, Matriz* m){
+        3:   61:    if (isEmpty(s)) {
+        1:   62:        printf("Não há mais comandos para retroceder.");
+        1:   63:        return -1;
+        -:   64:    }
+        -:   65:
+        2:   66:    copiaMatriz(m, &(s->dados[s->cabeca]));
+        2:   67:    liberaMatriz(&(s->dados[s->cabeca])); 
+        2:   68:    s->comandos[s->cabeca] = '\0';
+        2:   69:    s->cabeca--;
+        2:   70:    return 0;
+        -:   71:}
+        -:   72:
+       27:   73:void copiaMatriz(Matriz *dest, Matriz *src){
+        -:   74:
+       27:   75:    if (dest->matriz != NULL) liberaMatriz(dest);
+       27:   76:    if (src->matriz == NULL) {
+        5:   77:        dest->L = 0;
+        5:   78:        dest->C = 0;
+        5:   79:        dest->matriz = NULL;
+        5:   80:        return;
+        -:   81:    }
+       22:   82:    dest->L = src->L;
+       22:   83:    dest->C = src->C;
+        -:   84:
+       22:   85:    dest->matriz = malloc(sizeof(char*) * src->L);
+      157:   86:    for (int i = 0; i < src->L; i++) {
+      135:   87:        dest->matriz[i] = malloc(sizeof(char) * src->C);
+     1224:   88:        for (int j = 0; j < src->C; j++) {
+     1089:   89:            dest->matriz[i][j] = src->matriz[i][j];
+        -:   90:        }
+        -:   91:    }
+        -:   92:}

@@ -1,0 +1,62 @@
+        -:    0:Source:src/queueFunc.c
+        -:    0:Graph:coverage/queueFunc.gcno
+        -:    0:Data:coverage/queueFunc.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/queueFunc.h"
+        -:    2:
+    #####:    3:void initQueue (Queue *dq){
+    #####:    4:    int tamanhoInicial = 10; 
+    #####:    5:    dq->inicio = 0;
+    #####:    6:    dq->cap = tamanhoInicial; 
+    #####:    7:    dq->tam = 0; 
+    #####:    8:    dq->valores = malloc(tamanhoInicial*sizeof(Pos)); 
+    #####:    9:}
+        -:   10:
+    #####:   11:int isEmptyQ (Queue* dq){
+    #####:   12:    if(dq->tam == 0) return 1; 
+    #####:   13:    else return 0; 
+        -:   14:}
+        -:   15:
+    #####:   16:void enqueue(Queue *q, Pos p) {
+    #####:   17:    if (q->tam == q->cap) {
+    #####:   18:        int novaCap = q->cap * 2;
+    #####:   19:        Pos *novosValores = malloc(sizeof(Pos) * novaCap);
+        -:   20:
+    #####:   21:        for (int i = 0; i < q->tam; i++) {
+    #####:   22:            int idx = q->inicio + i;
+    #####:   23:            if (idx >= q->cap) idx -= q->cap;
+    #####:   24:            novosValores[i] = q->valores[idx];
+        -:   25:        }
+        -:   26:
+    #####:   27:        free(q->valores);
+    #####:   28:        q->valores = novosValores;
+    #####:   29:        q->cap = novaCap;
+    #####:   30:        q->inicio = 0;
+        -:   31:    }
+        -:   32:
+    #####:   33:    int fim = q->inicio + q->tam;
+    #####:   34:    if (fim >= q->cap) fim -= q->cap;
+        -:   35:
+    #####:   36:    q->valores[fim] = p;
+    #####:   37:    q->tam++;
+    #####:   38:}
+        -:   39:
+        -:   40:
+    #####:   41:int dequeue(Queue *q, Pos *x) {
+    #####:   42:    if (q->tam == 0) return 1; // Fila vazia
+        -:   43:
+    #####:   44:    *x = q->valores[q->inicio];
+        -:   45:
+    #####:   46:    q->inicio++;
+    #####:   47:    if (q->inicio == q->cap) q->inicio = 0;
+        -:   48:
+    #####:   49:    q->tam--;
+    #####:   50:    return 0;
+        -:   51:}
+        -:   52:
+    #####:   53:void liberaQueue (Queue *q){
+    #####:   54:    free(q->valores); 
+    #####:   55:    q->cap=0; 
+    #####:   56:    q->inicio=0; 
+    #####:   57:    q->tam=0; 
+    #####:   58:}
