@@ -59,7 +59,7 @@ void push(StackMat *s, Matriz *m, char comando){
 
 int pop(StackMat *s, Matriz* m){
     if (isEmpty(s)) {
-        printf("Não há mais comandos para retroceder.");
+        mensagens("Não há mais comandos para retroceder.");
         return -1;
     }
 

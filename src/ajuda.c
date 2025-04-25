@@ -41,6 +41,7 @@ int ajuda(Matriz* m, Queue* q) {
     return r;
 }
 
+
 void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos){
     for(int i=0; i<m->L; i++){
         for(int j=0; j<m->C; j++){

@@ -8,7 +8,7 @@ TEST = tests/*.c
 
 .PHONY: jogo
 jogo:
-	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo
+	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo -lncurses -ltinfo
 
 .PHONY: jogogcov
 jogogcov:

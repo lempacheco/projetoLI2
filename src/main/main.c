@@ -6,8 +6,16 @@
 #include "../../include/leFicheiro.h"
 #include "../../include/dataStructs.h"
 #include "../../include/stackMats.h"
+#include "../../include/interface.h"
+#include <ncurses.h>
 
-int main (){
+int main() {
+    // Inicializa o ncurses e configurações de cor
+    initscr();
+    start_color();
+    noecho();
+    curs_set(0);
+    keypad(stdscr, TRUE);
 
     Matriz m;
     initMatriz(&m);
@@ -16,27 +24,30 @@ int main (){
     Queue q; 
     initQueue(&q); 
 
-    int resultado = 0; 
+    int resultado = 0;
 
-    printf(">>> ");
+    // offsets de scroll mantidos entre execuções
+    int scrollLinha = 0;
+    int scrollColuna = 0;
 
-    while (resultado != 1) { 
-        resultado = escolheComandos(&m, &s, &q); 
-    
+
+    while (resultado != 1) {
+        // Passa os offsets por referência e atualiza dentro da função
+        resultado = escolheComandosNcurses(&m, &s, &q, &scrollLinha, &scrollColuna);
+
         if (resultado == -1) {
             pop(&s, &m);
         }
-    
-        if (resultado == 0 || resultado == -1) {
-            mostraMatriz(&m); 
+
+        if (resultado != 1) {
+            mostraMatriz(&m, scrollLinha, scrollColuna);
         }
     }
-    
 
     liberaMatriz(&m);
     liberaStackMat(&s);
     liberaQueue(&q);
 
-    return 0; 
-    
+    endwin();
+    return 0;
 }

@@ -13,9 +13,16 @@
 #include "../include/listasFunc.h"
 #include "../include/resolve.h"
 #include "../include/ajuda.h"
+#include "../include/mensagens.h"
+#include <ncurses.h>
+
+#define RET_INVALIDO -1
+#define RET_OK 0
+#define RET_SAIR 1
+#define RET_DESFAZ 2
+#define RET_COMANDO_DESCONHECIDO 3
 
 
-int mostraMatriz (Matriz *);
 int branco (Matriz *, Pos, Matriz*);
 int riscar (Matriz *, Pos);
 int escolheComandos (Matriz *, StackMat *, Queue *q);

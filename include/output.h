@@ -3,4 +3,7 @@
 #include <stdio.h>
 #include "../include/dataStructs.h"
 
-int mostraMatriz (Matriz *m);
+#define ALTURA_VISIVEL 10
+#define LARGURA_VISIVEL 10
+
+int mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna); 
