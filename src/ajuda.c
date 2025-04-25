@@ -1,27 +1,41 @@
 #include "../include/ajuda.h"
 
-int ajuda(Matriz* m, Queue* q){
+int ajuda(Matriz* m, Queue* q) {
     NodeGrupo* grupos = NULL;
     int r;
     Matriz t;
+    
     initMatriz(&t);
     copiaMatriz(&t, m);
 
-    if (verificar(m, &grupos)){
+    liberaGrupos(grupos);
+    grupos = NULL;
+
+    if (verificar(m, &grupos)) {
+        liberaGrupos(grupos); grupos = NULL;
         riscarIguaisDeLetraBranca(m, &grupos);
+
+        liberaGrupos(grupos); grupos = NULL;
         pintarVizinhosDeRiscadas(m, &grupos);
+
+        liberaGrupos(grupos); grupos = NULL;
         manterCaminho(m, q, &grupos);
+
         r = 0;
-    }else{
+    } else {
         printf("O tabuleiro atual é inválido.\n");
         r = -1;
     }
 
-    if (!verificar(m, &grupos)){
+
+    liberaGrupos(grupos); grupos = NULL;
+    if (!verificar(m, &grupos)) {
         copiaMatriz(m, &t);
+        printf("O tabuleiro já não é válido");
+        r = -1;
     }
 
-    liberaMatriz(m);
+    liberaMatriz(&t);
     liberaGrupos(grupos);
 
     return r;
@@ -76,7 +90,7 @@ void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos){
                     m->matriz[i][j-1] = toupper(m->matriz[i][j-1]);
                     if(!verificar(m, grupos)) m->matriz[i][j-1] = tolower(m->matriz[i][j-1]);
                 }
-            }
+            }   
         }
     }
 }
@@ -91,7 +105,7 @@ void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos){
             if (!verificaCaminho(m, q)){
                 m->matriz[i][j] = toupper(t);
             }
-            if (verificaCaminho(m, q) || !verificar(m, grupos)){
+            else if (verificaCaminho(m, q) || !verificar(m, grupos)){
                 m->matriz[i][j] = t;
             }
         }
