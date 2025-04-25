@@ -1,0 +1,76 @@
+        -:    0:Source:src/gravaFicheiro.c
+        -:    0:Graph:coverage/gravaFicheiro.gcno
+        -:    0:Data:coverage/gravaFicheiro.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/gravaFicheiro.h"
+        -:    2:
+        -:    3:/* Guarda a matriz fornecida num ficheiro com nome especificado,
+        -:    4:   criando o caminho como "lib/<nome>". O ficheiro é escrito no seguinte formato:
+        -:    5:   
+        -:    6:   - Primeira linha: <L> <C> (número de linhas e colunas, como caracteres).
+        -:    7:   - Linhas seguintes: conteúdo da matriz, linha a linha. 
+        -:    8:*/
+        -:    9:
+        5:   10:int gravaFicheiro(char* nomeM, char* nomeS, Matriz* m, StackMat* s){
+        5:   11:    FILE* fpM; 
+        5:   12:    FILE* fpS;
+        5:   13:    int r=0;
+        -:   14:
+        -:   15:    //matriz
+        5:   16:    fpM = fopen(nomeM, "w");
+        5:   17:    if (fpM == NULL) {
+    #####:   18:        printf ("Erro ao abrir o ficheiro.");
+    #####:   19:        return 1; 
+        -:   20:    }
+        -:   21:    
+        5:   22:    if (gravaMatriz(m, fpM)) return 1;
+        5:   23:    fclose(fpM);
+        -:   24:
+        -:   25:    //stackMat
+        5:   26:    fpS = fopen(nomeS, "w");
+        5:   27:    if (fpS == NULL) {
+    #####:   28:        printf ("Erro ao abrir o ficheiro.");
+    #####:   29:        return 1; 
+        -:   30:    }
+        -:   31:
+        5:   32:    if (gravaStackMat(s,fpS)) return 1;
+        5:   33:    fclose(fpS);
+        -:   34:    
+        5:   35:    return r; 
+        -:   36:}
+        -:   37:
+       10:   38:int gravaMatriz(Matriz* m, FILE* fp){
+       10:   39:    int i, j;
+        -:   40:
+       10:   41:    if (fprintf(fp, "%d %d\n", m->L, m->C) < 0) return 1; 
+        -:   42:
+       68:   43:    for (i=0; i<m->L; i++){
+      420:   44:        for (j=0; j<m->C; j++){
+      362:   45:            if (fputc(m->matriz[i][j], fp) == EOF) return 1;
+        -:   46:        }
+       58:   47:        if (i != m->L-1)
+       48:   48:            if (fputc('\n', fp) == EOF) return 1;
+        -:   49:    }
+        -:   50:
+        -:   51:    return 0;
+        -:   52:}
+        -:   53:
+        5:   54:int gravaStackMat(StackMat* s, FILE* fp){
+        5:   55:    int i;
+        -:   56:
+        -:   57:    //s->cabeca e s->tam
+        5:   58:    if (fprintf (fp, "%d %d\n", s->cabeca, s->tam) < 0) return 1;
+        -:   59:
+       10:   60:    for (i=0; i <= s->cabeca; i++){
+        -:   61:        //comando
+        5:   62:        if (fputc(s->comandos[i], fp) == EOF) return 1;
+        -:   63:
+        -:   64:        //matriz
+        5:   65:        if (fputc('\n', fp) == EOF) return 1;
+        5:   66:        if (gravaMatriz(&s->dados[i], fp)) return 1;
+        -:   67:
+        5:   68:        if (fputc('\n', fp) == EOF) return 1;
+        -:   69:    }
+        -:   70:
+        -:   71:    return 0;
+        -:   72:} 

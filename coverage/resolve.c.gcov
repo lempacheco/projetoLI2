@@ -1,0 +1,70 @@
+        -:    0:Source:src/resolve.c
+        -:    0:Graph:coverage/resolve.gcno
+        -:    0:Data:coverage/resolve.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/resolve.h"
+        -:    2:
+    #####:    3:void resolveTabuleiro(Matriz* m){//matrizinicial
+        -:    4:    //encontrar todos os repetidos em cada linha
+    #####:    5:    Rep* repL;
+    #####:    6:    repL = malloc(sizeof(Rep));
+    #####:    7:    repL[0].i = malloc(sizeof(int));
+    #####:    8:    repL[0].j = malloc(sizeof(int));
+        -:    9:
+    #####:   10:    encontraRep(m, repL, m->L, m->C);
+        -:   11:
+        -:   12:    //encontrar todos os repetidos em cada coluna
+    #####:   13:    Rep* repC;
+    #####:   14:    repC = malloc(sizeof(Rep));
+    #####:   15:    repC[0].i = malloc(sizeof(int));
+    #####:   16:    repC[0].j = malloc(sizeof(int));
+        -:   17:
+    #####:   18:    encontraRep(m, repC, m->C, m->L);
+        -:   19:
+        -:   20:    //
+    #####:   21:}
+        -:   22:
+    #####:   23:void encontraRep(Matriz* m, Rep* rep, int a, int b){
+    #####:   24:    int i, j;
+    #####:   25:    int temp;
+    #####:   26:    int tamRep = 1;
+        -:   27:
+    #####:   28:    for(i=0; i<a; i++){
+    #####:   29:        for (j=0; j<b; j++){
+    #####:   30:            if ((temp = existe(m->matriz[i][j], rep, tamRep)) != -1){
+    #####:   31:                rep[temp].freq++;
+    #####:   32:                rep[temp].i[rep[temp].freq] = i;
+    #####:   33:                rep[temp].j[rep[temp].freq] = j;
+    #####:   34:                realocaIJ(rep, rep[temp].freq+1);
+        -:   35:            }else{
+    #####:   36:                rep[tamRep-1].freq = 1;
+    #####:   37:                rep[tamRep-1].simbolo = m->matriz[i][j];
+    #####:   38:                rep[tamRep-1].i[0] = i;
+    #####:   39:                rep[tamRep-1].j[0] = j;
+        -:   40:
+    #####:   41:                tamRep++;
+    #####:   42:                realocaRep(rep, tamRep);
+        -:   43:            }
+        -:   44:        }
+        -:   45:    }
+    #####:   46:}
+        -:   47:
+    #####:   48:void realocaRep(Rep* rep, int tamRep){
+    #####:   49:    rep = realloc(rep, sizeof(Rep)*tamRep);
+    #####:   50:    rep[tamRep-1].i = malloc(sizeof(int));
+    #####:   51:    rep[tamRep-1].j = malloc(sizeof(int));
+    #####:   52:}
+        -:   53:
+    #####:   54:void realocaIJ(Rep* rep, int i){
+    #####:   55:    rep[i].i = realloc(rep[i].i, sizeof(int)*rep[i].freq);
+    #####:   56:    rep[i].j = realloc(rep[i].j, sizeof(int)*rep[i].freq);
+    #####:   57:}
+        -:   58:
+    #####:   59:int existe(char c, Rep* rep, int tamRep){//retorna -1 se n existe, o índice de rep onde está guardado se existe
+    #####:   60:    int i;
+    #####:   61:    int r = -1;
+    #####:   62:    for (i=0; i<tamRep; i++){
+    #####:   63:        if (c == rep[i].simbolo) r = i;
+        -:   64:    }
+    #####:   65:    return r;
+        -:   66:}

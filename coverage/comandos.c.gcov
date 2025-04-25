@@ -1,0 +1,165 @@
+        -:    0:Source:src/comandos.c
+        -:    0:Graph:coverage/comandos.gcno
+        -:    0:Data:coverage/comandos.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/comandos.h"
+        -:    2:
+        -:    3:
+        -:    4:// Problema com a posição (+1)
+        -:    5:
+        -:    6:/* Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
+        -:    7:   Isto é, coloca o caracter em maiúsculas. 
+        -:    8:*/
+        -:    9:
+        5:   10:int branco (Matriz *m, Pos p, Matriz* mInicial){
+        5:   11:    int l = p.l - 1; 
+        5:   12:    int c = p.c - 1; 
+        -:   13:
+        5:   14:    if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
+        -:   15:        return 1;
+        4:   16:    } else if(isupper(m->matriz[l][c])){
+        1:   17:        printf("Casa já está branca.\n"); 
+        1:   18:        return -1;
+        3:   19:    } else if(m->matriz[l][c] == '#'){
+        1:   20:        m->matriz[l][c] = toupper(mInicial->matriz[l][c]); 
+        -:   21:    }else{
+        2:   22:        m->matriz[l][c] = toupper(m->matriz[l][c]);
+        -:   23:    }
+        -:   24:    return 0; 
+        -:   25:}
+        -:   26:
+        -:   27:/* Recebe como argumentos uma matriz, e uma posição, e risca o elemento que esta na posição. 
+        -:   28:   Isto é, substitui o caracter para '#'. 
+        -:   29:*/
+        -:   30:
+        5:   31:int riscar (Matriz *m, Pos p){
+        5:   32:    int l = p.l - 1; 
+        5:   33:    int c = p.c - 1;
+        -:   34:
+        5:   35:    if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
+        -:   36:        return 1;
+        4:   37:    } else if(m->matriz[l][c]== '#') {
+        1:   38:        printf("Casa já está riscada.\n");
+        1:   39:        return -1; 
+        3:   40:    } else m->matriz[l][c] = '#'; 
+        -:   41:
+        3:   42:    return 0; 
+        -:   43:}
+        -:   44:
+        -:   45:/* Interpreta comandos inseridos pelo utilizador via stdin
+        -:   46:  e executa a ação correspondente sobre a matriz fornecida.
+        -:   47:  
+        -:   48:  Comandos suportados:
+        -:   49:  - 's': Sai do jogo (imprime mensagem e retorna 1).
+        -:   50:  - 'l <nome>': Lê um ficheiro e carrega o conteúdo na matriz.
+        -:   51:  - 'g <nome>': Grava o conteúdo atual da matriz num ficheiro.
+        -:   52:  - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
+        -:   53:  - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
+        -:   54:*/
+        -:   55:
+    #####:   56:int escolheComandos (Matriz *m, StackMat *s, Queue *q){
+    #####:   57:    char pl;
+    #####:   58:    int pc; 
+    #####:   59:    char c; 
+    #####:   60:    int r=0; 
+    #####:   61:    char* nomeFile;
+    #####:   62:    int i;
+        -:   63:
+    #####:   64:    c = fgetc(stdin);
+    #####:   65:    while (c == ' ' || c == '\n') c = fgetc(stdin);
+    #####:   66:    if (c == 0)r=1; 
+    #####:   67:    if (c == 's') { 
+    #####:   68:        r=1; 
+    #####:   69:        printf("Saindo do jogo.\n"); 
+    #####:   70:        return r; 
+        -:   71:    }  
+    #####:   72:    if (c == 'd') {
+    #####:   73:        if (!pop(s, m)) printf("Retrocedendo...");  
+    #####:   74:        return r;
+        -:   75:    }
+        -:   76:    if (c == 'v') {
+    #####:   77:        int t = 0; 
+    #####:   78:        NodeGrupo* grupos = NULL;
+    #####:   79:        verificar(m, &grupos);
+    #####:   80:        t=verificaCaminho(m, q);
+    #####:   81:        if (t==1){
+    #####:   82:            printf("\nExiste um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
+        -:   83:        } else {
+    #####:   84:            printf("\nNão existe um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
+        -:   85:        }
+    #####:   86:        imprimeGrupos(grupos);
+    #####:   87:        liberaGrupos(grupos); 
+    #####:   88:        return r; 
+        -:   89:        
+        -:   90:    }
+        -:   91:    if (c == 'l') {
+    #####:   92:        push(s, m, c); 
+    #####:   93:        nomeFile = malloc(sizeof(char));
+    #####:   94:        nomeFile[0] = getchar(); //ignora o espaço
+    #####:   95:        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
+    #####:   96:            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
+        -:   97:        }
+    #####:   98:        nomeFile[i] = '\0';
+    #####:   99:        char* caminhoM = malloc(sizeof(char)*(i+5));
+    #####:  100:        strcpy(caminhoM, "lib/");
+    #####:  101:        strcat(caminhoM, nomeFile); 
+        -:  102:
+    #####:  103:        char* caminhoS = malloc(sizeof(char)*(i+14));
+    #####:  104:        strcpy(caminhoS, "lib/history/");
+    #####:  105:        strcat(caminhoS, nomeFile); 
+        -:  106:
+    #####:  107:        r = leFicheiro(caminhoM, caminhoS, m, s);
+    #####:  108:        free(nomeFile);
+    #####:  109:        free(caminhoM);
+    #####:  110:        free(caminhoS);
+    #####:  111:        return r; 
+        -:  112:    }
+        -:  113:    if (c == 'g') {
+        -:  114:
+    #####:  115:        nomeFile = malloc(sizeof(char));
+    #####:  116:        nomeFile[0] = getchar(); //ignora o espaço
+    #####:  117:        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
+    #####:  118:            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
+        -:  119:        }
+    #####:  120:        nomeFile[i] = '\0';
+    #####:  121:        char* caminhoM = malloc(sizeof(char)*(i+5));
+    #####:  122:        strcpy(caminhoM, "lib/");
+    #####:  123:        strcat(caminhoM, nomeFile); 
+        -:  124:
+    #####:  125:        char* caminhoS = malloc(sizeof(char)*(i+14));
+    #####:  126:        strcpy(caminhoS, "lib/history/");
+    #####:  127:        strcat(caminhoS, nomeFile); 
+        -:  128:
+    #####:  129:        r = gravaFicheiro(caminhoM, caminhoS, m, s); 
+    #####:  130:        free(nomeFile);
+    #####:  131:        free(caminhoM);
+    #####:  132:        free(caminhoS);
+    #####:  133:        return r; 
+        -:  134:    }
+        -:  135:    if (c == 'a') { 
+    #####:  136:        push(s,m,c);
+    #####:  137:        r = ajuda(m, q);
+    #####:  138:        return r; 
+        -:  139:    }
+        -:  140:
+    #####:  141:    if (scanf(" %c%d", &pl, &pc) != 2) {
+        -:  142:        r = 1;
+    #####:  143:    } else if (pl - 'a' < 0 || pl - 'a' >= m->L || pc <= 0 || pc > m->C) {
+        -:  144:        r = 1;
+        -:  145:    } else {
+    #####:  146:        Pos p = {pl - 'a' + 1, pc}; 
+    #####:  147:        if (c == 'b') {
+    #####:  148:            push(s, m, c);
+    #####:  149:            r = branco(m, p, &s->mInicial);
+        -:  150:        } 
+    #####:  151:        else if (c == 'r') {
+    #####:  152:            push(s, m, c);
+    #####:  153:            r = riscar(m, p);
+        -:  154:        } else {
+    #####:  155:            printf("Comando inválido\n");
+        -:  156:        }
+        -:  157:    }
+        -:  158:    
+        -:  159:    return r; 
+        -:  160:
+        -:  161:}
