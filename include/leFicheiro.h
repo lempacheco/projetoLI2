@@ -7,6 +7,7 @@
 #include <math.h>
 #include "../include/dataStructs.h"
 #include "../include/stackMats.h"
+#include "../include/mensagens.h"
 
 
 int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s);

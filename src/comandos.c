@@ -1,5 +1,5 @@
 #include "../include/comandos.h"
-
+#include <ncurses.h>
 
 // Problema com a posição (+1)
 
@@ -14,7 +14,7 @@ int branco (Matriz *m, Pos p, Matriz* mInicial){
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
     } else if(isupper(m->matriz[l][c])){
-        printf("Casa já está branca.\n"); 
+        mensagens("Casa já está branca."); 
         return -1;
     } else if(m->matriz[l][c] == '#'){
         m->matriz[l][c] = toupper(mInicial->matriz[l][c]); 
@@ -35,7 +35,7 @@ int riscar (Matriz *m, Pos p){
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
     } else if(m->matriz[l][c]== '#') {
-        printf("Casa já está riscada.\n");
+        mensagens ("Casa já está riscada.");
         return -1; 
     } else m->matriz[l][c] = '#'; 
 
@@ -54,8 +54,9 @@ int riscar (Matriz *m, Pos p){
 */
 
 int escolheComandos (Matriz *m, StackMat *s, Queue *q){
-    char pl;
-    int pc; 
+    int pl = -1;
+    char pc = '\0'; 
+
     char c; 
     int r=0; 
     char* nomeFile;
@@ -63,31 +64,37 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
 
     c = fgetc(stdin);
     while (c == ' ' || c == '\n') c = fgetc(stdin);
-    if (c == 0)r=1; 
+
+    if (c == 0) r = RET_COMANDO_DESCONHECIDO; 
+
     if (c == 's') { 
-        r=1; 
-        printf("Saindo do jogo.\n"); 
-        return r; 
+        return 1; 
     }  
+
     if (c == 'd') {
-        if (!pop(s, m)) printf("Retrocedendo...");  
-        return r;
+        if (!pop(s, m)) {
+            return RET_DESFAZ;  
+        }
+        return 0;
     }
+    
     if (c == 'v') {
         int t = 0; 
         NodeGrupo* grupos = NULL;
         verificar(m, &grupos);
-        t=verificaCaminho(m, q);
+        t = verificaCaminho(m, q);
         if (t==1){
             printf("\nExiste um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
         } else {
             printf("\nNão existe um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
         }
+
         imprimeGrupos(grupos);
         liberaGrupos(grupos); 
         return r; 
         
     }
+
     if (c == 'l') {
         push(s, m, c); 
         nomeFile = malloc(sizeof(char));
@@ -110,6 +117,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         free(caminhoS);
         return r; 
     }
+
     if (c == 'g') {
 
         nomeFile = malloc(sizeof(char));
@@ -132,30 +140,55 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         free(caminhoS);
         return r; 
     }
+
     if (c == 'a') { 
         push(s,m,c);
         r = ajuda(m, q);
         return r; 
     }
 
-    if (scanf(" %c%d", &pl, &pc) != 2) {
-        r = 1;
-    } else if (pl - 'a' < 0 || pl - 'a' >= m->L || pc <= 0 || pc > m->C) {
-        r = 1;
-    } else {
-        Pos p = {pl - 'a' + 1, pc}; 
-        if (c == 'b') {
-            push(s, m, c);
-            r = branco(m, p, &s->mInicial);
-        } 
-        else if (c == 'r') {
-            push(s, m, c);
-            r = riscar(m, p);
-        } else {
-            printf("Comando inválido\n");
+ 
+    if (c == 'r' || c == 'b'){
+        push(s, m, c);
+
+        char comando = getchar(); 
+        while (pc == '\0'){
+            if (comando == '\n'){
+                return -1;
+            } else if (comando != ' '){
+                pc = comando; 
+            }
+            comando = getchar();
         }
-    }
+        while (pl == -1){
+            if (comando == '\n'){
+                return -1;
+            } else if (comando != ' '){
+                pl = comando - '0'; 
+            }
+            comando = getchar();
+        }
+
+        if (pc - 'a' < 0 || pc - 'a' >= m->C || pl <= 0 || pl > m->L) {
+            mensagens("Comando inválido");
+        } else {
+            Pos p = {pl, pc - 'a' + 1}; 
+            if (c == 'b') {
+                r = branco(m, p, &s->mInicial);
+            } 
+            else if (c == 'r') {
+                r = riscar(m, p);
+            } else {
+                mensagens("Comando inválido");
+            }
+        }
     
+    }
+
+    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's'){
+        r = RET_COMANDO_DESCONHECIDO; 
+    }
+
     return r; 
 
 }
