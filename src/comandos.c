@@ -147,6 +147,16 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         return r; 
     }
 
+    if (c == 'R') { 
+        push(s,m,c);
+        resolveTabuleiro(m, q); 
+        return 0; 
+    }
+
+    if (c == 'A'){
+        s->ajuda = 1; // ativou
+
+    }
  
     if (c == 'r' || c == 'b'){
         push(s, m, c);
@@ -175,9 +185,15 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
             Pos p = {pl, pc - 'a' + 1}; 
             if (c == 'b') {
                 r = branco(m, p, &s->mInicial);
+                if (s->ajuda == 1){
+                    ajuda(m,q); 
+                }
             } 
             else if (c == 'r') {
                 r = riscar(m, p);
+                if (s->ajuda == 1){
+                    ajuda(m,q); 
+                }
             } else {
                 mensagens("Comando inválido");
             }
@@ -185,7 +201,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     
     }
 
-    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's'){
+    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R'){
         r = RET_COMANDO_DESCONHECIDO; 
     }
 

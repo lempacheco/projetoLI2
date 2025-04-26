@@ -112,3 +112,4 @@ void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos){
         }
     }
 }
+
