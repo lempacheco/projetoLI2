@@ -8,6 +8,6 @@
 #include "../include/stackMats.h"
 
 int ajuda(Matriz* m, Queue* q);
-void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos);
-void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos);
-void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos);
+int riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos);
+int pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos);
+int manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos);

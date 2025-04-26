@@ -62,5 +62,4 @@ clean:
 
 .PHONY: debug
 debug:
-	$(CC) $(CFLAGS_DEBUG) $(SRC) src/main/main.c -o debug
-	# Caminho para a pasta onde estão os ficheiros
+	$(CC) $(CFLAGS_DEBUG) $(SRC) src/main/main.c -o debug -lncurses -ltinfo

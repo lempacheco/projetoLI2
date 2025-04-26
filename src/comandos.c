@@ -54,7 +54,7 @@ int riscar (Matriz *m, Pos p){
 */
 
 int escolheComandos (Matriz *m, StackMat *s, Queue *q){
-    int pl = -1;
+    int pl = 0;
     char pc = '\0'; 
 
     char c; 
@@ -151,21 +151,23 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     if (c == 'r' || c == 'b'){
         push(s, m, c);
 
-        char comando = getchar(); 
-        while (pc == '\0'){
-            if (comando == '\n'){
-                return -1;
-            } else if (comando != ' '){
-                pc = comando; 
-            }
+        char comando = getchar();
+
+        while (comando == ' ' || comando == '\n') {
+            if (comando == '\n') return -1;
             comando = getchar();
         }
-        while (pl == -1){
-            if (comando == '\n'){
-                return -1;
-            } else if (comando != ' '){
-                pl = comando - '0'; 
-            }
+        
+        pc = comando;
+        comando = getchar();
+
+        while (comando == ' ' || comando == '\n') {
+            if (comando == '\n') return -1;
+            comando = getchar();
+        }
+        
+        while (comando >= '0' && comando <= '9') {
+            pl = (pl * 10) + (comando - '0');
             comando = getchar();
         }
 
