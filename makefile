@@ -28,7 +28,7 @@ jogogcov:
 
 
 	find src -name '*.c' | while read file; do \
-		gcov -o coverage "$$file" > /dev/null; \
+		gcov -o coverage "$$file" >  coverage/output; \
 	done
 
 	mv *.gcov coverage/

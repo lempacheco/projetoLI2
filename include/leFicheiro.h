@@ -12,5 +12,4 @@
 int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s);
 void leMatriz(Matriz* m, FILE* fp);
 void leStackMat(StackMat* s, FILE* fp);
-int myPow(int x, int n);
 void leNumero(int* x, FILE* fp);
