@@ -110,3 +110,51 @@ void testar_leFicheiro() {
     liberaMatriz(&m3Expected);
     liberaStackMat(&s3Expected);
 } 
+
+void testar_leMatriz (){
+    Matriz m1,m1Expected;
+    FILE *fp;
+
+    char matrizExpected1[5][5] = {  "ecAdc",
+                                    "dcd#c",
+                                    "bddce",
+                                    "cdeeb",
+                                    "accbb"};
+
+    m1Expected=criaMatriz(5,5,matrizExpected1);
+    fp = fopen("lib/teste1.txt", "r");
+    leMatriz(&m1,fp);
+    comparaMatrizes(&m1,&m1Expected);
+    liberaMatriz(&m1);
+    liberaMatriz(&m1Expected);
+    fclose(fp);
+}
+
+void testar_leStackMat(){
+    StackMat s1;
+    FILE *fp;
+
+    char dadosExpected1[1][5][5] = {{  
+        "ecAdc",
+        "dcd#c",
+        "bddce",
+        "cdeeb",
+        "accbb"}};
+    char comandos1[1] = {'b'};
+    StackMat s1Expected = criaStackMat(0, 1, 5, 5, dadosExpected1, comandos1);
+    fp = fopen("lib/history/teste1.txt", "r");
+    leStackMat(&s1,fp);
+    comparaStackMats(&s1,&s1Expected);
+    liberaStackMat(&s1);
+    liberaStackMat(&s1Expected);
+    fclose(fp);
+}
+
+void testar_leNumero(){
+    int x;
+    FILE *fp;
+    fp = fopen("lib/teste1.txt", "r");
+    leNumero(&x,fp);
+    CU_ASSERT_EQUAL(x,5);
+    fclose(fp);
+}

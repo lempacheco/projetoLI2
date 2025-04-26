@@ -20,11 +20,36 @@ int main() {
       return CU_get_error();
     }
 
-    if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
+    if (NULL == CU_add_test(pSuite, "testar_leMatriz", testar_leMatriz)) {
       CU_cleanup_registry();
       return CU_get_error();
     }
     
+    if (NULL == CU_add_test(pSuite, "testar_lestackMat", testar_leStackMat)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_leNumero", testar_leNumero)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_gravaMatriz", testar_gravaMatriz)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_gravaStackMats", testar_gravaStackMat)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
     if (NULL == CU_add_test(pSuite, "testar_gravaFicheiro", testar_gravaFicheiro)) {
       CU_cleanup_registry();
       return CU_get_error();
