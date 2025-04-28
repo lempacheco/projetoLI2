@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <ncurses.h>
 #include "../include/condicoes.h"
 #include "../include/listasFunc.h"
 #include "../include/leFicheiro.h"
@@ -14,7 +15,6 @@
 #include "../include/resolve.h"
 #include "../include/ajuda.h"
 #include "../include/mensagens.h"
-#include <ncurses.h>
 
 #define RET_INVALIDO -1
 #define RET_OK 0
