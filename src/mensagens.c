@@ -2,7 +2,7 @@
 
 void mensagens(char s[]){
 
-    mvprintw(1, 0, "%s", s);
+    mvprintw(LINES - 1, 0, "%s", s);
     refresh();
     napms(1000);
 

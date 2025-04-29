@@ -61,7 +61,7 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
 
 
 int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
-    char linha[100]; // maior para não ter limite chato
+    char linha[100]; 
     int pos = 0;
     NodeGrupo* grupos = NULL;
 
@@ -76,7 +76,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
         mvprintw(LINES - 3, 0, "Digite o comando (ENTER para confirmar, 't' para tutorial): ");
         mvprintw(LINES - 2, 0, "%s", linha);
 
-        move(LINES - 2, pos); // posiciona o cursor no final do que já foi escrito
+        move(LINES - 2, pos); 
         refresh();
 
         int ch = getch();
@@ -153,13 +153,13 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
 
                 if (r == RET_SAIR) {
                     clear();
-                    mvprintw(0, 0, "Saindo do jogo...");
+                    mvprintw(LINES - 1, 0, "Saindo do jogo...");
                     refresh();
                     napms(1000);
                     return 1;
                 }
                 else if (r == RET_DESFAZ) {
-                    mvprintw(LINES - 1, 0, "Última jogada desfeita!");
+                    mvprintw(LINES - 1, 0, "Desfazendo...");
                     refresh();
                     napms(500);
                 }
