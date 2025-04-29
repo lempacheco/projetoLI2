@@ -15,7 +15,7 @@ typedef struct matriz {
 } Matriz;
 
 typedef struct StackMat{
-    Matriz *dados;
+    Matriz *dados; 
     char *comandos;
     int cabeca;
     int tam;

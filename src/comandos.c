@@ -66,7 +66,7 @@ int escolheComandosFromString(Matriz *m, StackMat *s, Queue *q, const char *linh
 
     if (c == '\0') return RET_COMANDO_DESCONHECIDO;
 
-    if (c == 's') return 1;
+    if (c == 's') return RET_SAIR;
 
     if (c == 'd') {
         if (!pop(s, m)) return RET_DESFAZ;
@@ -147,8 +147,8 @@ int escolheComandosFromString(Matriz *m, StackMat *s, Queue *q, const char *linh
         }
 
         if (pc - 'a' < 0 || pc - 'a' >= m->C || pl <= 0 || pl > m->L) {
-            mensagens("Comando inválido");
-            return RET_COMANDO_DESCONHECIDO;
+            mensagens("Posição inválida.");
+            return RET_OK;
         }
 
         Pos p = {pl, pc - 'a' + 1};
