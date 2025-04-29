@@ -1,6 +1,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 #include "../include/comandos.h"
+#include "../include/listasFunc.h"
 #include "../include/output.h"
 
 int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna); 

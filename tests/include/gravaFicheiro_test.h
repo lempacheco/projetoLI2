@@ -8,3 +8,5 @@
 #include "../include/criaMatriz.h"
 
 void testar_gravaFicheiro();
+void testar_gravaMatriz();
+void testar_gravaStackMat();

@@ -205,3 +205,54 @@ void testar_gravaFicheiro() {
     liberaMatriz(&m5);
     liberaStackMat(&s5);
 } 
+
+void testar_gravaMatriz(){
+    Matriz m1,m1Grav;
+    FILE *fp;
+
+    char matrizExpected1[5][5] = {
+        "ecAdc",
+        "dcd#c",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+    m1 = criaMatriz(5,5,matrizExpected1);
+    fp = fopen("lib/teste1.txt", "w");
+    gravaMatriz(&m1,fp);
+    fclose(fp);
+    fp = fopen("lib/teste1.txt", "r");
+    leMatriz(&m1Grav,fp);
+    comparaMatrizes(&m1,&m1Grav);
+    liberaMatriz(&m1);
+    liberaMatriz(&m1Grav);
+    fclose(fp);
+}
+
+void testar_gravaStackMat(){
+    StackMat s1,s1Grav;
+    Matriz m1;
+    FILE *fp;
+    initStackMat(&s1);
+    initStackMat(&s1Grav);
+    char matrizExpected1[5][5] = {
+        "ecAdc",
+        "dcd#c",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+    m1 = criaMatriz(5,5,matrizExpected1);
+    push(&s1, &m1, 'b');
+   
+    fp = fopen("lib/teste1.txt", "w");
+    gravaStackMat(&s1,fp);
+    fclose(fp);
+    fp = fopen("lib/teste1.txt", "r");
+    leStackMat(&s1Grav,fp);
+    comparaStackMats(&s1,&s1Grav);
+    liberaMatriz(&m1);
+    liberaStackMat(&s1);
+    liberaStackMat(&s1Grav);
+    fclose(fp);
+}
