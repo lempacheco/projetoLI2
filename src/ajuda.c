@@ -10,13 +10,16 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
 
     if (verificar(m, &grupos)) {
         liberaGrupos(grupos); grupos = NULL;
+
         riscarIguaisDeLetraBranca(m, &grupos);
 
         liberaGrupos(grupos); grupos = NULL;
         pintarVizinhosDeRiscadas(m, &grupos);
-
         liberaGrupos(grupos); grupos = NULL;
+
         manterCaminho(m, q, &grupos);
+        liberaGrupos(grupos); grupos = NULL;
+
     } else {
         printf("O tabuleiro atual é inválido.\n");
         liberaGrupos(grupos); grupos = NULL;
@@ -24,9 +27,10 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
         return -1;
     }
 
-    liberaGrupos(grupos); grupos = NULL;
-
+    
     if (!verificar(m, &grupos)) {
+        liberaGrupos(grupos); grupos = NULL;
+
         copiaMatriz(m, &t);
         liberaMatriz(&t);
         printf("O tabuleiro já não é válido");

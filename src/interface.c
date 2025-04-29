@@ -130,7 +130,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
                 while (getch() != '\n');
                 return RET_OK;
             } else {
-                int r = escolheComandosFromString(m, s, q, linha, &grupos);
+                int r = escolheComandos(m, s, q, linha, &grupos);
 
                 if (strcmp(linha,"v")==0){
                     clear();

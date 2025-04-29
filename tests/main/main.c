@@ -65,6 +65,11 @@ int main() {
       return CU_get_error();
     }
 
+    if (NULL == CU_add_test(pSuite, "testar_escolheComandos", testar_escolheComandos)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
     if (NULL == CU_add_test(pSuite, "testar_verifRiscadaOrt", testar_verifRiscadaOrt)) {
       CU_cleanup_registry();
       return CU_get_error();
