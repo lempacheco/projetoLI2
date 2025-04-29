@@ -129,6 +129,10 @@ int escolheComandosFromString(Matriz *m, StackMat *s, Queue *q, const char *linh
         return 0;
     }
 
+    if (c == 'D') {
+        return 0;
+    }
+
     if (c == 'b' || c == 'r') {
         push(s, m, c);
 

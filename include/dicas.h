@@ -7,4 +7,4 @@
 #include "../include/stackMats.h"
 #include "../include/resolve.h"
 
-int dicas (Matriz* m);
+int dicas (Matriz* m, Queue* q);

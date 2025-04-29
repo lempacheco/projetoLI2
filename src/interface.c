@@ -150,6 +150,8 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
                     while (getch() != '\n');
                     return RET_OK;
                 }
+                if (strcmp(linha,"D")==0){
+                    mvprintw(LINES,0,dicas(m,q));                }
 
                 if (r == RET_SAIR) {
                     clear();
