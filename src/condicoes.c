@@ -165,5 +165,6 @@ int verificaCaminho (Matriz *m, Queue *q){
     }
     free(m->visitada); 
 
+
     return (casasVisitadas == casasLivres); 
 }

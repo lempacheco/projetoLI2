@@ -401,3 +401,35 @@ void testar_branco() {
     }
     free(m1I.matriz);
 }
+
+void testar_escolheComandos(){
+    
+    char matrizExpected1[5][5] = {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+
+    Matriz m1 = criaMatriz(5,5,matrizExpected1); 
+
+    // comando s
+
+    Queue q;
+    initQueue(&q);
+    NodeGrupo* grupos = NULL;
+    StackMat s;
+    initStackMat(&s);
+
+    char *linha1 = "s"; 
+    int r1 = escolheComandos(&m1, &s, &q, linha1, &grupos); 
+    CU_ASSERT_EQUAL(r1, 1);
+
+    liberaGrupos(grupos); 
+    liberaMatriz(&m1);
+    liberaStackMat(&s);
+    liberaQueue(&q); 
+     
+
+}

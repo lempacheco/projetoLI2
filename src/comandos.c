@@ -52,7 +52,7 @@ int riscar (Matriz *m, Pos p){
   - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
 */
 
-int escolheComandosFromString(Matriz *m, StackMat *s, Queue *q, const char *linha, NodeGrupo** grupos) {
+int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** grupos) {
     int pl = 0;
     char pc = '\0'; 
     int r = 0;

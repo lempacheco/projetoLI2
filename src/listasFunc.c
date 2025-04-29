@@ -106,7 +106,7 @@ NodeGrupo* adicionarLista (NodeGrupo* grupo, NodePosicao* lista, int mensagem) {
         atual = atual->prox;
     }
 
-    atual->prox = novoGrupo; 
+    atual->prox = novoGrupo;  
     return grupo; 
 }
 

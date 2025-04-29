@@ -27,5 +27,5 @@
 
 int branco (Matriz *, Pos, Matriz*);
 int riscar (Matriz *, Pos);
-int escolheComandosFromString(Matriz *m, StackMat *s, Queue *q, const char *linha, NodeGrupo** grupos);
+int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** grupos);
 int retroceder(Matriz *, StackMat *); 
