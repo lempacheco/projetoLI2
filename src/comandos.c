@@ -1,5 +1,4 @@
 #include "../include/comandos.h"
-#include <ncurses.h>
 
 // Problema com a posição (+1)
 
@@ -144,12 +143,13 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     if (c == 'a') { 
         push(s,m,c);
         r = ajuda(m, q);
+        if (r==1) r=0;
         return r; 
     }
 
     if (c == 'R') { 
         push(s,m,c);
-        resolveTabuleiro(m, q); 
+        resolve(m, q); 
         return 0; 
     }
 

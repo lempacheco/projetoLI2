@@ -1,110 +1,230 @@
 #include "../include/resolve.h"
 
-void resolveTabuleiro(Matriz* m, Queue* q){//matrizinicial
-    int i=0; 
-    int r; 
-    Matriz mInicial; 
-    initMatriz (&mInicial); 
-    copiaMatriz(&mInicial, m); 
-    Pos p1, p2; 
-    Pos* jaRiscou = malloc(sizeof(Pos)); 
-    int tamJaRiscou = 0; 
-    int jaAdicionou = 0; 
+int resolve(Matriz* m, Queue* q){
+    //NodeGrupo* grupo;
 
-    encontraPrimeiroRepetido(m, &p1, &p2, m->L, m->C); 
+    Grupos caminho;
+    caminho.gs = malloc(sizeof(Grupo));
+    caminho.tam=1;
+    caminho.cab=-1;
 
-    while (!ganhou(m)){
-        if (!posicaoPertence(jaRiscou, tamJaRiscou, p1)){
-            m->matriz [p1.l][p1.c] = '#'; 
-            r=0; 
-        } else if (!posicaoPertence(jaRiscou, tamJaRiscou, p2)){
-            m->matriz [p2.l][p2.c] = '#'; 
-            r=0; 
-            p1=p2; 
-        } else {
-            if(!ganhou(m) && encontraPrimeiroRepetido(m, &p1, &p2, m->L, m->C) == 0){
-                copiaMatriz(m, &mInicial); 
+    Matriz mInicial;
+    initMatriz(&mInicial);
+    copiaMatriz(&mInicial, m);
+
+    if (!encontraABA(m, &caminho)){
+        if (!encontraAAXA(m, &caminho)){
+            tudoBranco(m);
+            if (!ganhou(m)){
+                mvprintw(1, 0, "Tabuleiro é impossível.");
+                return 0;
+            }else{
+                return 1;
             }
-            r=1;
+        }else{
+            resolveAAXA(m, &caminho);
         }
-
-        if(r==0){
-            if (!jaAdicionou){ 
-                jaRiscou[tamJaRiscou] = p1; 
-                jaAdicionou = 1; 
-                tamJaRiscou++;
-                jaRiscou = realloc(jaRiscou, sizeof(Pos) * tamJaRiscou + 1);
-
-            }
-            while(ajuda(m,q) > 0);
-            if(!ganhou(m) && encontraPrimeiroRepetido(m, &p1, &p2, m->L, m->C) == 0){
-                copiaMatriz(m, &mInicial); 
-                jaAdicionou = 0; 
-            }
-             
-        }
+    }else{
+        resolveABA(m, &caminho);
     }
-    free(jaRiscou);
+
+    while(ajuda(m, q) == 1);
+
+    while(!ganhou(m)){
+        if (!encontraABA(m, &caminho)){
+            if (!encontraAAXA(m, &caminho)){
+                if (retrocedeCaminho(m, &mInicial, &caminho) == -1){
+                    mvprintw(1, 0, "Tabuleiro é impossível.");
+                    return 0;
+                }
+            }else{
+                resolveAAXA(m, &caminho);
+            }
+        }else{
+            resolveABA(m, &caminho);
+        }
+
+        while(ajuda(m, q) == 1);
+    }
+
+    free(caminho.gs);
+    liberaMatriz(&mInicial);
+
+    return 1;
 }
 
-int posicaoPertence(Pos* array, int tamanho, Pos p) {
-    int i;
-    for (i = 0; i < tamanho; i++) {
-        if (array[i].l == p.l && array[i].c == p.c) {
-            return 1; // Pertence
+int encontraABA(Matriz* m, Grupos* caminho){
+    // Verifica padrões horizontais
+    for (int i = 0; i < m->L; i++) {
+        for (int j = 0; j < m->C - 2; j++) {
+            if (m->matriz[i][j] == m->matriz[i][j + 2] && m->matriz[i][j] != m->matriz[i][j + 1]) {
+                (caminho->cab)++;
+                caminho->gs[caminho->cab].p1.l = i;
+                caminho->gs[caminho->cab].p1.c = j;
+                caminho->gs[caminho->cab].p2.l = i;
+                caminho->gs[caminho->cab].p2.c = j+1;
+                caminho->gs[caminho->cab].p3.l = i;
+                caminho->gs[caminho->cab].p3.c = j+2;
+                caminho->gs[caminho->cab].b = 1;
+                caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
+                return 1;
+            }
         }
     }
-    return 0; // Não pertence
+
+    // Verifica padrões verticais
+    for (int j = 0; j < m->C; j++) {
+        for (int i = 0; i < m->L - 2; i++) {
+            if (m->matriz[i][j] == m->matriz[i + 2][j] && m->matriz[i][j] != m->matriz[i + 1][j]) {
+                (caminho->cab)++;
+                caminho->gs[caminho->cab].p1.l = i;
+                caminho->gs[caminho->cab].p1.c = j;
+                caminho->gs[caminho->cab].p2.l = i+1;
+                caminho->gs[caminho->cab].p2.c = j;
+                caminho->gs[caminho->cab].p3.l = i+2;
+                caminho->gs[caminho->cab].p3.c = j;
+                caminho->gs[caminho->cab].b = 1;
+                caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
+                return 1;
+            }
+        }
+    }
+
+    return 0;
 }
 
-
-int encontraPrimeiroRepetido(Matriz* m, Pos* p1, Pos* p2, int a, int b) {
-    int i, j, k;
-
-    for (i = 0; i < a; i++) {
-        for (j = 0; j < b; j++) {
-            char atual = m->matriz[i][j];
-
-            // Procura novamente a partir da próxima casa
-            for (k = j + 1; k < b; k++) {
-                if (m->matriz[i][k] == atual) {
-                    p1->l = i;
-                    p1->c = j;
-                    p2->l = i;
-                    p2->c = k;
-                    return 1; // Encontrou repetido na linha
+int encontraAAXA(Matriz* m, Grupos* caminho){
+    // Verifica padrões horizontais
+    for (int i = 0; i < m->L; i++) {
+        for (int j = 0; j < m->C - 3; j++) { // Começa verificando as duas primeiras letras
+            if (m->matriz[i][j] == m->matriz[i][j + 1]) { // As duas primeiras letras são iguais (XX)
+                int k = j + 2;
+                // Verifica letras intermediárias diferentes de X
+                while (k < m->C - 1 && m->matriz[i][k] != m->matriz[i][j]) {
+                    k++;
                 }
-            }
-
-            // Depois procura nas outras linhas
-            for (k = i + 1; k < a; k++) {
-                if (m->matriz[k][j] == atual) {
-                    p1->l = i;
-                    p1->c = j;
-                    p2->l = k;
-                    p2->c = j;
-                    return 1; // Encontrou repetido na coluna
+                // Verifica se a sequência termina com X
+                if (k < m->C && m->matriz[i][k] == m->matriz[i][j]) {
+                    (caminho->cab)++;
+                    caminho->gs[caminho->cab].p1.l = i;
+                    caminho->gs[caminho->cab].p1.c = j;
+                    caminho->gs[caminho->cab].p2.l = i;
+                    caminho->gs[caminho->cab].p2.c = j+1;
+                    caminho->gs[caminho->cab].p3.l = i;
+                    caminho->gs[caminho->cab].p3.c = k;
+                    caminho->gs[caminho->cab].b = 0;
+                    caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
+                    return 1;
                 }
             }
         }
     }
 
-    return 0; // Não encontrou repetido
+    // Verifica padrões verticais
+    for (int j = 0; j < m->C; j++) {
+        for (int i = 0; i < m->L - 3; i++) { // Começa verificando as duas primeiras letras
+            if (m->matriz[i][j] == m->matriz[i + 1][j]) { // As duas primeiras letras são iguais (XX)
+                int k = i + 2;
+                // Verifica letras intermediárias diferentes de X
+                while (k < m->L - 1 && m->matriz[k][j] != m->matriz[i][j]) {
+                    k++;
+                }
+                // Verifica se a sequência termina com X
+                if (k < m->L && m->matriz[k][j] == m->matriz[i][j]) {
+                    (caminho->cab)++;
+                    caminho->gs[caminho->cab].p1.l = i;
+                    caminho->gs[caminho->cab].p1.c = j;
+                    caminho->gs[caminho->cab].p2.l = i+1;
+                    caminho->gs[caminho->cab].p2.c = j;
+                    caminho->gs[caminho->cab].p3.l = k;
+                    caminho->gs[caminho->cab].p3.c = j;
+                    caminho->gs[caminho->cab].b = 0;
+                    caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
+                    return 1;
+                }
+            }
+        }
+    }
+
+    return 0;
+}
+
+void resolveABA(Matriz* m, Grupos* caminho){
+    m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] = '#';
+    m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = toupper(m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c]);
+}
+
+void resolveAAXA(Matriz* m, Grupos* caminho){
+    m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = '#';
+    m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] = '#';
+}
+
+int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho){
+    if (caminho->cab == -1) return -1;
+
+    if (caminho->gs[caminho->cab].b == 1){//é um ABA
+        if (m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] == '#'){
+            //reseta o p1
+            m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] = mInicial->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c];
+            //risca o p3
+            m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] = '#';
+        }else if(m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] == '#'){
+            //reseta o p3
+            m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] = mInicial->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c];
+            //volta atrás no caminho
+            caminho->cab--;
+            //aplica esta função à posição atual do caminho
+            retrocedeCaminho(m, mInicial, caminho);
+
+            return 0;
+        }
+    }else{//é um AAXA
+        if (m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] != '#'){
+            //reseta o p2
+            m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = mInicial->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c];
+            //risca o p1
+            m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] = '#';
+            //o p3 continua riscado
+        }else if(m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] != '#'){
+            //reseta o p3
+            m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] = mInicial->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c];
+            //risca o p2
+            m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = '#';
+            //o p1 continua riscado
+        }else if(m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] != '#'){
+            //reseta o p1
+            m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] = mInicial->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c];
+            //reseta o p2
+            m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = mInicial->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c];
+            //volta atrás no caminho
+            caminho->cab--;
+            //aplica esta função à posição atual do caminho
+            return retrocedeCaminho(m, mInicial, caminho);
+
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
 int ganhou(Matriz* m){
-    int r=1; 
-    NodeGrupo** grupo = NULL; 
+    NodeGrupo* grupo;
+    if (!verificar(m, &grupo)) return 0;
 
-    if (!verificar(m,grupo)){
-        return 0; 
-    }
-    for(int i=0; i<m->L && r; i++){
-        for(int j=0; j<m->C && r; j++){
-            if (m->matriz[i][j] != '#' && !isupper(m->matriz[i][j])){
-                r=0; // não resolveu; 
-            }
+    int r = 1;
+    for (int i=0; i<m->L && r; i++){
+        for (int j=0; j<m->C && r; j++){
+            if (m->matriz[i][j] != '#' && !isupper(m->matriz[i][j])) r=0;
         }
     }
-    return r; 
+    return r;
+}
+
+void tudoBranco(Matriz* m){
+    for (int i=0; i<m->L; i++){
+        for (int j=0; j<m->C; j++){
+            if (m->matriz[i][j] != '#') m->matriz[i][j] = toupper(m->matriz[i][j]);
+        }
+    }
 }
