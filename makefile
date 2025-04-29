@@ -8,21 +8,20 @@ TEST = tests/*.c
 
 .PHONY: jogo
 jogo:
-	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo
+	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo -lncurses -ltinfo
 
-.PHONY: jogogcov
 jogogcov:
 	rm -r coverage
 	mkdir -p coverage
-	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) src/main/main.c -o jogo
+	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) src/main/main.c -o testar
 	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
-	./jogo
+	./testar
 	find . -maxdepth 1 -name '*.gcda' -exec mv {} coverage/ \;
 
 	cd coverage && \
 	for f in *; do \
 		if [ -f "$$f" ]; then \
-			nome_corrigido=$$(echo "$$f" | cut -c6-); \
+			nome_corrigido=$$(echo "$$f" | cut -c8-); \
 			mv "$$f" "$$nome_corrigido"; \
 		fi; \
 	done
@@ -36,7 +35,7 @@ jogogcov:
 
 .PHONY: testar
 testar:
-	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
+	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 
 .PHONY: testargcov
 testargcov:
@@ -69,4 +68,4 @@ clean:
 
 .PHONY: debug
 debug:
-	$(CC) $(CFLAGS_DEBUG) -lcunit $(SRC) $(TEST) src/main/main.c -o testar
+	$(CC) $(CFLAGS_DEBUG) $(SRC) src/main/main.c -o debug -lncurses -ltinfo

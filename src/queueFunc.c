@@ -55,4 +55,5 @@ void liberaQueue (Queue *q){
     q->cap=0; 
     q->inicio=0; 
     q->tam=0; 
+    free(q); 
 }

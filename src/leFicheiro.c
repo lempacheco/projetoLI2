@@ -1,4 +1,5 @@
 #include "../include/leFicheiro.h"
+#include <ncurses.h>
 
 /*  Lê o conteúdo de um ficheiro e carrega-o na matriz fornecida.
 
@@ -15,8 +16,8 @@ int leFicheiro(char* nomeMatriz, char* nomeStackMat, Matriz *m, StackMat* s) {
     //matriz atual
     fpM = fopen(nomeMatriz, "r");
     if (fpM == NULL) {
-        printf ("Erro ao abrir o ficheiro.");
-        return 1; 
+        mensagens ("Erro ao abrir o ficheiro.");
+        return -1; 
     }
 
     if (m->matriz != NULL) liberaMatriz(m);
@@ -53,7 +54,7 @@ void leMatriz(Matriz* m, FILE* fp){
 
     if (m->L <= 0 || m->C <= 0){
         m->matriz = NULL;
-        printf ("Erro: ficheiro não contém uma matriz válida.");
+        mensagens("Erro: ficheiro não contém uma matriz válida.");
     }
     
    
@@ -85,7 +86,7 @@ void leStackMat(StackMat* s, FILE* fp){
     if (s->cabeca <= -1 || s->tam <= 0){
         s->dados = NULL;
         s->comandos = NULL; 
-        printf ("Erro: ficheiro não contém um histórico válido.");
+        mensagens ("Erro: ficheiro não contém um histórico válido.");
     }
 
     s->comandos = realloc(s->comandos, sizeof(char)*s->tam);

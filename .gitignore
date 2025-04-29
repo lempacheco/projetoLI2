@@ -3,8 +3,9 @@ jogo
 testar
 debug
 lib/*
-!lib/exemplo.txt
+!lib/exemplo1.txt
 !lib/exemplo2.txt
+!lib/exemplo3.txt
 !lib/teste1.txt
 !lib/teste2.txt
 !lib/teste3.txt

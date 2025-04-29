@@ -41,7 +41,7 @@ void testar_leFicheiro() {
     int r2;
     r2 = leFicheiro("lib/elfjeiofheifhewofj.txt", "lib/history/elfjeiofheifhewofj.txt", &m2, &s2);
 
-    CU_ASSERT_EQUAL(r2, 1);
+    CU_ASSERT_EQUAL(r2, -1);
 
     //3
     Matriz m3;

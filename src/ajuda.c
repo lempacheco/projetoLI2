@@ -1,15 +1,12 @@
 #include "../include/ajuda.h"
 
-int ajuda(Matriz* m, Queue* q) {
+int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
     NodeGrupo* grupos = NULL;
-    int r;
+    int r = 0;
     Matriz t;
-    
-    initMatriz(&t);
-    copiaMatriz(&t, m);
 
-    liberaGrupos(grupos);
-    grupos = NULL;
+    initMatriz(&t);
+    copiaMatriz(&t, m); // salvar estado inicial
 
     if (verificar(m, &grupos)) {
         liberaGrupos(grupos); grupos = NULL;
@@ -20,26 +17,36 @@ int ajuda(Matriz* m, Queue* q) {
 
         liberaGrupos(grupos); grupos = NULL;
         manterCaminho(m, q, &grupos);
-
-        r = 0;
     } else {
         printf("O tabuleiro atual é inválido.\n");
-        r = -1;
+        liberaGrupos(grupos); grupos = NULL;
+        liberaMatriz(&t);
+        return -1;
     }
-
 
     liberaGrupos(grupos); grupos = NULL;
+
     if (!verificar(m, &grupos)) {
         copiaMatriz(m, &t);
+        liberaMatriz(&t);
         printf("O tabuleiro já não é válido");
-        r = -1;
+        return -1;
     }
+
+    if (!saoIguais(&t, m)){
+        liberaMatriz(&t);
+        return 1;
+    }
+
+    int mudou = !saoIguais(m, &t);
 
     liberaMatriz(&t);
     liberaGrupos(grupos);
 
-    return r;
+    if (mudou) return 1;
+    return 0;
 }
+
 
 void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos){
     for(int i=0; i<m->L; i++){
@@ -49,9 +56,7 @@ void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos){
                     if(tolower(m->matriz[i][j]) == m->matriz[l][j]){
                         char t = m->matriz[l][j];
                         m->matriz[l][j] = '#';
-                        if(!verificar(m, grupos)){
-                            m->matriz[l][j] = t;
-                        }
+                        if(!verificar(m, grupos)) m->matriz[l][j] = t;
                     }
                 }
                 for(int c=0; c<m->C; c++){
@@ -68,6 +73,7 @@ void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos){
 
 void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos){
     int i, j;
+
     for (i=0; i<m->L; i++){
         for (j=0; j<m->C; j++){
             if (m->matriz[i][j]=='#'){
@@ -98,6 +104,7 @@ void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos){
 void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos){
     int i, j;
     char t;
+
     for (i=0; i<m->L; i++){
         for (j=0; j<m->C; j++){
             t = m->matriz[i][j];
@@ -110,4 +117,23 @@ void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos){
             }
         }
     }
+}
+
+int saoIguais(Matriz* m1, Matriz* m2){
+    int i, j;
+    int r = 1;
+    if(m1->L != m2->L) return 0; 
+    if(m1->C != m2->C) return 0; 
+
+    if (m1->matriz == NULL){
+        if(m1->matriz != m2->matriz) return 0;
+    }else{
+        for (i = 0; i < m1->L && r; i++) {
+            for (j = 0; j < m1->C && r; j++) {
+                r = (m1->matriz[i][j] == m2->matriz[i][j]);
+            }
+        }
+    }
+
+    return r;
 }

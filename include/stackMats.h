@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/dataStructs.h"
+#include "../include/mensagens.h"
 
 void initStackMat(StackMat *s);
 int isFull(StackMat *s);

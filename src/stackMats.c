@@ -7,6 +7,7 @@ void initStackMat(StackMat *s){
     initMatriz(&s->dados[0]);
     initMatriz(&s->mInicial);
     s->cabeca = -1;
+    s->ajuda = 0; 
 }
 
 void initMatriz(Matriz* m){
@@ -59,7 +60,7 @@ void push(StackMat *s, Matriz *m, char comando){
 
 int pop(StackMat *s, Matriz* m){
     if (isEmpty(s)) {
-        printf("Não há mais comandos para retroceder.");
+        mensagens("Não há mais comandos para retroceder.");
         return -1;
     }
 

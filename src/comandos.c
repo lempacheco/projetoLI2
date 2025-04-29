@@ -1,6 +1,5 @@
 #include "../include/comandos.h"
 
-
 // Problema com a posição (+1)
 
 /* Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
@@ -14,7 +13,7 @@ int branco (Matriz *m, Pos p, Matriz* mInicial){
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
     } else if(isupper(m->matriz[l][c])){
-        printf("Casa já está branca.\n"); 
+        mensagens("Casa já está branca."); 
         return -1;
     } else if(m->matriz[l][c] == '#'){
         m->matriz[l][c] = toupper(mInicial->matriz[l][c]); 
@@ -35,7 +34,7 @@ int riscar (Matriz *m, Pos p){
     if (l < 0 || c < 0 || l >= m->L || c >= m->C) {
         return 1;
     } else if(m->matriz[l][c]== '#') {
-        printf("Casa já está riscada.\n");
+        mensagens ("Casa já está riscada.");
         return -1; 
     } else m->matriz[l][c] = '#'; 
 
@@ -53,109 +52,113 @@ int riscar (Matriz *m, Pos p){
   - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
 */
 
-int escolheComandos (Matriz *m, StackMat *s, Queue *q){
-    char pl;
-    int pc; 
-    char c; 
-    int r=0; 
+int escolheComandosFromString(Matriz *m, StackMat *s, Queue *q, const char *linha, NodeGrupo** grupos) {
+    int pl = 0;
+    char pc = '\0'; 
+    int r = 0;
     char* nomeFile;
-    int i;
+    int i = 0;
+    char c;
+     
+    // Pula espaços iniciais
+    while (linha[i] == ' ') i++;
+    c = linha[i++];
 
-    c = fgetc(stdin);
-    while (c == ' ' || c == '\n') c = fgetc(stdin);
-    if (c == 0)r=1; 
-    if (c == 's') { 
-        r=1; 
-        printf("Saindo do jogo.\n"); 
-        return r; 
-    }  
+    if (c == '\0') return RET_COMANDO_DESCONHECIDO;
+
+    if (c == 's') return 1;
+
     if (c == 'd') {
-        if (!pop(s, m)) printf("Retrocedendo...");  
+        if (!pop(s, m)) return RET_DESFAZ;
+        return 0;
+    }
+
+    if (c == 'v') {
+  
+        int t = 0; 
+        
+        verificar(m, grupos);
+        t = verificaCaminho(m, q);
+        if (t==1) r=7; 
+        else r = 8;  
+ 
+        return r; 
+    }
+
+    if (c == 'l' || c == 'g') {
+        while (linha[i] == ' ') i++;
+        int len = strlen(&linha[i]);
+        if (len == 0) return RET_COMANDO_DESCONHECIDO;
+
+        nomeFile = malloc(len + 1);
+        strcpy(nomeFile, &linha[i]);
+
+        char* caminhoM = malloc(len + 5);
+        strcpy(caminhoM, "lib/");
+        strcat(caminhoM, nomeFile);
+
+        char* caminhoS = malloc(len + 14);
+        strcpy(caminhoS, "lib/history/");
+        strcat(caminhoS, nomeFile);
+
+        if (c == 'l')
+            r = leFicheiro(caminhoM, caminhoS, m, s);
+        else
+            r = gravaFicheiro(caminhoM, caminhoS, m, s);
+
+        free(nomeFile);
+        free(caminhoM);
+        free(caminhoS);
         return r;
     }
-    if (c == 'v') {
-        int t = 0; 
-        NodeGrupo* grupos = NULL;
-        verificar(m, &grupos);
-        t=verificaCaminho(m, q);
-        if (t==1){
-            printf("\nExiste um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
-        } else {
-            printf("\nNão existe um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
-        }
-        imprimeGrupos(grupos);
-        liberaGrupos(grupos); 
-        return r; 
-        
-    }
-    if (c == 'l') {
-        push(s, m, c); 
-        nomeFile = malloc(sizeof(char));
-        nomeFile[0] = getchar(); //ignora o espaço
-        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
-            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
-        }
-        nomeFile[i] = '\0';
-        char* caminhoM = malloc(sizeof(char)*(i+5));
-        strcpy(caminhoM, "lib/");
-        strcat(caminhoM, nomeFile); 
 
-        char* caminhoS = malloc(sizeof(char)*(i+14));
-        strcpy(caminhoS, "lib/history/");
-        strcat(caminhoS, nomeFile); 
-
-        r = leFicheiro(caminhoM, caminhoS, m, s);
-        free(nomeFile);
-        free(caminhoM);
-        free(caminhoS);
-        return r; 
-    }
-    if (c == 'g') {
-
-        nomeFile = malloc(sizeof(char));
-        nomeFile[0] = getchar(); //ignora o espaço
-        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
-            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
-        }
-        nomeFile[i] = '\0';
-        char* caminhoM = malloc(sizeof(char)*(i+5));
-        strcpy(caminhoM, "lib/");
-        strcat(caminhoM, nomeFile); 
-
-        char* caminhoS = malloc(sizeof(char)*(i+14));
-        strcpy(caminhoS, "lib/history/");
-        strcat(caminhoS, nomeFile); 
-
-        r = gravaFicheiro(caminhoM, caminhoS, m, s); 
-        free(nomeFile);
-        free(caminhoM);
-        free(caminhoS);
-        return r; 
-    }
-    if (c == 'a') { 
-        push(s,m,c);
+    if (c == 'a') {
+        push(s, m, c);
         r = ajuda(m, q);
-        return r; 
+        return (r == 1) ? 0 : r;
     }
 
-    if (scanf(" %c%d", &pl, &pc) != 2) {
-        r = 1;
-    } else if (pl - 'a' < 0 || pl - 'a' >= m->L || pc <= 0 || pc > m->C) {
-        r = 1;
-    } else {
-        Pos p = {pl - 'a' + 1, pc}; 
-        if (c == 'b') {
-            push(s, m, c);
-            r = branco(m, p, &s->mInicial);
-        } 
-        else if (c == 'r') {
-            push(s, m, c);
-            r = riscar(m, p);
-        } else {
-            printf("Comando inválido\n");
+    if (c == 'R') {
+        push(s, m, c);
+        resolve(m, q);
+        return 0;
+    }
+
+    if (c == 'A') {
+        s->ajuda = 1;
+        return 0;
+    }
+
+    if (c == 'b' || c == 'r') {
+        push(s, m, c);
+
+        while (linha[i] == ' ') i++;
+        pc = linha[i++];
+
+        while (linha[i] == ' ') i++;
+
+        while (linha[i] >= '0' && linha[i] <= '9') {
+            pl = (pl * 10) + (linha[i] - '0');
+            i++;
         }
-    }
-    
-    return r; 
 
+        if (pc - 'a' < 0 || pc - 'a' >= m->C || pl <= 0 || pl > m->L) {
+            mensagens("Comando inválido");
+            return RET_COMANDO_DESCONHECIDO;
+        }
+
+        Pos p = {pl, pc - 'a' + 1};
+        if (c == 'b') {
+            r = branco(m, p, &s->mInicial);
+            if (s->ajuda == 1) ajuda(m, q);
+        } else {
+            r = riscar(m, p);
+            if (s->ajuda == 1) ajuda(m, q);
+        }
+
+        return r;
+    }
+
+    return RET_COMANDO_DESCONHECIDO;
 }
+

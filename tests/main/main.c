@@ -15,6 +15,75 @@ int main() {
     CU_pSuite pSuite = NULL;
 
     pSuite = CU_add_suite("test_suite", 0, 0);
+    if (NULL == pSuite) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_leMatriz", testar_leMatriz)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+    
+    if (NULL == CU_add_test(pSuite, "testar_lestackMat", testar_leStackMat)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_leFicheiro", testar_leFicheiro)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_leNumero", testar_leNumero)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_gravaMatriz", testar_gravaMatriz)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_gravaStackMats", testar_gravaStackMat)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_gravaFicheiro", testar_gravaFicheiro)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+     
+    if (NULL == CU_add_test(pSuite, "testar_riscar", testar_riscar)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_branco", testar_branco)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_verifRiscadaOrt", testar_verifRiscadaOrt)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_verifBranco", testar_verifBranco)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_verificar", testar_verificar)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
+
+    if (NULL == CU_add_test(pSuite, "testar_verificaCaminho", testar_verificaCaminho)) {
+      CU_cleanup_registry();
+      return CU_get_error();
+    }
 
     CU_add_test(pSuite, "testar_leMatriz", testar_leMatriz);
     
