@@ -1,7 +1,7 @@
 
 #include "../../include/comandos.h"
 #include "../../include/condicoes.h"
-#include "../../include/matrizRandom.h"
+
 #include "../../include/output.h"
 #include "../../include/leFicheiro.h"
 #include "../../include/dataStructs.h"

@@ -63,6 +63,8 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
 int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
     char linha[100];
 
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+
     mostraMatriz(m, *scrollLinha, *scrollColuna);
     refresh();
 
@@ -97,6 +99,42 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
             l++;
             imprimeGruposNcurses(grupos, &l);
             liberaGrupos(grupos);
+
+            mvprintw(LINES - 2, 0, "Pressione ENTER para continuar...");
+            refresh();
+            while (getch() != '\n');
+            return RET_OK;
+        }
+
+        if (linha[0] == 't') {
+            
+            clear();
+            attron(COLOR_PAIR(1));
+            mvprintw(1, 0, "TUTORIAL");
+
+            mvprintw(3, 0, "Comandos:");
+            attroff(COLOR_PAIR(1));
+
+            mvprintw(4, 2, "g (ficheiro) -> gravar o estado atual do jogo num ficheiro");
+            mvprintw(5, 2, "l (ficheiro) -> ler o estado do jogo de um ficheiro ");
+            mvprintw(6, 2, "b <letra minúscula><número> -> coloca a coordenada em maiúscula");
+            mvprintw(7, 2, "r <letra minúscula><número> -> coloca a coordenada riscada");
+            mvprintw(8, 2, "v -> verificar o estado do jogo e apontar todas as restrições violadas");
+            mvprintw(9, 2, "a -> ajuda o jogador, funcionando como um autocompletador");
+            mvprintw(10, 2, "A -> realiza automaticamente o comando 'a'");
+            mvprintw(11, 2, "R -> resolver o jogo");
+            mvprintw(12, 2, "s -> Sai do jogo");
+            mvprintw(13, 2, "d -> desfaz o último comando executado ");
+
+            attron(COLOR_PAIR(1));
+            mvprintw(14, 0, "Regras do jogo");
+            attroff(COLOR_PAIR(1));
+            mvprintw(15, 2, "Cada casa contém um símbolo (uma letra inicialmente minúscula);");
+            mvprintw(16, 2, "Em cada linha e coluna só pode existir uma única réplica de cada símbolo que é pintada a branco (coloca-se a letra em maiúsculas);");
+            mvprintw(17, 2, "Todas as outras réplicas desse símbolo têm que ser riscadas (substituídas por um cardinal);");
+            mvprintw(18, 2, "Se uma casa está riscada, todas as casas vizinhas ortogonais têm que estar pintadas a branco;");
+            mvprintw(19, 2, "É necessário existir um caminho ortogonal entre todas as casas brancas do tabuleiro.");
+
 
             mvprintw(LINES - 2, 0, "Pressione ENTER para continuar...");
             refresh();

@@ -359,3 +359,78 @@ void testar_verificar(){
     liberaMatriz(&m6);
     liberaGrupos(grupo6);
 }
+
+void testar_verificaCaminho(){
+
+    // Caso válido - existe caminho
+    char matrizExpected1[5][5] = {
+        "e#adc",
+        "dAdec",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+
+    Queue* q1 = malloc(sizeof(Queue));
+    initQueue(q1);
+    Matriz m1 = criaMatriz(5,5,matrizExpected1); 
+    int r1 = verificaCaminho(&m1, q1); 
+    CU_ASSERT_EQUAL(r1, 1);
+
+    liberaMatriz(&m1); 
+    liberaQueue(q1);
+
+    // Caso inválido - não existe caminho
+    char matrizExpected2[7][8] = {
+        "B#ffbgdd",
+        "#fdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+    };
+
+    Queue* q2 = malloc(sizeof(Queue));
+    initQueue(q2);
+    Matriz m2 = criaMatriz(7,8,matrizExpected2); 
+    int r2 = verificaCaminho(&m2, q2); 
+    CU_ASSERT_EQUAL(r2, 0);
+
+    liberaMatriz(&m2); 
+    liberaQueue(q2);
+
+    // Caso válido - existe caminho
+    char matrizExpected3[5][5] = {
+        "E#ADC",
+        "DC#E#",
+        "B#DCE",
+        "CDE#B", 
+        "A#CB#"
+    };
+
+    Queue* q3 = malloc(sizeof(Queue));
+    initQueue(q3);
+    Matriz m3 = criaMatriz(5,5,matrizExpected3); 
+    int r3 = verificaCaminho(&m3, q3); 
+    CU_ASSERT_EQUAL(r3, 1);
+
+    liberaMatriz(&m3); 
+    liberaQueue(q3);
+
+    // Caso inválido - não existe caminho
+    char matrizExpected4[4][5] = {
+        "#ABC#",
+        "c#D#k",
+        "ef#jl",
+        "ghijk"
+    };
+    Queue* q4 = malloc(sizeof(Queue));
+    initQueue(q4);
+    Matriz m4 = criaMatriz(4,5,matrizExpected4); 
+    int r4 = verificaCaminho(&m4, q4); 
+    CU_ASSERT_EQUAL(r4, 0);
+
+    liberaMatriz(&m4); 
+    liberaQueue(q4);
+}

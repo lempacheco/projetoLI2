@@ -8,6 +8,7 @@
 
 
 void resolveTabuleiro(Matriz* m, Queue* q); 
-int posicaoPertence(Pos* array, int tamanho, Pos p);
-int encontraPrimeiroRepetido(Matriz* m, Pos* p1, Pos* p2, int a, int b); 
-int ganhou(Matriz* m); 
+int resolverDuplicadosControlado(Matriz* m, Queue* q);
+void aplicarPadraoAAA (Matriz* m); 
+void aplicarPadraoABA(Matriz* m); 
+int resolverTentativa(Matriz* m, Queue* q, int i1, int j1, int i2, int j2);

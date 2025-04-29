@@ -36,7 +36,7 @@ jogogcov:
 
 .PHONY: testar
 testar:
-	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
+	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 
 .PHONY: testargcov
 testargcov:
