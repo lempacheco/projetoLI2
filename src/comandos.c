@@ -1,5 +1,4 @@
 #include "../include/comandos.h"
-#include <ncurses.h>
 
 // Problema com a posição (+1)
 
@@ -144,9 +143,20 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     if (c == 'a') { 
         push(s,m,c);
         r = ajuda(m, q);
+        if (r==1) r=0;
         return r; 
     }
 
+    if (c == 'R') { 
+        push(s,m,c);
+        resolve(m, q); 
+        return 0; 
+    }
+
+    if (c == 'A'){
+        s->ajuda = 1; // ativou
+
+    }
  
     if (c == 'r' || c == 'b'){
         push(s, m, c);
@@ -177,9 +187,15 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
             Pos p = {pl, pc - 'a' + 1}; 
             if (c == 'b') {
                 r = branco(m, p, &s->mInicial);
+                if (s->ajuda == 1){
+                    ajuda(m,q); 
+                }
             } 
             else if (c == 'r') {
                 r = riscar(m, p);
+                if (s->ajuda == 1){
+                    ajuda(m,q); 
+                }
             } else {
                 mensagens("Comando inválido");
             }
@@ -187,7 +203,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     
     }
 
-    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's'){
+    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R'){
         r = RET_COMANDO_DESCONHECIDO; 
     }
 

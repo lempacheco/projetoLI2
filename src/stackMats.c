@@ -7,6 +7,7 @@ void initStackMat(StackMat *s){
     initMatriz(&s->dados[0]);
     initMatriz(&s->mInicial);
     s->cabeca = -1;
+    s->ajuda = 0; 
 }
 
 void initMatriz(Matriz* m){

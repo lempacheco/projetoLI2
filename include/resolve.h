@@ -1,16 +1,31 @@
+#pragma once
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include "../include/dataStructs.h"
+#include "../include/stackMats.h"
+#include "../include/ajuda.h"
+#include "../include/condicoes.h"
 
-typedef struct rep{
-    int freq;
-    char simbolo;
-    int* i;
-    int* j;
-}Rep;
+typedef struct grupo{
+    Pos p1;
+    Pos p2;
+    Pos p3;
+    int b; //1 - ABA; 0 - AAXA;
+}Grupo;
 
-void resolveTabuleiro(Matriz* m);
-void encontraRep(Matriz* m, Rep* rep, int a, int b);
-void realocaRep(Rep* rep, int tamRep);
-void realocaIJ(Rep* rep, int i);
-int existe(char c, Rep* rep, int tamRep);
+typedef struct grupos{
+    Grupo* gs;
+    int cab;
+    int tam;
+}Grupos;
+
+int resolve(Matriz* m, Queue* q);
+int encontraABA(Matriz* m, Grupos* caminho);
+int encontraAAXA(Matriz* m, Grupos* caminho);
+void resolveABA(Matriz* m, Grupos* caminho);
+void resolveAAXA(Matriz* m, Grupos* caminho);
+int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho);
+int ganhou(Matriz* m);
+void tudoBranco(Matriz* m);

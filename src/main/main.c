@@ -7,6 +7,7 @@
 #include "../../include/dataStructs.h"
 #include "../../include/stackMats.h"
 #include "../../include/interface.h"
+#include "../../include/ajuda.h"
 #include <ncurses.h>
 
 int main() {
@@ -38,7 +39,7 @@ int main() {
         if (resultado == -1) {
             pop(&s, &m);
         }
-
+    
         if (resultado != 1) {
             mostraMatriz(&m, scrollLinha, scrollColuna);
         }

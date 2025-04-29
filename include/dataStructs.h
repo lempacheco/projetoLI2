@@ -20,6 +20,7 @@ typedef struct StackMat{
     int cabeca;
     int tam;
     Matriz mInicial;
+    int ajuda; 
 } StackMat;
 
 // Lista interna: posições
