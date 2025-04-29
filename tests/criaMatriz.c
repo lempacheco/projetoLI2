@@ -68,3 +68,32 @@ NodePosicao* criarListaCom(Pos posicoes[], int n) {
     }
     return lista;
 }
+
+Queue criaQueue(int tam, int cap,Pos* p){
+    Queue q;
+    q.cap = cap;
+    q.tam = tam;
+    q.inicio = 0;
+    q.valores = malloc(sizeof(Pos) * cap);
+    if (p==NULL){
+        q.valores=NULL;
+    }
+    else{
+        for (int i = 0; i < tam; i++) {
+            q.valores[i] = p[i];
+        }
+    }
+    return q;
+}
+
+void comparaQueue(Queue* q1,Queue* q2){
+    int i;
+    CU_ASSERT_EQUAL(q1->cap, q2->cap); 
+    CU_ASSERT_EQUAL(q1->tam, q2->tam);
+    CU_ASSERT_EQUAL(q1->inicio, q2->inicio);
+
+    for (i=0;i<q1->tam;i++){
+        CU_ASSERT_EQUAL(q1->valores[i].c,q2->valores[i].c);
+        CU_ASSERT_EQUAL(q1->valores[i].l,q2->valores[i].l);
+    }
+}

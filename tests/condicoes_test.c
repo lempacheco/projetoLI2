@@ -359,3 +359,39 @@ void testar_verificar(){
     liberaMatriz(&m6);
     liberaGrupos(grupo6);
 }
+
+void testar_verificaCaminho(){
+    //Caso Valido
+    char matrizExpected1[5][5] = {
+        "eCadR",
+        "dcdec",
+        "bddce",
+        "c#C#b",
+        "accbb"
+    };
+    Queue q1;
+    initQueue(&q1);
+    Matriz m1 = criaMatriz(5,5,matrizExpected1); 
+    int r1 = verificaCaminho(&m1, &q1); 
+    CU_ASSERT_EQUAL(r1, 1);
+
+    liberaMatriz(&m1);
+    liberaQueue(&q1);
+
+    //Caso Valido
+    char matrizExpected2[5][5] = {
+        "eCadR",
+        "dcdec",
+        "bddce",
+        "c#C##",
+        "acc#b"
+    };
+    Queue q2;
+    initQueue(&q2);
+    Matriz m2 = criaMatriz(5,5,matrizExpected2); 
+    int r2 = verificaCaminho(&m2, &q2); 
+    CU_ASSERT_EQUAL(r2, 0);
+
+    liberaMatriz(&m2);
+    liberaQueue(&q2);
+}

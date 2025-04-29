@@ -12,8 +12,9 @@ jogo:
 
 .PHONY: jogogcov
 jogogcov:
+	rm -r coverage
 	mkdir -p coverage
-	$(CC) $(CFLAGS_GCOV) $(SRC) src/main/main.c -o jogo
+	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) src/main/main.c -o jogo
 	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
 	./jogo
 	find . -maxdepth 1 -name '*.gcda' -exec mv {} coverage/ \;
@@ -26,12 +27,12 @@ jogogcov:
 		fi; \
 	done
 
-
 	find src -name '*.c' | while read file; do \
-		gcov -o coverage "$$file" >  coverage/output; \
+		gcov -f -o coverage "$$file" >> coverage/output; \
 	done
 
 	mv *.gcov coverage/
+	rm coverage/*.gcno coverage/*.gcda
 
 .PHONY: testar
 testar:
@@ -39,26 +40,28 @@ testar:
 
 .PHONY: testargcov
 testargcov:
+	rm -r coverage
+	mkdir -p coverage
 	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
-	@find tests -name '*.gcno' -exec mv {} coverage/ \;
+	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
 	./testar
 	find . -maxdepth 1 -name '*.gcda' -exec mv {} coverage/ \;
 
 	cd coverage && \
 	for f in *; do \
 		if [ -f "$$f" ]; then \
-			nome_corrigido=$$(echo "$$f" | cut -c6-); \
+			nome_corrigido=$$(echo "$$f" | cut -c8-); \
 			mv "$$f" "$$nome_corrigido"; \
 		fi; \
 	done
 
 
-	find tests -name '*.c' | while read file; do \
-		gcov -o coverage "$$file" >  coverage/output; \
+	find src -name '*.c' | while read file; do \
+		gcov -f -o coverage "$$file" >> coverage/output; \
 	done
 
 	mv *.gcov coverage/
-
+	rm coverage/*.gcno coverage/*.gcda
 clean:
 	rm -f jogo testar debug lib/teste5.txt lib/history/teste5.txt
 	rm -f ./*.gcno ./*.gcda
@@ -66,5 +69,4 @@ clean:
 
 .PHONY: debug
 debug:
-	$(CC) $(CFLAGS_DEBUG) $(SRC) src/main/main.c -o debug
-	# Caminho para a pasta onde estão os ficheiros
+	$(CC) $(CFLAGS_DEBUG) -lcunit $(SRC) $(TEST) src/main/main.c -o testar

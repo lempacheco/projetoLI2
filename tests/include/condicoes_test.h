@@ -10,3 +10,4 @@
 void testar_verifRiscadaOrt();
 void testar_verifBranco();
 void testar_verificar(); 
+void testar_verificaCaminho(); 

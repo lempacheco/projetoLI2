@@ -14,20 +14,12 @@ int gravaFicheiro(char* nomeM, char* nomeS, Matriz* m, StackMat* s){
 
     //matriz
     fpM = fopen(nomeM, "w");
-    if (fpM == NULL) {
-        printf ("Erro ao abrir o ficheiro.");
-        return 1; 
-    }
-    
+
     if (gravaMatriz(m, fpM)) return 1;
     fclose(fpM);
 
     //stackMat
     fpS = fopen(nomeS, "w");
-    if (fpS == NULL) {
-        printf ("Erro ao abrir o ficheiro.");
-        return 1; 
-    }
 
     if (gravaStackMat(s,fpS)) return 1;
     fclose(fpS);

@@ -1,0 +1,238 @@
+Function 'copiaMatriz'
+Lines executed:100.00% of 14
+
+Function 'pop'
+Lines executed:100.00% of 11
+
+Function 'push'
+Lines executed:100.00% of 10
+
+Function 'liberaStackMat'
+Lines executed:100.00% of 10
+
+Function 'liberaMatriz'
+Lines executed:100.00% of 6
+
+Function 'isEmpty'
+Lines executed:100.00% of 2
+
+Function 'isFull'
+Lines executed:100.00% of 2
+
+Function 'initMatriz'
+Lines executed:100.00% of 5
+
+Function 'initStackMat'
+Lines executed:100.00% of 8
+
+File 'src/stackMats.c'
+Lines executed:100.00% of 66
+Creating 'stackMats.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:100.00% of 2
+Creating 'stdio2.h.gcov'
+
+Lines executed:100.00% of 68
+Function 'mostraMatriz'
+Lines executed:0.00% of 11
+
+File 'src/output.c'
+Lines executed:0.00% of 9
+Creating 'output.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:0.00% of 2
+Creating 'stdio2.h.gcov'
+
+Lines executed:0.00% of 11
+Function 'manterCaminho'
+Lines executed:0.00% of 12
+
+Function 'pintarVizinhosDeRiscadas'
+Lines executed:0.00% of 18
+
+Function 'riscarIguaisDeLetraBranca'
+Lines executed:0.00% of 16
+
+Function 'ajuda'
+Lines executed:0.00% of 28
+
+File 'src/ajuda.c'
+Lines executed:0.00% of 72
+Creating 'ajuda.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:0.00% of 2
+Creating 'stdio2.h.gcov'
+
+Lines executed:0.00% of 74
+Function 'leNumero'
+Lines executed:93.33% of 15
+
+Function 'leStackMat'
+Lines executed:100.00% of 19
+
+Function 'leMatriz'
+Lines executed:100.00% of 18
+
+Function 'leFicheiro'
+Lines executed:100.00% of 19
+
+File 'src/leFicheiro.c'
+Lines executed:98.55% of 69
+Creating 'leFicheiro.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:100.00% of 2
+Creating 'stdio2.h.gcov'
+
+Lines executed:98.59% of 71
+Function 'gravaStackMat'
+Lines executed:100.00% of 10
+
+Function 'gravaMatriz'
+Lines executed:100.00% of 8
+
+Function 'gravaFicheiro'
+Lines executed:100.00% of 11
+
+File 'src/gravaFicheiro.c'
+Lines executed:100.00% of 27
+Creating 'gravaFicheiro.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:100.00% of 2
+Creating 'stdio2.h.gcov'
+
+Lines executed:100.00% of 29
+Function 'escolheComandos'
+Lines executed:0.00% of 81
+
+Function 'riscar'
+Lines executed:122.22% of 9
+
+Function 'branco'
+Lines executed:100.00% of 10
+
+File 'src/comandos.c'
+Lines executed:20.65% of 92
+Creating 'comandos.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:100.00% of 2
+Creating 'stdio2.h.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio.h'
+Lines executed:0.00% of 2
+Creating 'stdio.h.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/string_fortified.h'
+Lines executed:0.00% of 4
+Creating 'string_fortified.h.gcov'
+
+Lines executed:21.00% of 100
+Function 'liberaQueue'
+Lines executed:100.00% of 6
+
+Function 'dequeue'
+Lines executed:100.00% of 7
+
+Function 'enqueue'
+Lines executed:100.00% of 17
+
+Function 'isEmptyQ'
+Lines executed:100.00% of 3
+
+Function 'initQueue'
+Lines executed:100.00% of 7
+
+File 'src/queueFunc.c'
+Lines executed:100.00% of 40
+Creating 'queueFunc.c.gcov'
+
+Lines executed:100.00% of 40
+Function 'liberaListaPos'
+Lines executed:100.00% of 6
+
+Function 'liberaGrupos'
+Lines executed:100.00% of 11
+
+Function 'imprimeGrupos'
+Lines executed:0.00% of 20
+
+Function 'imprimeCabeca'
+Lines executed:0.00% of 4
+
+Function 'imprimeCauda'
+Lines executed:0.00% of 8
+
+Function 'adicionarLista'
+Lines executed:100.00% of 10
+
+Function 'adicionarPos'
+Lines executed:100.00% of 10
+
+Function 'pertenceAoGrupo'
+Lines executed:100.00% of 4
+
+Function 'listasIguais'
+Lines executed:100.00% of 12
+
+Function 'posPertence'
+Lines executed:100.00% of 4
+
+File 'src/listasFunc.c'
+Lines executed:65.52% of 87
+Creating 'listasFunc.c.gcov'
+
+File '/usr/include/x86_64-linux-gnu/bits/stdio2.h'
+Lines executed:0.00% of 2
+Creating 'stdio2.h.gcov'
+
+Lines executed:64.04% of 89
+Function 'verificaCaminho'
+Lines executed:100.00% of 41
+
+Function 'verificar'
+Lines executed:100.00% of 11
+
+Function 'verifBranco'
+Lines executed:95.65% of 23
+
+Function 'verifRiscadaOrt'
+Lines executed:100.00% of 18
+
+File 'src/condicoes.c'
+Lines executed:98.92% of 93
+Creating 'condicoes.c.gcov'
+
+Lines executed:98.92% of 93
+Function 'main'
+Lines executed:100.00% of 36
+
+File 'tests/main/main.c'
+Lines executed:100.00% of 36
+Creating 'main.c.gcov'
+
+Lines executed:100.00% of 36
+Function 'existe'
+Lines executed:0.00% of 6
+
+Function 'realocaIJ'
+Lines executed:0.00% of 4
+
+Function 'realocaRep'
+Lines executed:0.00% of 5
+
+Function 'encontraRep'
+Lines executed:0.00% of 18
+
+Function 'resolveTabuleiro'
+Lines executed:0.00% of 12
+
+File 'src/resolve.c'
+Lines executed:0.00% of 45
+Creating 'resolve.c.gcov'
+
+Lines executed:0.00% of 45

@@ -12,6 +12,7 @@ lib/*
 !lib/teste5.txt
 !lib/teste6.txt
 !lib/teste7.txt
+!lib/teste8.txt
 !lib/history
 lib/history/*
 !lib/history/teste1.txt
@@ -21,3 +22,4 @@ lib/history/*
 !lib/history/teste5.txt
 !lib/history/teste6.txt
 !lib/history/teste7.txt
+!lib/history/teste8.txt

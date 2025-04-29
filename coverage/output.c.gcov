@@ -1,0 +1,24 @@
+        -:    0:Source:src/output.c
+        -:    0:Graph:coverage/output.gcno
+        -:    0:Data:coverage/output.gcda
+        -:    0:Runs:1
+        -:    1:#include "../include/output.h"
+        -:    2:
+        -:    3:/* Percorre a matriz fornecida e imprime os seus elementos no terminal. 
+        -:    4:*/
+        -:    5:
+    #####:    6:int mostraMatriz (Matriz *m) {
+    #####:    7:    int i, j; 
+        -:    8:
+    #####:    9:    printf("\n");
+        -:   10:    
+    #####:   11:    for(i=0; i<m->L; i++){
+    #####:   12:        for (j=0; j<m->C; j++){
+    #####:   13:            printf("%c ",m->matriz[i][j]); 
+        -:   14:        }
+    #####:   15:        printf("\n"); 
+        -:   16:    }
+    #####:   17:    printf("\n>>> ");
+        -:   18:
+    #####:   19:    return 0; 
+        -:   20:}
