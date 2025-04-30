@@ -7,6 +7,7 @@
 #include "../include/stackMats.h"
 #include "../include/ajuda.h"
 #include "../include/condicoes.h"
+#include "../include/mensagens.h"
 
 typedef struct grupo{
     Pos p1;
@@ -21,7 +22,7 @@ typedef struct grupos{
     int tam;
 }Grupos;
 
-int resolve(Matriz* m, Queue* q);
+int resolve(Matriz* m, Matriz* mInicial, Queue* q);
 int encontraABA(Matriz* m, Grupos* caminho);
 int encontraAAXA(Matriz* m, Grupos* caminho);
 void resolveABA(Matriz* m, Grupos* caminho);
@@ -29,3 +30,4 @@ void resolveAAXA(Matriz* m, Grupos* caminho);
 int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho);
 int ganhou(Matriz* m);
 void tudoBranco(Matriz* m);
+//int verificaTudoBranco(Matriz* m);

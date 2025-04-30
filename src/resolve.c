@@ -1,24 +1,34 @@
 #include "../include/resolve.h"
 
-int resolve(Matriz* m, Queue* q){
-    //NodeGrupo* grupo;
+int resolve(Matriz* m, Matriz* mInicial, Queue* q){
+    /* Matriz t;
+    initMatriz(&t); */
+
 
     Grupos caminho;
     caminho.gs = malloc(sizeof(Grupo));
     caminho.tam=1;
     caminho.cab=-1;
 
-    Matriz mInicial;
-    initMatriz(&mInicial);
-    copiaMatriz(&mInicial, m);
+    if (ganhou(m)){
+        mensagens("O tabuleiro já está resolvido.");
+
+        free(caminho.gs);
+        return -1;
+    }
+
+    copiaMatriz(m, mInicial);
 
     if (!encontraABA(m, &caminho)){
         if (!encontraAAXA(m, &caminho)){
             tudoBranco(m);
             if (!ganhou(m)){
-                mvprintw(1, 0, "Tabuleiro é impossível.");
+                mensagens("Tabuleiro é impossível.");
+
+                free(caminho.gs);
                 return 0;
             }else{
+                free(caminho.gs);
                 return 1;
             }
         }else{
@@ -33,8 +43,15 @@ int resolve(Matriz* m, Queue* q){
     while(!ganhou(m)){
         if (!encontraABA(m, &caminho)){
             if (!encontraAAXA(m, &caminho)){
-                if (retrocedeCaminho(m, &mInicial, &caminho) == -1){
-                    mvprintw(1, 0, "Tabuleiro é impossível.");
+                /* copiaMatriz(&t, m);
+                if (verificaTudoBranco(&t) == 1){
+                    tudoBranco(m);
+                    return 1;
+                } */
+                if (retrocedeCaminho(m, mInicial, &caminho) == -1){
+                    mensagens("Tabuleiro é impossível.");
+
+                    free(caminho.gs);
                     return 0;
                 }
             }else{
@@ -48,7 +65,6 @@ int resolve(Matriz* m, Queue* q){
     }
 
     free(caminho.gs);
-    liberaMatriz(&mInicial);
 
     return 1;
 }
@@ -224,7 +240,19 @@ int ganhou(Matriz* m){
 void tudoBranco(Matriz* m){
     for (int i=0; i<m->L; i++){
         for (int j=0; j<m->C; j++){
-            if (m->matriz[i][j] != '#') m->matriz[i][j] = toupper(m->matriz[i][j]);
+            if (m->matriz[i][j] != '#' && !isupper(m->matriz[i][j])) m->matriz[i][j] = toupper(m->matriz[i][j]);
         }
     }
 }
+
+/* int verificaTudoBranco(Matriz* m){
+    NodeGrupo* grupos = NULL;
+
+    tudoBranco(m);
+
+    int r = verificar(m, &grupos);
+
+    liberaGrupos(grupos);
+
+    return r;
+} */

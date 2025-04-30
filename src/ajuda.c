@@ -2,7 +2,6 @@
 
 int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
     NodeGrupo* grupos = NULL;
-    int r = 0;
     Matriz t;
 
     initMatriz(&t);
@@ -33,7 +32,7 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
 
         copiaMatriz(m, &t);
         liberaMatriz(&t);
-        printf("O tabuleiro já não é válido");
+        //printf("O tabuleiro já não é válido");
         return -1;
     }
 
@@ -140,4 +139,8 @@ int saoIguais(Matriz* m1, Matriz* m2){
     }
 
     return r;
+}
+
+void ajudaSempre(Matriz* m, Queue* q){
+    while (ajuda(m, q)==1);
 }
