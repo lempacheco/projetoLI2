@@ -2,7 +2,6 @@
 
 int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
     NodeGrupo* grupos = NULL;
-    int r = 0;
     Matriz t;
 
     initMatriz(&t);
