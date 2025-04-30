@@ -416,20 +416,61 @@ void testar_escolheComandos(){
 
     // comando s
 
-    Queue q;
-    initQueue(&q);
-    NodeGrupo* grupos = NULL;
-    StackMat s;
-    initStackMat(&s);
+    Queue q1;
+    initQueue(&q1);
+    NodeGrupo* grupos1 = NULL;
+    StackMat s1;
+    initStackMat(&s1);
 
     char *linha1 = "s"; 
-    int r1 = escolheComandos(&m1, &s, &q, linha1, &grupos); 
+    int r1 = escolheComandos(&m1, &s1, &q1, linha1, &grupos1); 
     CU_ASSERT_EQUAL(r1, 1);
 
-    liberaGrupos(grupos); 
+    liberaGrupos(grupos1); 
     liberaMatriz(&m1);
-    liberaStackMat(&s);
-    liberaQueue(&q); 
-     
+    liberaStackMat(&s1);
+    liberaQueue(&q1); 
+
+    // comando d 
+
+    Queue q2;
+    initQueue(&q2);
+    NodeGrupo* grupos2 = NULL;
+
+    char matrizExpected2[5][5] = {
+        "ecAdc",
+        "dcdec",
+        "bd##e",
+        "cdeeb",
+        "accbb"
+    };
+
+    Matriz m2 = criaMatriz(5,5,matrizExpected2); 
+
+    char dadosExpected1[2][5][5] = {{  
+        "ecAdc",
+        "dcdec",
+        "bddce",
+        "cdeeb",
+        "accbb"}, 
+    {
+        "ecAdc",
+        "dcdec",
+        "bd#ce",
+        "cdeeb",
+        "accbb"
+    }};
+
+    char comandos1[2] = {'b','r'};
+    StackMat s2 = criaStackMat(0, 2, 5, 5, dadosExpected1, comandos1);
+
+    char *linha2 = "d"; 
+    int r2 = escolheComandos(&m2, &s2, &q2, linha2, &grupos2); 
+    CU_ASSERT_EQUAL(r2, 0);
+
+    liberaGrupos(grupos2); 
+    liberaMatriz(&m2);
+    liberaStackMat(&s2);
+    liberaQueue(&q2); 
 
 }

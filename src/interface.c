@@ -95,7 +95,10 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
         } else if (ch == '\n') {
             linha[pos] = '\0'; // Termina a string
 
-
+            if (strcmp(linha,"D")==0){
+                int d = dicas(m,q);
+                mvprintw(LINES-1,0, "Existem %d casas erradas.", d);
+            }
             if (strcmp(linha, "t") == 0) {
                 clear();
                 attron(COLOR_PAIR(1));
@@ -150,8 +153,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
                     while (getch() != '\n');
                     return RET_OK;
                 }
-                if (strcmp(linha,"D")==0){
-                    mvprintw(LINES,0,dicas(m,q));                }
+
 
                 if (r == RET_SAIR) {
                     clear();

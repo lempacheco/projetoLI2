@@ -115,11 +115,13 @@ void testar_dequeue(){
     Queue q1In = criaQueue(1, 10,listaPosIn1);
     Queue q1F;
     q1F.cap = 10;
-    q1F.tam = 1;
-    q1F.inicio = 0;
+    q1F.tam = 0;
+    q1F.inicio = 1;
     q1F.valores=NULL;
 
+
     r1=dequeue(&q1In,listaPos);
+
     comparaQueue(&q1In,&q1F);
     CU_ASSERT_EQUAL(r1,0);
     CU_ASSERT_EQUAL(listaPos[0].c,1);
@@ -141,7 +143,7 @@ void testar_dequeue(){
     q2F.valores=NULL;
 
     r2=dequeue(&q2In,listaPos);
-    printf("\n%d %d",q2In.tam,q2In.inicio);
+  
     CU_ASSERT_EQUAL(q2In.tam,0);
     CU_ASSERT_EQUAL(q2In.cap,10);
     CU_ASSERT_EQUAL(q2In.inicio,0);
