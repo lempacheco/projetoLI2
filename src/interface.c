@@ -171,6 +171,8 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
                     mvprintw(LINES - 1, 0, "Comando desconhecido.");
                     refresh();
                     napms(500);
+                }else if (r == RET_POP) {
+                    return r;
                 }
             }
 

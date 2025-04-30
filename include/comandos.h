@@ -19,7 +19,7 @@
 #include "../include/dicas.h"
 #include "../include/geraTabuleiro.h"
 
-#define RET_INVALIDO -1
+#define RET_POP -1
 #define RET_OK 0
 #define RET_SAIR 1
 #define RET_DESFAZ 2

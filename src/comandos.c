@@ -82,7 +82,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         if (t==1) r=7; 
         else r = 8;  
 
-    if (c == 'l') {
+    /* if (c == 'l') {
         push(s, m, c); 
         nomeFile = malloc(sizeof(char));
         nomeFile[0] = getchar(); //ignora o espaço
@@ -126,25 +126,19 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         free(caminhoM);
         free(caminhoS);
         return r; 
-    }
+    } */
 
-    if (c == 'a') { 
+    /* if (c == 'a') { 
         push(s,m,c);
         r = ajuda(m, q);
         if (r==1) r=0;
         return r; 
-    }
+    } */
 
-    if (c == 'R') { 
-        push(s,m,c);
-        resolve(m, q); 
-        return 0; 
-    }
-
-    if (c == 'A'){
+    /* if (c == 'A'){
         s->ajuda = 1; // ativou
 
-    }
+    } */
 
     if (c == 'G'){
         push(s,m,c);
@@ -190,8 +184,10 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
 
     if (c == 'R') {
         push(s, m, c);
-        resolve(m, q);
-        return 0;
+        //copiaMatriz(m, &s->mInicial);
+        r = resolve(m, &s->mInicial, q);
+        if (r==1) r=0;
+        return r;
     }
 
     if (c == 'A') {
