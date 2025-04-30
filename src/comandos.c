@@ -77,10 +77,10 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         return 0;
     }
     
-    if (c == 'v') {
+    /* if (c == 'v') {
         int t = 0; 
         NodeGrupo* grupos = NULL;
-        verificar(m, &grupos);
+        int absald = verificar(m, &grupos);
         t = verificaCaminho(m, q);
         if (t==1){
             printf("\nExiste um caminho ortogonal entre quaisquer duas casas brancas no tabuleiro.\n"); 
@@ -92,7 +92,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         liberaGrupos(grupos); 
         return r; 
         
-    }
+    } */
 
     if (c == 'l') {
         push(s, m, c); 
@@ -157,6 +157,12 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
         s->ajuda = 1; // ativou
 
     }
+
+    if (c == 'G'){
+        push(s,m,c);
+        geraTabuleiro(m); 
+        return 0; 
+    }
  
     if (c == 'r' || c == 'b'){
         push(s, m, c);
@@ -203,7 +209,7 @@ int escolheComandos (Matriz *m, StackMat *s, Queue *q){
     
     }
 
-    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R'){
+    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R' && c != 'G'){
         r = RET_COMANDO_DESCONHECIDO; 
     }
 

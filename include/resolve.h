@@ -29,3 +29,4 @@ void resolveAAXA(Matriz* m, Grupos* caminho);
 int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho);
 int ganhou(Matriz* m);
 void tudoBranco(Matriz* m);
+//int verificaTudoBranco(Matriz* m);

@@ -36,11 +36,11 @@ jogogcov:
 
 .PHONY: testar
 testar:
-	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
+	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 
 .PHONY: testargcov
 testargcov:
-	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
+	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 	@find tests -name '*.gcno' -exec mv {} coverage/ \;
 
 

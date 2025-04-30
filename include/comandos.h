@@ -15,6 +15,7 @@
 #include "../include/resolve.h"
 #include "../include/ajuda.h"
 #include "../include/mensagens.h"
+#include "../include/geraTabuleiro.h"
 
 #define RET_INVALIDO -1
 #define RET_OK 0
