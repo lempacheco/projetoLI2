@@ -140,3 +140,7 @@ int saoIguais(Matriz* m1, Matriz* m2){
 
     return r;
 }
+
+void ajudaSempre(Matriz* m, Queue* q){
+    while (ajuda(m, q)==1);
+}

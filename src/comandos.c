@@ -190,8 +190,13 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         return r;
     }
 
-    if (c == 'A') {
+    if (c == 'B') {
         s->ajuda = 1;
+        return 0;
+    }
+
+    if (c == 'A') {
+        ajudaSempre(m, q);
         return 0;
     }
 
@@ -229,7 +234,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         return r;
     }
 
-    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R' && c != 'G'){
+    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R' && c != 'G' && c != 'B'){
         r = RET_COMANDO_DESCONHECIDO; 
     }
 
