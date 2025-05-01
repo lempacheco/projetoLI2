@@ -2,6 +2,7 @@
 jogo
 testar
 debug
+coverage/
 lib/*
 !lib/exemplo1.txt
 !lib/exemplo2.txt

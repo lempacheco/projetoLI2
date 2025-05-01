@@ -10,38 +10,14 @@ TEST = tests/*.c
 jogo:
 	$(CC) $(CFLAGS) $(SRC) src/main/main.c -o jogo -lncurses -ltinfo
 
-jogogcov:
-	rm -r coverage
-	mkdir -p coverage
-	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) src/main/main.c -o testar
-	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
-	./testar
-	find . -maxdepth 1 -name '*.gcda' -exec mv {} coverage/ \;
-
-	cd coverage && \
-	for f in *; do \
-		if [ -f "$$f" ]; then \
-			nome_corrigido=$$(echo "$$f" | cut -c8-); \
-			mv "$$f" "$$nome_corrigido"; \
-		fi; \
-	done
-
-	find src -name '*.c' | while read file; do \
-		gcov -f -o coverage "$$file" >> coverage/output; \
-	done
-
-	mv *.gcov coverage/
-	rm coverage/*.gcno coverage/*.gcda
-
 .PHONY: testar
 testar:
 	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 
 .PHONY: testargcov
-testargcov:
-	rm -r coverage
+gcov:
 	mkdir -p coverage
-	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar
+	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
 	./testar
 	find . -maxdepth 1 -name '*.gcda' -exec mv {} coverage/ \;
