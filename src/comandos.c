@@ -69,7 +69,10 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     if (c == 's') return RET_SAIR;
 
     if (c == 'd') {
-        if (!pop(s, m)) return RET_DESFAZ;
+        if (isEmpty(s)) mensagens ("Não há mais comandos para retroceder."); 
+        if (!pop(s, m)){
+            return RET_DESFAZ;
+        } 
         return 0;
     }
 

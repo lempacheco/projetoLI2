@@ -7,7 +7,7 @@
 */
 
 
- int mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
+int mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
     int linhaOffset = 2, colunaOffset = 4;
     char letraColuna = 'a' + scrollColuna;
 

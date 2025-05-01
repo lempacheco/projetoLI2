@@ -110,65 +110,6 @@ NodeGrupo* adicionarLista (NodeGrupo* grupo, NodePosicao* lista, int mensagem) {
     return grupo; 
 }
 
-/*
- Imprime no terminal a cauda de uma lista.  
-*/
-void imprimeCauda (NodePosicao* lista) {
-    if (lista == NULL) {
-        printf("  (nenhuma posição)\n");
-        return;
-    }
-
-    NodePosicao* atual = lista->prox; 
-  
-    while (atual != NULL) {
-        printf(" (%c, %d)\n", (atual->p.l) + 'a', atual->p.c); 
-        atual = atual->prox; 
-    }
-}
-
-/*
- Imprime no terminal a cabeça de uma lista.  
-*/
-void imprimeCabeca (NodePosicao* lista){
-    if (lista != NULL)
-        printf(" (%c, %d) ", (lista->p.l) + 'a', lista->p.c); 
-}
-    
-/*
- Imprime no terminal um grupo, ou seja um conjunto de listas.  
-*/
-void imprimeGrupos (NodeGrupo* grupo) {
-    
-    if (grupo == NULL) {
-        printf("Não houve quaisquer posições inválidas atingidas.\n"); 
-    }
-
-    NodeGrupo* atualGrupo = grupo;
-
-    while (atualGrupo != NULL) {
-        if (atualGrupo->m == 0) {
-            printf("A posicão");
-            imprimeCabeca(atualGrupo->cabeca);
-            printf("tem as seguintes posições riscadas na ortogonal:\n");
-            imprimeCauda(atualGrupo->cabeca);
-
-        } else if (atualGrupo->m == 1) {
-            printf("As seguintes posições estão brancas duplicadas na mesma linha/coluna:\n");
-            imprimeCabeca(atualGrupo->cabeca);
-            printf("\n"); 
-            imprimeCauda(atualGrupo->cabeca); 
-
-        } else {
-            printf("Tipo de restrição desconhecido:\n");
-        }
-
-        
-        atualGrupo = atualGrupo->prox;
-        printf("\n");
-    }
-}
-
 void liberaGrupos(NodeGrupo* lista) {
     while (lista != NULL) {
         NodeGrupo* grupoAtual = lista;

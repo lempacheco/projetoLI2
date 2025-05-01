@@ -57,3 +57,21 @@ void liberaQueue (Queue *q){
     q->tam=0; 
 
 }
+
+Queue copiaQueue(Queue* q) {
+    Queue nova;
+    nova.cap = q->cap;
+    nova.tam = q->tam;
+    nova.inicio = q->inicio;
+
+    if (q->valores != NULL && q->cap > 0) {
+        nova.valores = malloc(sizeof(Pos) * q->cap);
+        for (int i = 0; i < q->cap; i++) {
+            nova.valores[i] = q->valores[i];
+        }
+    } else {
+        nova.valores = NULL;
+    }
+
+    return nova;
+}

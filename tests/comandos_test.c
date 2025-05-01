@@ -462,11 +462,11 @@ void testar_escolheComandos(){
     }};
 
     char comandos1[2] = {'b','r'};
-    StackMat s2 = criaStackMat(0, 2, 5, 5, dadosExpected1, comandos1);
+    StackMat s2 = criaStackMat(1, 2, 5, 5, dadosExpected1, comandos1);
 
     char *linha2 = "d"; 
     int r2 = escolheComandos(&m2, &s2, &q2, linha2, &grupos2); 
-    CU_ASSERT_EQUAL(r2, 0);
+    CU_ASSERT_EQUAL(r2, 2);
 
     liberaGrupos(grupos2); 
     liberaMatriz(&m2);
