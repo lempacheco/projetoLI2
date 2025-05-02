@@ -77,79 +77,21 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     }
 
     if (c == 'v') {
-  
+        
         int t = 0; 
         
         verificar(m, grupos);
         t = verificaCaminho(m, q);
         if (t==1) r=7; 
-        else r = 8;  
-
-    /* if (c == 'l') {
-        push(s, m, c); 
-        nomeFile = malloc(sizeof(char));
-        nomeFile[0] = getchar(); //ignora o espaço
-        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
-            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
-        }
-        nomeFile[i] = '\0';
-        char* caminhoM = malloc(sizeof(char)*(i+5));
-        strcpy(caminhoM, "lib/");
-        strcat(caminhoM, nomeFile); 
-
-        char* caminhoS = malloc(sizeof(char)*(i+14));
-        strcpy(caminhoS, "lib/history/");
-        strcat(caminhoS, nomeFile); 
-
-        r = leFicheiro(caminhoM, caminhoS, m, s);
-        free(nomeFile);
-        free(caminhoM);
-        free(caminhoS);
+        else r = 8; 
+ 
         return r; 
     }
-
-    if (c == 'g') {
-
-        nomeFile = malloc(sizeof(char));
-        nomeFile[0] = getchar(); //ignora o espaço
-        for (i=0; (nomeFile[i] = getchar())!='\n'; i++){
-            nomeFile = realloc(nomeFile, sizeof(char)*(i+2));
-        }
-        nomeFile[i] = '\0';
-        char* caminhoM = malloc(sizeof(char)*(i+5));
-        strcpy(caminhoM, "lib/");
-        strcat(caminhoM, nomeFile); 
-
-        char* caminhoS = malloc(sizeof(char)*(i+14));
-        strcpy(caminhoS, "lib/history/");
-        strcat(caminhoS, nomeFile); 
-
-        r = gravaFicheiro(caminhoM, caminhoS, m, s); 
-        free(nomeFile);
-        free(caminhoM);
-        free(caminhoS);
-        return r; 
-    } */
-
-    /* if (c == 'a') { 
-        push(s,m,c);
-        r = ajuda(m, q);
-        if (r==1) r=0;
-        return r; 
-    } */
-
-    /* if (c == 'A'){
-        s->ajuda = 1; // ativou
-
-    } */
 
     if (c == 'G'){
         push(s,m,c);
         geraTabuleiro(m); 
         return 0; 
-    }
- 
-        return r; 
     }
 
     if (c == 'l' || c == 'g') {
@@ -182,12 +124,14 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     if (c == 'a') {
         push(s, m, c);
         r = ajuda(m, q);
-        return (r == 1) ? 0 : r;
+        if (r == 1)
+            return 0;
+        else
+            return r;
     }
-
+    
     if (c == 'R') {
         push(s, m, c);
-        //copiaMatriz(m, &s->mInicial);
         r = resolve(m, &s->mInicial, q);
         if (r==1) r=0;
         return r;

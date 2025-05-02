@@ -122,6 +122,36 @@ void testar_verifRiscadaOrt(){
 
     liberaMatriz(&m7);
     liberaGrupos(grupo7);
+
+    // caso para cobrir o pertenceGrupo.
+
+    char matrizExpected8[5][5] = {
+        "##adc",  
+        "###tc",  
+        "b#dce",  
+        "csdeb",
+        "accbb"
+    };
+    
+    NodePosicao* listaExistente = NULL;
+    listaExistente = adicionarPos(listaExistente, 2, 1); 
+    listaExistente = adicionarPos(listaExistente, 1, 2); 
+    listaExistente = adicionarPos(listaExistente, 1, 0);  
+    listaExistente = adicionarPos(listaExistente, 0, 1);  
+    listaExistente = adicionarPos(listaExistente, 1, 1);  
+    
+    NodeGrupo* grupo8 = NULL;
+    grupo8 = adicionarLista(grupo8, listaExistente, 0);
+    
+    Matriz m8 = criaMatriz(5, 5, matrizExpected8);
+    int r8 = verifRiscadaOrt(&m8, 1, 1, &grupo8);
+    CU_ASSERT_EQUAL(r8, 0);
+    
+   
+    CU_ASSERT_PTR_NULL(grupo8->prox);  // apenas um grupo deve existir
+    
+    liberaMatriz(&m8);
+    liberaGrupos(grupo8);
 }
 
 void testar_verifBranco(){
