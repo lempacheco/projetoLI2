@@ -234,6 +234,7 @@ int ganhou(Matriz* m){
             if (m->matriz[i][j] != '#' && !isupper(m->matriz[i][j])) r=0;
         }
     }
+    liberaGrupos(&grupo);
     return r;
 }
 
