@@ -31,6 +31,7 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
         liberaGrupos(grupos); grupos = NULL;
 
         copiaMatriz(m, &t);
+        liberaMatriz(&t);
         return -1;
     }
 
