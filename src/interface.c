@@ -170,7 +170,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
                 else if (r == RET_DESFAZ) {
                     mvprintw(LINES - 1, 0, "Desfazendo...");
                     refresh();
-                    napms(500);
+                    napms(500);  
                 }
                 else if (r == RET_COMANDO_DESCONHECIDO) {
                     mvprintw(LINES - 1, 0, "Comando desconhecido.");

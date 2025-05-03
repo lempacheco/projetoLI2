@@ -68,7 +68,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
 
     if (c == 's') return RET_SAIR;
 
-    if (c == 'd') {
+    if (strcmp(linha, "d")==0) {
         if (isEmpty(s)) mensagens ("Não há mais comandos para retroceder."); 
         if (!pop(s, m)){
             return RET_DESFAZ;
@@ -76,7 +76,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         return 0;
     }
 
-    if (c == 'v') { 
+    if (strcmp(linha, "v")==0) { 
         
         verificar(m, grupos);
         int t = verificaCaminho(m, q);
@@ -113,7 +113,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         return r;
     }
 
-    if (c == 'a') {
+    if (strcmp(linha, "a")==0) {
         push(s, m, c);
         r = ajuda(m, q);
         if (r == 1)
@@ -124,25 +124,25 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
             return r;
     }
     
-    if (c == 'R') {
+    if (strcmp(linha, "R")==0) {
         push(s, m, c);
         r = resolve(m, &s->mInicial, q);
         if (r==1) r=0;
         return r;
     }
 
-    if (c == 'B') {
+    if (strcmp(linha, "H")==0) {
         s->ajuda = 1;
         return 0;
     }
 
-    if (c == 'A') {
+    if (strcmp(linha, "A")==0) {
         push(s, m, c);
         r = ajudaSempre(m, q);
         return r;
     }
 
-    if (c == 'D') {
+    if (strcmp(linha, "D")==0) {
         r = dicas(m, &s->mInicial, q);
         return r;
     }
@@ -160,11 +160,19 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
             i++;
         }
 
+        
         if (pc - 'a' < 0 || pc - 'a' >= m->C || pl <= 0 || pl > m->L) {
             mensagens("Posição inválida.");
             return RET_OK;
         }
 
+        while (linha[i]!='\0'){
+            if (linha[i] != ' ') {
+                mensagens ("Comando inválido."); 
+                return -1; 
+            } 
+            i++; 
+        }
         Pos p = {pl, pc - 'a' + 1};
         if (c == 'b') {
             r = branco(m, p, &s->mInicial);
