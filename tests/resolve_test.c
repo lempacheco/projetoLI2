@@ -229,81 +229,141 @@ void testar_encontraABA() {
     liberaMatriz(&m3);
 }
 
-/* 
+
 void testar_retrocedeCaminho() {
-    // Caso 1: Retrocede em um grupo ABA, onde p1 está riscado
-    char matriz1[3][3] = {
-        "a#b",
-        "abc",
-        "def"
-    };
-    char matrizInicial1[3][3] = {
-        "abb",
-        "abc",
-        "def"
-    };
+    //1 grupo ABA p1 == #
+    char mat1[3][3] = {"#b#", "abc", "def"};
+    char matInicial1[3][3] = {"aba", "abc", "def"};
 
-    Matriz m1 = criaMatriz(3, 3, matriz1);
-    Matriz mInicial1 = criaMatriz(3, 3, matrizInicial1);
-    
-    Grupos caminho1;
-    caminho1.cab = 0;
-    caminho1.gs[0].b = 1;
-    caminho1.gs[0].p1.l = 0; caminho1.gs[0].p1.c = 1; // '#'
-    caminho1.gs[0].p3.l = 0; caminho1.gs[0].p3.c = 2;
+    Matriz m1 = criaMatriz(3, 3, mat1);
+    Matriz mi1 = criaMatriz(3, 3, matInicial1);
 
-    int r1 = retrocedeCaminho(&m1, &mInicial1, &caminho1);
-    CU_ASSERT_EQUAL(r1, 1);
-    CU_ASSERT_EQUAL(m1.matriz[0][1], matrizInicial1[0][1]);
+    Grupos g1;
+    g1.gs = malloc(sizeof(Grupo) * 2);
+    g1.cab = 0;
+    g1.gs[0].b = 1;
+    g1.gs[0].p1 = (Pos){0, 0};
+    g1.gs[0].p3 = (Pos){0, 2};
+
+    int r1 = retrocedeCaminho(&m1, &mi1, &g1);
+    CU_ASSERT_EQUAL(m1.matriz[0][0], 'a');
     CU_ASSERT_EQUAL(m1.matriz[0][2], '#');
+    CU_ASSERT_EQUAL(r1, 1);
 
+    free(g1.gs);
     liberaMatriz(&m1);
-    liberaMatriz(&mInicial1);
+    liberaMatriz(&mi1);
 
-    // Caso 2: Retrocede em um grupo AAXA, onde p3 não está riscado
-    char matriz2[3][3] = {
-        "#Ab",
-        "aAc",
-        "d#f"
+    //2 grupo ABA p3 == #
+    char mat2[1][3] = {
+        "Ab#"
     };
-    char matrizInicial2[3][3] = {
-        "aAb",
-        "aAc",
-        "dAf"
+    char matInicial2[1][3] = {
+        "aba"
     };
+    Matriz m2 = criaMatriz(1, 3, mat2);
+    Matriz m2i = criaMatriz(1, 3, matInicial2);
+    Grupos g2;
+    g2.cab = 0;
+    g2.gs = malloc(sizeof(Grupo)*2);
+    g2.gs[0].b = 1;
+    g2.gs[0].p1 = (Pos){0, 0};
+    g2.gs[0].p3 = (Pos){0, 2};
+    int r2 = retrocedeCaminho(&m2, &m2i, &g2);
+    CU_ASSERT_EQUAL(g2.cab, -1);
+    CU_ASSERT_EQUAL(r2, 0);
+    free(g2.gs); 
+    liberaMatriz(&m2); 
+    liberaMatriz(&m2i);
 
-    Matriz m2 = criaMatriz(3, 3, matriz2);
-    Matriz mInicial2 = criaMatriz(3, 3, matrizInicial2);
+    //3 grupo AAXA p1 != #
+    char mat3[1][4] = {
+        "abca"
+    };
+    char matInicial3[1][4] = {
+        "abca"
+    };
+    Matriz m3 = criaMatriz(1, 4, mat3);
+    Matriz m3i = criaMatriz(1, 4, matInicial3);
+    Grupos g3;
+    g3.cab = 0;
+    g3.gs = malloc(sizeof(Grupo)*2);
+    g3.gs[0].b = 0;
+    g3.gs[0].p1 = (Pos){0, 0};
+    g3.gs[0].p2 = (Pos){0, 1};
+    g3.gs[0].p3 = (Pos){0, 3};
+    int r3 = retrocedeCaminho(&m3, &m3i, &g3);
+    CU_ASSERT_EQUAL(m3.matriz[0][1], 'b');
+    CU_ASSERT_EQUAL(m3.matriz[0][0], '#');
+    CU_ASSERT_EQUAL(r3, 1);
+    free(g3.gs);
+    liberaMatriz(&m3); 
+    liberaMatriz(&m3i);
 
-    Grupos caminho2;
-    caminho2.cab = 0;
-    caminho2.gs[0].b = 0;
-    caminho2.gs[0].p1.l = 0; caminho2.gs[0].p1.c = 0; // '#'
-    caminho2.gs[0].p2.l = 1; caminho2.gs[0].p2.c = 1;
-    caminho2.gs[0].p3.l = 2; caminho2.gs[0].p3.c = 1;
+    //4 grupo AAXA p2 != #
+    char mat4[1][4] = {
+        "#bc#"
+    };
+    char matInicial4[1][4] = {
+        "abca"
+    };
+    Matriz m4 = criaMatriz(1, 4, mat4);
+    Matriz m4i = criaMatriz(1, 4, matInicial4);
+    Grupos g4;
+    g4.cab = 0;
+    g4.gs = malloc(sizeof(Grupo)*2);
+    g4.gs[0].b = 0;
+    g4.gs[0].p1 = (Pos){0, 0};
+    g4.gs[0].p2 = (Pos){0, 1};
+    g4.gs[0].p3 = (Pos){0, 3};
+    int r4 = retrocedeCaminho(&m4, &m4i, &g4);
+    CU_ASSERT_EQUAL(m4.matriz[0][3], 'a');
+    CU_ASSERT_EQUAL(m4.matriz[0][1], '#');
+    CU_ASSERT_EQUAL(r4, 1);
+    free(g4.gs); 
+    liberaMatriz(&m4); 
+    liberaMatriz(&m4i); 
 
-    int r2 = retrocedeCaminho(&m2, &mInicial2, &caminho2);
-    CU_ASSERT_EQUAL(r2, 1);
-    CU_ASSERT_EQUAL(m2.matriz[0][0], matrizInicial2[0][0]);
-    CU_ASSERT_EQUAL(m2.matriz[1][1], '#');
+    //5 grupo AAXA p3 != #
+    char mat5[1][4] = {
+        "##ca"
+    };
+    char matInicial5[1][4] = {
+        "abca"
+    };
+    Matriz m5 = criaMatriz(1, 4, mat5);
+    Matriz m5i = criaMatriz(1, 4, matInicial5);
+    Grupos g5;
+    g5.cab = 0;
+    g5.gs = malloc(sizeof(Grupo)*2);
+    g5.gs[0].b = 0;
+    g5.gs[0].p1 = (Pos){0, 0};
+    g5.gs[0].p2 = (Pos){0, 1};
+    g5.gs[0].p3 = (Pos){0, 3};
+    int r5 = retrocedeCaminho(&m5, &m5i, &g5);
+    CU_ASSERT_EQUAL(g5.cab, -1);
+    CU_ASSERT_EQUAL(m5.matriz[0][0], 'a');
+    CU_ASSERT_EQUAL(m5.matriz[0][1], 'b');
+    CU_ASSERT_EQUAL(r5, -1);
+    free(g5.gs); 
+    liberaMatriz(&m5); 
+    liberaMatriz(&m5i);
 
-    liberaMatriz(&m2);
-    liberaMatriz(&mInicial2);
-
-    // Caso 3: Caminho vazio
-    Matriz m3 = criaMatriz(2, 2, (char[2][2]){{'a','b'},{'c','d'}});
-    Matriz mInicial3 = criaMatriz(2, 2, (char[2][2]){{'a','b'},{'c','d'}});
-
-    Grupos caminho3;
-    caminho3.cab = -1;
-
-    int r3 = retrocedeCaminho(&m3, &mInicial3, &caminho3);
-    CU_ASSERT_EQUAL(r3, -1);
-
-    liberaMatriz(&m3);
-    liberaMatriz(&mInicial3);
+    //6 Não da para retroceder
+    char matAtual6[3][3] = {"abc","def","ghi"};
+    char matInicial6[3][3] = {"abc","def","ghi"};
+    Matriz m6 = criaMatriz(3, 3, matAtual6);
+    Matriz m6i = criaMatriz(3, 3, matInicial6);
+    Grupos g6;
+    g6.cab = -1;
+    g6.gs = malloc(sizeof(Grupo));
+    int r6 = retrocedeCaminho(&m6, &m6i, &g6);
+    CU_ASSERT_EQUAL(r6, -1);
+    free(g6.gs);
+    liberaMatriz(&m6); liberaMatriz(&m6i);
+    
 }
- */
+
 
 void testar_ganhou(){
 

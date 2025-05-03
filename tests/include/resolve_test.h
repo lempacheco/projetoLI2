@@ -10,5 +10,6 @@ void testar_encontraAAXA();
 void testar_encontraABA();
 void testar_resolveAAXA();
 void testar_resolveABA();
+void testar_retrocedeCaminho();
 void testar_ganhou();
 void testar_tudoBranco();

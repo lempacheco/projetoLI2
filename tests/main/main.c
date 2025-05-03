@@ -115,6 +115,8 @@ int main() {
 
     CU_add_test(pSuite, "testar_resolveABA", testar_resolveABA);
 
+    CU_add_test(pSuite, "testar_retrocedeCaminho", testar_retrocedeCaminho);
+
     CU_add_test(pSuite, "testar_ganhou", testar_ganhou); 
 
     CU_basic_run_tests();
