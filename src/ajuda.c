@@ -22,7 +22,7 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
         liberaGrupos(grupos); grupos = NULL;
 
     } else {
-        printf("O tabuleiro atual é inválido.\n");
+        mensagens("O tabuleiro atual é inválido.");
         liberaGrupos(grupos); grupos = NULL;
         liberaMatriz(&t);
         return -1;
@@ -142,6 +142,11 @@ int saoIguais(Matriz* m1, Matriz* m2){
     return r;
 }
 
-void ajudaSempre(Matriz* m, Queue* q){
-    while (ajuda(m, q)==1);
+int ajudaSempre(Matriz* m, Queue* q){
+    int c = 0; 
+    while (ajuda(m, q) == 1) c++;
+    if (c == 0) return -1; 
+
+    return 0; 
+    
 }

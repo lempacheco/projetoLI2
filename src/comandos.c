@@ -76,22 +76,14 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         return 0;
     }
 
-    if (c == 'v') {
-        
-        int t = 0; 
+    if (c == 'v') { 
         
         verificar(m, grupos);
-        t = verificaCaminho(m, q);
-        if (t==1) r=7; 
+        int t = verificaCaminho(m, q);
+        if (t==1) r = 7; 
         else r = 8; 
  
         return r; 
-    }
-
-    if (c == 'G'){
-        push(s,m,c);
-        geraTabuleiro(m); 
-        return 0; 
     }
 
     if (c == 'l' || c == 'g') {
@@ -126,6 +118,8 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         r = ajuda(m, q);
         if (r == 1)
             return 0;
+        else if (r == 0)
+            return -1; 
         else
             return r;
     }
@@ -143,13 +137,14 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     }
 
     if (c == 'A') {
-        push(s,m,c);
-        ajudaSempre(m, q);
-        return 0;
+        push(s, m, c);
+        r = ajudaSempre(m, q);
+        return r;
     }
 
     if (c == 'D') {
-        return 0;
+        r = dicas(m, &s->mInicial, q);
+        return r;
     }
 
     if (c == 'b' || c == 'r') {
