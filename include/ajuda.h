@@ -12,4 +12,4 @@ void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos);
 void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos);
 void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos);
 int saoIguais(Matriz* m1, Matriz* m2);
-void ajudaSempre(Matriz* m, Queue* q);
+int ajudaSempre(Matriz* m, Queue* q);
