@@ -3,9 +3,11 @@
 int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
     NodeGrupo* grupos = NULL;
     Matriz t;
+    
+    if (ganhou(m)) return 0;
 
     initMatriz(&t);
-    copiaMatriz(&t, m); // salvar estado inicial
+    copiaMatriz(&t, m); // salvar estado inicial)
 
     if (verificar(m, &grupos)) {
         liberaGrupos(grupos); grupos = NULL;

@@ -4,7 +4,7 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
     /* Matriz t;
     initMatriz(&t); */
 
-
+    
     Grupos caminho;
     caminho.gs = malloc(sizeof(Grupo));
     caminho.tam=1;
@@ -226,7 +226,7 @@ int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho){
 
 int ganhou(Matriz* m){
     NodeGrupo* grupo;
-    if (!verificar(m, &grupo)) return 0;
+    if (!verificar(m, &grupo)) {liberaGrupos(grupo); return 0;}
 
     int r = 1;
     for (int i=0; i<m->L && r; i++){
@@ -234,7 +234,7 @@ int ganhou(Matriz* m){
             if (m->matriz[i][j] != '#' && !isupper(m->matriz[i][j])) r=0;
         }
     }
-    liberaGrupos(&grupo);
+    liberaGrupos(grupo);
     return r;
 }
 

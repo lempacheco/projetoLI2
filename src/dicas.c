@@ -8,14 +8,13 @@ int dicas (Matriz* m, Matriz* mInicial,  Queue* q){
     q1 = copiaQueue(q);
     int count=0;
     copiaMatriz(&m1,m);
-    resolve(&m1, &mInicial, &q1);
+    resolve(&m1, mInicial, &q1);
     for (int i=0;i<m->L;i++){
         for (int j=0;j<m->C;j++){
             if(!islower(m->matriz[i][j]) && m->matriz[i][j]!= m1.matriz[i][j]) count++;
         }
     }
-    liberaMatriz(&m1);
-    liberaMatriz(&mInicial); 
+    liberaMatriz(&m1); 
     liberaQueue(&q1);
     return count; 
 } 

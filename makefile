@@ -44,4 +44,4 @@ clean:
 
 .PHONY: debug
 debug:
-	$(CC) $(CFLAGS_DEBUG) $(SRC) src/main/main.c -o debug -lncurses -ltinfo
+	$(CC) $(CFLAGS_DEBUG) -lcunit $(SRC) $(TEST) tests/main/main.c -o debug -lncurses -ltinfo

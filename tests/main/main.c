@@ -17,7 +17,7 @@ int main() {
 
     pSuite = CU_add_suite("test_suite", 0, 0);
 
-    CU_add_test(pSuite, "testar_ganhou", testar_ganhou);  
+    CU_add_test(pSuite, "testar_resolve", testar_resolve);  
 
     CU_add_test(pSuite, "testar_leMatriz", testar_leMatriz);
     
@@ -106,6 +106,16 @@ int main() {
     CU_add_test(pSuite, "testar_dequeue", testar_dequeue);
 
     CU_add_test(pSuite, "testar_tudoBranco", testar_tudoBranco); 
+
+    CU_add_test(pSuite, "testar_encontraAAXA", testar_encontraAAXA);
+
+    CU_add_test(pSuite, "testar_encontraABA", testar_encontraABA);
+
+    CU_add_test(pSuite, "testar_resolveAAXA", testar_resolveAAXA);
+
+    CU_add_test(pSuite, "testar_resolveABA", testar_resolveABA);
+
+    CU_add_test(pSuite, "testar_ganhou", testar_ganhou); 
 
     CU_basic_run_tests();
     return CU_get_error();

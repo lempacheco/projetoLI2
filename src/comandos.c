@@ -143,6 +143,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     }
 
     if (c == 'A') {
+        push(s,m,c);
         ajudaSempre(m, q);
         return 0;
     }
