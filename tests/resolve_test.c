@@ -54,7 +54,8 @@ void testar_resolve(){
     liberaQueue(&q2);
 
     //3 matriz impossivel
-    /* int r3;
+    /*
+    int r3;
     char matriz3[5][5] = {
         "aaaba",
         "aabaa",
@@ -76,7 +77,7 @@ void testar_resolve(){
     liberaMatriz(&m3In);
     liberaMatriz(&m3Fin);
     liberaMatriz(&m3Inicial);
-    liberaQueue(&q3);  */
+    liberaQueue(&q3);   */
 }
 
 void testar_resolveAAXA() {

@@ -6,6 +6,7 @@
 #include "../include/stackMats_test.h" 
 #include "../include/listasFunc_test.h" 
 #include "../include/queueFunc_test.h" 
+#include "../include/dicas_test.h"
 #include "../include/resolve_test.h" 
 #include <stdio.h>
 
@@ -16,6 +17,8 @@ int main() {
     CU_pSuite pSuite = NULL;
 
     pSuite = CU_add_suite("test_suite", 0, 0);
+
+    CU_add_test(pSuite, "testar_dicas", testar_dicas);
 
     CU_add_test(pSuite, "testar_resolve", testar_resolve);  
 
