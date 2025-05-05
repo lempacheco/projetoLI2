@@ -29,4 +29,11 @@
 int branco (Matriz *, Pos, Matriz*);
 int riscar (Matriz *, Pos);
 int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** grupos);
-int retroceder(Matriz *, StackMat *); 
+int comandoD(Matriz* m, StackMat* s);
+int comandoV(Matriz* m, Queue* q, NodeGrupo** grupos);
+int comandosLG(Matriz* m, StackMat* s, char* linha);
+int comandoA(Matriz* m, StackMat* s, Queue* q, char* linha);
+int comandoR(Matriz* m, StackMat* s, Queue* q, char* linha);
+int comandoRB(Matriz* m, StackMat* s, Queue* q, char* linha);
+
+/* int retroceder(Matriz *, StackMat *);  */

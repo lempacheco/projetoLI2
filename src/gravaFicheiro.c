@@ -1,5 +1,5 @@
 #include "../include/gravaFicheiro.h"
-#include<ncurses.h>
+#include <ncurses.h>
 
 /* Guarda a matriz fornecida num ficheiro com nome especificado,
    criando o caminho como "lib/<nome>". O ficheiro é escrito no seguinte formato:
@@ -16,7 +16,7 @@ int gravaFicheiro(char* nomeM, char* nomeS, Matriz* m, StackMat* s){
     //matriz
     fpM = fopen(nomeM, "w");
 
-    if (gravaMatriz(m, fpM)) return 1;
+    if (gravaMatriz(m, fpM)) return -1;
     fclose(fpM);
 
     //stackMat

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "../include/dataStructs.h"
 #include "../include/leFicheiro.h"
 #include <stdio.h>

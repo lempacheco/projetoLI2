@@ -630,5 +630,258 @@ void testar_escolheComandos(){
     liberaStackMat(&s8);
     liberaQueue(&q8);
 
+    // comando a
+
+    char matrizExpected9[5][5] = {
+        "ecadc",
+        "dcdec",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+
+    Matriz m9 = criaMatriz(5,5,matrizExpected9); 
+
+    Queue q9;
+    initQueue(&q9);
+    NodeGrupo* grupos9 = NULL;
+    StackMat s9;
+    initStackMat(&s9);
+
+    char *linha9 = "a"; 
+    int r9 = escolheComandos(&m9, &s9, &q9, linha9, &grupos9); 
+    CU_ASSERT_EQUAL(r9, 0);
+
+    liberaGrupos(grupos9); 
+    liberaMatriz(&m9);
+    liberaStackMat(&s9);
+    liberaQueue(&q9); 
+
+    char matrizExpected10[5][5] = {
+        "E#ADC",
+        "DC#E#",
+        "B#DCE",
+        "CDE#B", 
+        "A#CB#"
+    };
+
+    Matriz m10 = criaMatriz(5,5,matrizExpected10); 
+
+    Queue q10;
+    initQueue(&q10);
+    NodeGrupo* grupos10 = NULL;
+    StackMat s10;
+    initStackMat(&s10);
+
+    char *linha10 = "a"; 
+    int r10 = escolheComandos(&m10, &s10, &q10, linha10, &grupos10); 
+    CU_ASSERT_EQUAL(r10, -1);
+
+    liberaGrupos(grupos10); 
+    liberaMatriz(&m10);
+    liberaStackMat(&s10);
+    liberaQueue(&q10); 
+
+    char matrizExpected11[7][8] = {
+        "#Hffbgdd",
+        "Bfdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+   
+    };
+
+    Matriz m11 = criaMatriz(7,8,matrizExpected11); 
+
+    Queue q11;
+    initQueue(&q11);
+    NodeGrupo* grupos11 = NULL;
+    StackMat s11;
+    initStackMat(&s11);
+
+    char *linha11 = "a"; 
+    int r11 = escolheComandos(&m11, &s11, &q11, linha11, &grupos11); 
+    CU_ASSERT_EQUAL(r11, -1);
+
+    liberaGrupos(grupos11); 
+    liberaMatriz(&m11);
+    liberaStackMat(&s11);
+    liberaQueue(&q11); 
+
+    // comando r
+
+    char matrizExpected12[7][8] = {
+        "#Hffbgdd",
+        "Bfdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+   
+    };
+
+    Matriz m12 = criaMatriz(7,8,matrizExpected12); 
+
+    Queue q12;
+    initQueue(&q12);
+    NodeGrupo* grupos12 = NULL;
+    StackMat s12;
+    initStackMat(&s12);
+
+    char *linha12 = "r b 1"; 
+    int r12 = escolheComandos(&m12, &s12, &q12, linha12, &grupos12); 
+    CU_ASSERT_EQUAL(r12, 0);
+    CU_ASSERT_EQUAL(m12.matriz[0][1], '#');
+
+    liberaGrupos(grupos12); 
+    liberaMatriz(&m12);
+    liberaStackMat(&s12);
+    liberaQueue(&q12); 
+
+
+    char matrizExpected13[7][8] = {
+        "#Hffbgdd",
+        "Bfdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+   
+    };
+
+    Matriz m13 = criaMatriz(7,8,matrizExpected13); 
+
+    Queue q13;
+    initQueue(&q13);
+    NodeGrupo* grupos13 = NULL;
+    StackMat s13;
+    initStackMat(&s13);
+
+    char *linha13 = "r a 1"; 
+    int r13 = escolheComandos(&m13, &s13, &q13, linha13, &grupos13); 
+    CU_ASSERT_EQUAL(r13, 0);
+    CU_ASSERT_EQUAL(m13.matriz[0][0], '#');
+
+    liberaGrupos(grupos13); 
+    liberaMatriz(&m13);
+    liberaStackMat(&s13);
+    liberaQueue(&q13); 
+
+
+    char matrizExpected14[7][8] = {
+        "#Hffbgdd",
+        "Bfdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+   
+    };
+
+    Matriz m14 = criaMatriz(7,8,matrizExpected14); 
+
+    Queue q14;
+    initQueue(&q14);
+    NodeGrupo* grupos14 = NULL;
+    StackMat s14;
+    initStackMat(&s14);
+
+    char *linha14 = "r j 1"; 
+    int r14 = escolheComandos(&m14, &s14, &q14, linha14, &grupos14); 
+    CU_ASSERT_EQUAL(r14, 0);
+    CU_ASSERT_EQUAL(m14.matriz[0][10], '#');
+
+    liberaGrupos(grupos14); 
+    liberaMatriz(&m14);
+    liberaStackMat(&s14);
+    liberaQueue(&q14); 
+
+
+    // comando b
+
+
+    Matriz m15 = criaMatriz(7,8,matrizExpected12); 
+
+    Queue q15;
+    initQueue(&q15);
+    NodeGrupo* grupos15 = NULL;
+    StackMat s15;
+    initStackMat(&s15);
+
+    char *linha12 = "r b 1"; 
+    int r12 = escolheComandos(&m12, &s12, &q12, linha12, &grupos12); 
+    CU_ASSERT_EQUAL(r12, 0);
+    CU_ASSERT_EQUAL(m12.matriz[0][1], '#');
+
+    liberaGrupos(grupos12); 
+    liberaMatriz(&m12);
+    liberaStackMat(&s12);
+    liberaQueue(&q12); 
+
+
+    char matrizExpected13[7][8] = {
+        "#Hffbgdd",
+        "Bfdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+   
+    };
+
+    Matriz m13 = criaMatriz(7,8,matrizExpected13); 
+
+    Queue q13;
+    initQueue(&q13);
+    NodeGrupo* grupos13 = NULL;
+    StackMat s13;
+    initStackMat(&s13);
+
+    char *linha13 = "r a 1"; 
+    int r13 = escolheComandos(&m13, &s13, &q13, linha13, &grupos13); 
+    CU_ASSERT_EQUAL(r13, 0);
+    CU_ASSERT_EQUAL(m13.matriz[0][0], '#');
+
+    liberaGrupos(grupos13); 
+    liberaMatriz(&m13);
+    liberaStackMat(&s13);
+    liberaQueue(&q13); 
+
+
+    char matrizExpected14[7][8] = {
+        "#Hffbgdd",
+        "Bfdfaahe",
+        "ecgbfhgb",
+        "hdhbegfg",
+        "ddceefgg",
+        "hfbcafdc",
+        "dabcgdbc"
+   
+    };
+
+    Matriz m14 = criaMatriz(7,8,matrizExpected14); 
+
+    Queue q14;
+    initQueue(&q14);
+    NodeGrupo* grupos14 = NULL;
+    StackMat s14;
+    initStackMat(&s14);
+
+    char *linha14 = "r j 1"; 
+    int r14 = escolheComandos(&m14, &s14, &q14, linha14, &grupos14); 
+    CU_ASSERT_EQUAL(r14, 0);
+    CU_ASSERT_EQUAL(m14.matriz[0][10], '#');
+
+    liberaGrupos(grupos14); 
+    liberaMatriz(&m14);
+    liberaStackMat(&s14);
+    liberaQueue(&q14); 
+
 
 }

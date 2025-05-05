@@ -1,9 +1,6 @@
 #include "../include/resolve.h"
 
 int resolve(Matriz* m, Matriz* mInicial, Queue* q){
-    /* Matriz t;
-    initMatriz(&t); */
-
     
     Grupos caminho;
     caminho.gs = malloc(sizeof(Grupo));
@@ -43,11 +40,6 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
     while(!ganhou(m)){
         if (!encontraABA(m, &caminho)){
             if (!encontraAAXA(m, &caminho)){
-                /* copiaMatriz(&t, m);
-                if (verificaTudoBranco(&t) == 1){
-                    tudoBranco(m);
-                    return 1;
-                } */
                 if (retrocedeCaminho(m, mInicial, &caminho) == -1){
                     mensagens("Tabuleiro é impossível.");
 
@@ -245,15 +237,3 @@ void tudoBranco(Matriz* m){
         }
     }
 }
-
-/* int verificaTudoBranco(Matriz* m){
-    NodeGrupo* grupos = NULL;
-
-    tudoBranco(m);
-
-    int r = verificar(m, &grupos);
-
-    liberaGrupos(grupos);
-
-    return r;
-} */

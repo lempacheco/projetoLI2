@@ -7,7 +7,7 @@
 */
 
 
-int mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
+void mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
     int linhaOffset = 2, colunaOffset = 4;
     char letraColuna = 'a' + scrollColuna;
 
@@ -57,5 +57,4 @@ int mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
     }
 
     refresh();
-    return 0;
 }

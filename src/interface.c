@@ -95,17 +95,6 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
         } else if (ch == '\n') {
             linha[pos] = '\0'; // Termina a string
 
-            if (strcmp(linha, "D") == 0) {
-               
-                int d = dicas(m, &s->mInicial, q);
-                
-            
-                mvprintw(LINES - 1, 0, "Existem %d casas erradas.", d);
-                refresh();
-                napms(1000);
-                return RET_OK;
-            }
-            
             if (strcmp(linha, "t") == 0) {
                 clear();
                 attron(COLOR_PAIR(1));
@@ -142,6 +131,15 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
             } else {
                 int r = escolheComandos(m, s, q, linha, &grupos);
 
+
+                if (strcmp(linha, "D") == 0) {
+                
+                    mvprintw(LINES - 1, 0, "Existem %d casas erradas.", r);
+                    refresh();
+                    napms(1000);
+                    return RET_OK;
+                }
+                
                 if (strcmp(linha,"v")==0){
                     clear();
                     int l = 0; 
@@ -172,7 +170,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
                 else if (r == RET_DESFAZ) {
                     mvprintw(LINES - 1, 0, "Desfazendo...");
                     refresh();
-                    napms(500);
+                    napms(500);  
                 }
                 else if (r == RET_COMANDO_DESCONHECIDO) {
                     mvprintw(LINES - 1, 0, "Comando desconhecido.");
