@@ -7,7 +7,7 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
     if (ganhou(m)) return 0;
 
     initMatriz(&t);
-    copiaMatriz(&t, m); // salvar estado inicial)
+    copiaMatriz(&t, m); // salvar estado inicial
 
     if (verificar(m, &grupos)) {
         liberaGrupos(grupos); grupos = NULL;
@@ -35,7 +35,7 @@ int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as fu
         copiaMatriz(m, &t);
         liberaMatriz(&t);
         return -1;
-    }
+    } 
 
     if (!saoIguais(&t, m)){
         liberaMatriz(&t);

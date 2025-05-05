@@ -53,102 +53,116 @@ int riscar (Matriz *m, Pos p){
 */
 
 int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** grupos) {
-    int pl = 0;
-    char pc = '\0'; 
-    int r = 0;
-    char* nomeFile;
     int i = 0;
-    char c;
+    
+    while (linha[i] == ' ') i++; 
+    char c = linha[i++]; 
      
-    // Pula espaços iniciais
-    while (linha[i] == ' ') i++;
-    c = linha[i++];
-
     if (c == '\0') return RET_COMANDO_DESCONHECIDO;
 
-    if (c == 's') return RET_SAIR;
+    if (strcmp(linha, "s") == 0) return RET_SAIR; 
+    if (strcmp(linha, "d") == 0) return comandoD(m, s);
+    if (strcmp(linha, "v") == 0) return comandoV(m, q, grupos);
+    if (c == 'l' || c == 'g') return comandosLG(m, s, linha);
+    if (strcmp(linha, "a") == 0) return comandoA(m, s, q, linha);
+    if (strcmp(linha, "R") == 0) return comandoR(m, s, q, linha);
+    if (strcmp(linha, "H") == 0) { s->ajuda = 1; return 0; }
+    if (strcmp(linha, "A") == 0) return ajudaSempre(m, q);
+    if (strcmp(linha, "D") == 0) return dicas(m, &s->mInicial, q);
+    if (c == 'b' || c == 'r') return comandoRB(m, s, q, linha); 
 
-    if (strcmp(linha, "d")==0) {
-        if (isEmpty(s)) mensagens ("Não há mais comandos para retroceder."); 
-        if (!pop(s, m)){
-            return RET_DESFAZ;
-        } 
-        return 0;
-    }
+    return RET_COMANDO_DESCONHECIDO; 
 
-    if (strcmp(linha, "v")==0) { 
-        
-        verificar(m, grupos);
+}
+
+int comandoD (Matriz* m, StackMat* s){
+
+    if (isEmpty(s)) mensagens ("Não há mais comandos para retroceder."); 
+    if (!pop(s, m)){
+        return RET_DESFAZ;
+    } 
+    return 0;
+}
+
+int comandoV (Matriz* m, Queue* q, NodeGrupo** grupos){
+    int r=0; 
+
+    verificar(m, grupos);
         int t = verificaCaminho(m, q);
         if (t==1) r = 7; 
         else r = 8; 
  
-        return r; 
-    }
-
-    if (c == 'l' || c == 'g') {
-        while (linha[i] == ' ') i++;
-        int len = strlen(&linha[i]);
-        if (len == 0) return RET_COMANDO_DESCONHECIDO;
-
-        nomeFile = malloc(len + 1);
-        strcpy(nomeFile, &linha[i]);
-
-        char* caminhoM = malloc(len + 5);
-        strcpy(caminhoM, "lib/");
-        strcat(caminhoM, nomeFile);
-
-        char* caminhoS = malloc(len + 14);
-        strcpy(caminhoS, "lib/history/");
-        strcat(caminhoS, nomeFile);
-
-        if (c == 'l')
-            r = leFicheiro(caminhoM, caminhoS, m, s);
-        else
-            r = gravaFicheiro(caminhoM, caminhoS, m, s);
-
-        free(nomeFile);
-        free(caminhoM);
-        free(caminhoS);
         return r;
-    }
+}
 
-    if (strcmp(linha, "a")==0) {
-        push(s, m, c);
-        r = ajuda(m, q);
-        if (r == 1)
-            return 0;
-        else if (r == 0)
-            return -1; 
-        else
-            return r;
-    }
-    
-    if (strcmp(linha, "R")==0) {
-        push(s, m, c);
-        r = resolve(m, &s->mInicial, q);
-        if (r==1) r=0;
-        return r;
-    }
+int comandosLG (Matriz* m, StackMat* s, char* linha){
+    int r=0; 
+    char* nomeFile;
+    int i = 0;
 
-    if (strcmp(linha, "H")==0) {
-        s->ajuda = 1;
+    while (linha[i] == ' ') i++;   // pular espaços
+    char c = linha[i++];           // obter 'l' ou 'g'
+
+    while (linha[i] == ' ') i++;
+    int len = strlen(&linha[i]);
+    if (len == 0) return RET_COMANDO_DESCONHECIDO;
+
+    nomeFile = malloc(len + 1);
+    strcpy(nomeFile, &linha[i]);
+
+    char* caminhoM = malloc(len + 5);
+    strcpy(caminhoM, "lib/");
+    strcat(caminhoM, nomeFile);
+
+    char* caminhoS = malloc(len + 14);
+    strcpy(caminhoS, "lib/history/");
+    strcat(caminhoS, nomeFile);
+
+    if (c == 'l')
+        r = leFicheiro(caminhoM, caminhoS, m, s);
+    else
+        r = gravaFicheiro(caminhoM, caminhoS, m, s);
+
+    free(nomeFile);
+    free(caminhoM);
+    free(caminhoS);
+    return r;
+}
+
+int comandoA (Matriz* m, StackMat* s, Queue* q, char* linha){
+    int r=0; 
+    char c = linha[0]; 
+
+    push(s, m, c);
+    r = ajuda(m, q);
+    if (r == 1)
         return 0;
-    }
-
-    if (strcmp(linha, "A")==0) {
-        push(s, m, c);
-        r = ajudaSempre(m, q);
+    else if (r == 0)
+        return -1; 
+    else
         return r;
-    }
+}
 
-    if (strcmp(linha, "D")==0) {
-        r = dicas(m, &s->mInicial, q);
-        return r;
-    }
+int comandoR (Matriz* m, StackMat* s, Queue* q, char* linha){
+    int r=0; 
+    char c = linha[0]; 
 
-    if (c == 'b' || c == 'r') {
-        push(s, m, c);
+    push(s, m, c);
+    r = resolve(m, &s->mInicial, q);
+    if (r==1) r=0;
+    return r;
+}
+
+int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
+    int i=0; 
+    int pl = 0;
+    char pc = '\0'; 
+    int r = 0;
+
+    while (linha[i] == ' ') i++;   // pular espaços
+    char c = linha[i++];           
+    
+    push(s, m, c);
 
         while (linha[i] == ' ') i++;
         pc = linha[i++];
@@ -183,13 +197,4 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
         }
 
         return r;
-    }
-
-    if (c != 'a' && c != 'r' && c != 'b' && c != 'v' && c != 'g' && c != 'l' && c != 'd' && c != 's' && c!='A' && c != 'R' && c != 'G' && c != 'B'){
-        r = RET_COMANDO_DESCONHECIDO; 
-    }
-
-    return r; 
-
 }
-
