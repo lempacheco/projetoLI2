@@ -34,7 +34,7 @@ int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as f
 
         copiaMatriz(m, &t);
         liberaMatriz(&t);
-        return 0;
+        return -1;
     } 
 
     if (!saoIguais(&t, m)){

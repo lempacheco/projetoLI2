@@ -37,7 +37,7 @@ void testar_ajuda(){
     int r2;
     r2 = ajuda(&m2, &q2);
     comparaMatrizes(&m2, &m2Expected);
-    CU_ASSERT_EQUAL(r2, 0);
+    CU_ASSERT_EQUAL(r2, -1);
 
     liberaQueue(&q2);
     liberaMatriz(&m2);
