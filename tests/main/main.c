@@ -7,7 +7,8 @@
 #include "../include/listasFunc_test.h" 
 #include "../include/queueFunc_test.h" 
 #include "../include/dicas_test.h"
-#include "../include/resolve_test.h" 
+#include "../include/resolve_test.h"
+#include "../include/ajuda_test.h"  
 #include <stdio.h>
 
 int main() {
@@ -17,6 +18,12 @@ int main() {
     CU_pSuite pSuite = NULL;
 
     pSuite = CU_add_suite("test_suite", 0, 0);
+
+    CU_add_test(pSuite, "testar_ajudaSempre", testar_ajudaSempre);
+
+    CU_add_test(pSuite, "testar_saoIguais", testar_saoIguais);
+
+    CU_add_test(pSuite, "testar_ajuda", testar_ajuda);
 
     CU_add_test(pSuite, "testar_dicas", testar_dicas);
 
