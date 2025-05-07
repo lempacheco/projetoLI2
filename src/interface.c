@@ -60,25 +60,90 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
 }
 
 
-int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
-    char linha[100]; 
-    int pos = 0;
-    NodeGrupo* grupos = NULL;
+int mostraTutorial() {
+    clear();
+    attron(COLOR_PAIR(1));
+    mvprintw(1, 0, "TUTORIAL");
+    mvprintw(3, 0, "Comandos:");
+    attroff(COLOR_PAIR(1));
 
-    noecho();            // Não imprime automaticamente
-    keypad(stdscr, TRUE); // Captura teclas especiais
+    const char *linhas[] = {
+        "g (ficheiro) -> gravar o estado atual do jogo num ficheiro",
+        "l (ficheiro) -> ler o estado do jogo de um ficheiro",
+        "b <letra><número> -> coloca a coordenada em maiúscula",
+        "r <letra><número> -> coloca a coordenada riscada",
+        "v -> verificar restrições",
+        "a -> ajuda o jogador",
+        "A -> autoajuda",
+        "R -> resolver jogo",
+        "s -> sair",
+        "d -> desfazer comando"
+    };
+
+    for (int i = 0; i < 10; i++) mvprintw(4 + i, 2, "%s", linhas[i]);
+
+    attron(COLOR_PAIR(1));
+    mvprintw(14, 0, "Regras do jogo");
+    attroff(COLOR_PAIR(1));
+    mvprintw(15, 2, "Cada casa contém um símbolo minúsculo;");
+    mvprintw(16, 2, "Apenas uma réplica por linha/coluna pode estar em branco;");
+    mvprintw(17, 2, "Réplica riscada = cardinal;");
+    mvprintw(18, 2, "Casa riscada exige vizinhos ortogonais brancos;");
+    mvprintw(19, 2, "Caminho ortogonal entre todas as casas brancas necessário;");
+
+    mvprintw(LINES - 2, 0, "ENTER para continuar...");
+    refresh();
+    while (getch() != '\n');
+    return RET_OK;
+}
+
+int executaComando(char *linha, int r, NodeGrupo *grupos) {
+    if (strcmp(linha, "D") == 0) {
+        mvprintw(LINES - 1, 0, "Existem %d casas erradas.", r);
+        refresh(); napms(1000);
+        return RET_OK;
+    }
+   
+    if (strcmp(linha, "v") == 0) {
+        clear(); int l = 0;
+        mvprintw(l++, 0, r == 7 ? "Existe caminho ortogonal entre todas as casas brancas." : "Não existe caminho ortogonal entre todas as casas brancas.");
+        l++;
+        imprimeGruposNcurses(grupos, &l);
+        liberaGrupos(grupos);
+        mvprintw(LINES - 2, 0, "ENTER para continuar...");
+        refresh(); while (getch() != '\n');
+        return RET_OK;
+    }
+   
+    if (r == RET_SAIR) {
+        clear(); mvprintw(LINES - 1, 0, "Saindo do jogo...");
+        refresh(); napms(1000);
+        return 1;
+    }
+   
+    if (r == RET_DESFAZ) {
+        mvprintw(LINES - 1, 0, "Desfazendo..."); refresh(); napms(500);
+    } else if (r == RET_COMANDO_DESCONHECIDO) {
+        mvprintw(LINES - 1, 0, "Comando desconhecido."); refresh(); napms(500);
+    }
+   
+    return (r == RET_POP) ? RET_POP : RET_OK;
+}
+
+
+int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
+    char linha[100] = ""; int pos = 0;
+    NodeGrupo *grupos = NULL;
+
+    noecho();
+    keypad(stdscr, TRUE);
 
     while (1) {
         clear();
-
         mostraMatriz(m, *scrollLinha, *scrollColuna);
-
         mvprintw(LINES - 3, 0, "Digite o comando (ENTER para confirmar, 't' para tutorial): ");
-        mvprintw(LINES - 2, 0, "%s", linha);
-
-        move(LINES - 2, pos); 
+        mvprintw(LINES - 2, 0, "%s", linha); move(LINES - 2, pos);
         refresh();
-
         int ch = getch();
 
         if (ch == KEY_UP && *scrollLinha > 0) {
@@ -93,103 +158,17 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
             pos--;
             linha[pos] = '\0';
         } else if (ch == '\n') {
-            linha[pos] = '\0'; // Termina a string
+            linha[pos] = '\0'; 
+            if (strcmp(linha, "t") == 0) return mostraTutorial();
 
-            if (strcmp(linha, "t") == 0) {
-                clear();
-                attron(COLOR_PAIR(1));
-                mvprintw(1, 0, "TUTORIAL");
-    
-                mvprintw(3, 0, "Comandos:");
-                attroff(COLOR_PAIR(1));
-    
-                mvprintw(4, 2, "g (ficheiro) -> gravar o estado atual do jogo num ficheiro");
-                mvprintw(5, 2, "l (ficheiro) -> ler o estado do jogo de um ficheiro ");
-                mvprintw(6, 2, "b <letra minúscula><número> -> coloca a coordenada em maiúscula");
-                mvprintw(7, 2, "r <letra minúscula><número> -> coloca a coordenada riscada");
-                mvprintw(8, 2, "v -> verificar o estado do jogo e apontar todas as restrições violadas");
-                mvprintw(9, 2, "a -> ajuda o jogador, funcionando como um autocompletador");
-                mvprintw(10, 2, "A -> realiza automaticamente o comando 'a'");
-                mvprintw(11, 2, "R -> resolver o jogo");
-                mvprintw(12, 2, "s -> Sai do jogo");
-                mvprintw(13, 2, "d -> desfaz o último comando executado ");
-    
-                attron(COLOR_PAIR(1));
-                mvprintw(14, 0, "Regras do jogo");
-                attroff(COLOR_PAIR(1));
-                mvprintw(15, 2, "Cada casa contém um símbolo (uma letra inicialmente minúscula);");
-                mvprintw(16, 2, "Em cada linha e coluna só pode existir uma única réplica de cada símbolo que é pintada a branco (coloca-se a letra em maiúsculas);");
-                mvprintw(17, 2, "Todas as outras réplicas desse símbolo têm que ser riscadas (substituídas por um cardinal);");
-                mvprintw(18, 2, "Se uma casa está riscada, todas as casas vizinhas ortogonais têm que estar pintadas a branco;");
-                mvprintw(19, 2, "É necessário existir um caminho ortogonal entre todas as casas brancas do tabuleiro.");
-    
-    
-                mvprintw(LINES - 2, 0, "Pressione ENTER para continuar...");
-                refresh();
-                while (getch() != '\n');
-                return RET_OK;
-            } else {
-                int r = escolheComandos(m, s, q, linha, &grupos);
+            int r = escolheComandos(m, s, q, linha, &grupos);
+            int resultado = executaComando(linha, r, grupos);
+            if (resultado != RET_OK) return resultado;
 
+            pos = 0; linha[0] = '\0';
 
-                if (strcmp(linha, "D") == 0) {
-                
-                    mvprintw(LINES - 1, 0, "Existem %d casas erradas.", r);
-                    refresh();
-                    napms(1000);
-                    return RET_OK;
-                }
-                
-                if (strcmp(linha,"v")==0){
-                    clear();
-                    int l = 0; 
-                    if (r==7){
-                        mvprintw(l++, 0, "Existe um caminho ortogonal entre quaisquer duas casas brancas.");
-                    } else if (r==8){
-                        mvprintw(l++, 0, "Não existe um caminho ortogonal entre quaisquer duas casas brancas.");
-                    }
-                    l++;
-                    imprimeGruposNcurses(grupos, &l);
-
-                    liberaGrupos(grupos);
-
-                    mvprintw(LINES - 2, 0, "Pressione ENTER para continuar...");
-                    refresh();
-                    while (getch() != '\n');
-                    return RET_OK;
-                }
-
-
-                if (r == RET_SAIR) {
-                    clear();
-                    mvprintw(LINES - 1, 0, "Saindo do jogo...");
-                    refresh();
-                    napms(1000);
-                    return 1;
-                }
-                else if (r == RET_DESFAZ) {
-                    mvprintw(LINES - 1, 0, "Desfazendo...");
-                    refresh();
-                    napms(500);  
-                }
-                else if (r == RET_COMANDO_DESCONHECIDO) {
-                    mvprintw(LINES - 1, 0, "Comando desconhecido.");
-                    refresh();
-                    napms(500);
-                }else if (r == RET_POP) {
-                    return r;
-                }
-            }
-
-            // Limpa para digitar novo comando
-            pos = 0;
-            linha[0] = '\0';
-        } else if (isprint(ch) && pos < (int)sizeof(linha) - 1) {
-            linha[pos++] = ch;
-            linha[pos] = '\0';
-        }
+        } 
+        else if (pos < 99) linha[pos++] = ch, linha[pos] = '\0';
     }
-
     return 0;
 }
-

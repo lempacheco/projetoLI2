@@ -17,7 +17,6 @@
 #include "../include/mensagens.h"
 #include "../include/interface.h"
 #include "../include/dicas.h"
-#include "../include/geraTabuleiro.h"
 
 #define RET_POP -1
 #define RET_OK 0
