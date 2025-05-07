@@ -67,7 +67,9 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     if (strcmp(linha, "a") == 0) return comandoA(m, s, q, linha);
     if (strcmp(linha, "R") == 0) return comandoR(m, s, q, linha);
     if (strcmp(linha, "H") == 0) { s->ajuda = 1; return 0; }
-    if (strcmp(linha, "A") == 0) return ajudaSempre(m, q);
+    if (strcmp(linha, "A") == 0) {
+        push(s, m, c); 
+        return ajudaSempre(m, q);}
     if (strcmp(linha, "D") == 0) return dicas(m, &s->mInicial, q);
     if (c == 'b' || c == 'r') return comandoRB(m, s, q, linha); 
 
@@ -129,6 +131,7 @@ int comandosLG (Matriz* m, StackMat* s, char* linha){
     return r;
 }
 
+// comando 'a'
 int comandoA (Matriz* m, StackMat* s, Queue* q, char* linha){
     int r=0; 
     char c = linha[0]; 

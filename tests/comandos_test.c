@@ -933,7 +933,8 @@ void testar_escolheComandos(){
     liberaStackMat(&s20);
     liberaQueue(&q20); 
 
-    Matriz m21 = criaMatriz(5,5,matrizExpected20); 
+    Matriz m21; 
+    initMatriz(&m21); 
 
     Queue q21;
     initQueue(&q21);
@@ -949,4 +950,125 @@ void testar_escolheComandos(){
     liberaMatriz(&m21);
     liberaStackMat(&s21);
     liberaQueue(&q21); 
+
+    // comando g
+
+
+    char matrizExpected22[5][5] = {
+        "ecAdc",
+        "dcd#c",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+
+    Matriz m22 = criaMatriz(5,5,matrizExpected22); 
+
+    Queue q22;
+    initQueue(&q22);
+    NodeGrupo* grupos22 = NULL;
+    StackMat s22;
+    initStackMat(&s22);
+
+    char *linha22 = "g testeG.txt"; 
+    int r22 = escolheComandos(&m22, &s22, &q22, linha22, &grupos22); 
+    CU_ASSERT_EQUAL(r22, 0);
+
+    liberaGrupos(grupos22); 
+    liberaMatriz(&m22);
+    liberaStackMat(&s22);
+    liberaQueue(&q22);  
+
+    //comando A
+    char matrizExpected23[5][5] = {
+        "#CAD#",
+        "D#deC",
+        "BDdce",
+        "Cdeeb",
+        "A#Cbb"
+   
+    };
+
+    Matriz m23 = criaMatriz(5,5,matrizExpected23); 
+
+    Queue q23;
+    initQueue(&q23);
+    NodeGrupo* grupos23 = NULL;
+    StackMat s23;
+    initStackMat(&s23);
+
+    char *linha23 = "A"; 
+    int r23 = escolheComandos(&m23, &s23, &q23, linha23, &grupos23); 
+    CU_ASSERT_EQUAL(r23, -1);
+
+    liberaGrupos(grupos23); 
+    liberaMatriz(&m23);
+    liberaStackMat(&s23);
+    liberaQueue(&q23);  
+
+
+    Matriz m24 = criaMatriz(5,5,matrizExpected20); 
+
+    Queue q24;
+    initQueue(&q24);
+    NodeGrupo* grupos24 = NULL;
+    StackMat s24;
+    initStackMat(&s24);
+
+    char *linha24 = "A"; 
+    int r24 = escolheComandos(&m24, &s24, &q24, linha24, &grupos24); 
+    CU_ASSERT_EQUAL(r24, -1);
+
+    liberaGrupos(grupos24); 
+    liberaMatriz(&m24);
+    liberaStackMat(&s24);
+    liberaQueue(&q24); 
+
+    
+    char matrizExpected25[5][5] = {
+        "#cadc",
+        "dcdec",
+        "bddce",
+        "cdeeb",
+        "accbb"
+    };
+
+    Matriz m25 = criaMatriz(5,5,matrizExpected25);
+
+    Queue q25;
+    initQueue(&q25);
+    NodeGrupo* grupos25 = NULL;
+    StackMat s25;
+    initStackMat(&s25);
+
+    char *linha25 = "A"; 
+    int r25 = escolheComandos(&m25, &s25, &q25, linha25, &grupos25); 
+    CU_ASSERT_EQUAL(r25, 0);
+
+    liberaGrupos(grupos25); 
+    liberaMatriz(&m25);
+    liberaStackMat(&s25);
+    liberaQueue(&q25); 
+
+    // comando H
+
+    Matriz m26 = criaMatriz(5,5,matrizExpected25);
+
+    Queue q26;
+    initQueue(&q26);
+    NodeGrupo* grupos26 = NULL;
+    StackMat s26;
+    initStackMat(&s26);
+    s26.ajuda = 1; 
+
+    char *linha26 = "H"; 
+    int r26 = escolheComandos(&m26, &s26, &q26, linha26, &grupos26); 
+    CU_ASSERT_EQUAL(r26, 0); 
+
+    liberaGrupos(grupos26); 
+    liberaMatriz(&m26);
+    liberaStackMat(&s26);
+    liberaQueue(&q26);
+
+
 }

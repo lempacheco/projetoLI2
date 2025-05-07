@@ -1,6 +1,6 @@
 #include "../include/ajuda.h"
 
-int ajuda(Matriz* m, Queue* q) {//retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
+int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
     NodeGrupo* grupos = NULL;
     Matriz t;
     
@@ -81,25 +81,10 @@ void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos){
     for (i=0; i<m->L; i++){
         for (j=0; j<m->C; j++){
             if (m->matriz[i][j]=='#'){
-                if (i+1<m->L){
-                    m->matriz[i+1][j] = toupper(m->matriz[i+1][j]);
-                    if(!verificar(m, grupos)) m->matriz[i+1][j] = tolower(m->matriz[i+1][j]);
-                } 
-
-                if (i-1>=0){
-                    m->matriz[i-1][j] = toupper(m->matriz[i-1][j]);
-                    if(!verificar(m, grupos)) m->matriz[i-1][j] = tolower(m->matriz[i-1][j]);
-                } 
-
-                if (j+1<m->C){
-                    m->matriz[i][j+1] = toupper(m->matriz[i][j+1]);
-                    if(!verificar(m, grupos)) m->matriz[i][j+1] = tolower(m->matriz[i][j+1]);
-                } 
-
-                if (j-1>=0){
-                    m->matriz[i][j-1] = toupper(m->matriz[i][j-1]);
-                    if(!verificar(m, grupos)) m->matriz[i][j-1] = tolower(m->matriz[i][j-1]);
-                }
+                tentaPintar(m, i+1, j, grupos);
+                tentaPintar(m, i-1, j, grupos);
+                tentaPintar(m, i, j+1, grupos);
+                tentaPintar(m, i, j-1, grupos);
             }   
         }
     }
@@ -129,8 +114,7 @@ int saoIguais(Matriz* m1, Matriz* m2){
     if(m1->L != m2->L) return 0; 
     if(m1->C != m2->C) return 0; 
 
-    if (m1->matriz == NULL){
-        if(m1->matriz != m2->matriz) return 0;
+    if (!m1->matriz || !m2->matriz) {return m1->matriz == m2->matriz;
     }else{
         for (i = 0; i < m1->L && r; i++) {
             for (j = 0; j < m1->C && r; j++) {
@@ -141,6 +125,15 @@ int saoIguais(Matriz* m1, Matriz* m2){
 
     return r;
 }
+
+void tentaPintar(Matriz* m, int i, int j, NodeGrupo** grupos) {
+    if (i >= 0 && i < m->L && j >= 0 && j < m->C) {
+        m->matriz[i][j] = toupper(m->matriz[i][j]);
+        if (!verificar(m, grupos))
+            m->matriz[i][j] = tolower(m->matriz[i][j]);
+    }
+}
+
 
 int ajudaSempre(Matriz* m, Queue* q){
     int c = 0; 
