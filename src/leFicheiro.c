@@ -107,10 +107,6 @@ void leNumero(int *x, FILE* fp) {
     int negativo = 0;
     char c = fgetc(fp);
 
-    while (c == ' ' || c == '\n') {
-        c = fgetc(fp);
-    }
-
     if (c == '-') {
         negativo = 1;
         c = fgetc(fp);

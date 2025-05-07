@@ -14,9 +14,9 @@ jogo:
 testar:
 	$(CC) $(CFLAGS) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 
-.PHONY: testargcov
+
 gcov:
-	mkdir -p coverage
+	make clean
 	$(CC) $(CFLAGS_GCOV) -lcunit $(SRC) $(TEST) tests/main/main.c -o testar -lncurses -ltinfo
 	find . -maxdepth 1 -name '*.gcno' -exec mv {} coverage/ \;
 	./testar
@@ -33,6 +33,7 @@ gcov:
 
 	find src -name '*.c' | while read file; do \
 		gcov -f -o coverage "$$file" >> coverage/output; \
+		printf '\n\n\n' >> coverage/output; \
 	done
 
 	mv *.gcov coverage/

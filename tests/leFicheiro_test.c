@@ -138,6 +138,27 @@ void testar_leMatriz (){
     liberaMatriz(&m2);
     liberaMatriz(&m2Expected);
     fclose(fp);
+
+    //3
+    Matriz m3,m3Expected;
+    char matrizExpected3[11][11] = {  "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa",
+                                    "aaaaaaaaaaa"};
+    m3Expected=criaMatriz(11,11,matrizExpected3);
+    fp = fopen("lib/teste9.txt", "r");
+    leMatriz(&m3,fp);
+    comparaMatrizes(&m3,&m3Expected);
+    liberaMatriz(&m3);
+    liberaMatriz(&m3Expected);
+    fclose(fp);
 }
 
 void testar_leStackMat(){
