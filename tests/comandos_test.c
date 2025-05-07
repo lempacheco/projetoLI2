@@ -547,7 +547,7 @@ void testar_escolheComandos(){
 
     char *linha5 = "a"; 
     int r5 = escolheComandos(&m5, &s5, &q5, linha5, &grupos5); 
-    CU_ASSERT_EQUAL(r5, 0);
+    CU_ASSERT_EQUAL(r5, -1);
 
     liberaGrupos(grupos5); 
     liberaMatriz(&m5);
@@ -650,7 +650,7 @@ void testar_escolheComandos(){
 
     char *linha9 = "a"; 
     int r9 = escolheComandos(&m9, &s9, &q9, linha9, &grupos9); 
-    CU_ASSERT_EQUAL(r9, 0);
+    CU_ASSERT_EQUAL(r9, -1);
 
     liberaGrupos(grupos9); 
     liberaMatriz(&m9);
