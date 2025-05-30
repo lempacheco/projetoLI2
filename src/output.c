@@ -11,24 +11,26 @@ void mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
     int linhaOffset = 2, colunaOffset = 4;
     char letraColuna = 'a' + scrollColuna;
 
-    init_pair(1, COLOR_RED, COLOR_BLACK);     // '#' riscado
-    init_pair(2, COLOR_GREEN, COLOR_BLACK);   // minúsculo
+    init_pair(1, COLOR_RED, COLOR_BLACK);    // '#' riscado
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);  // minúsculo
     init_pair(3, COLOR_WHITE, COLOR_BLACK);  // maiúsculo
-    init_pair(4, COLOR_BLACK, COLOR_WHITE);
+    init_pair(4, COLOR_BLACK, COLOR_WHITE);  // borda
 
     clear();
 
-    // Cabeçalho
+    //título 
+    attron(COLOR_PAIR(4));
+    // cabeçalho
     attron(COLOR_PAIR(4));
 
     mvprintw(linhaOffset, colunaOffset, "   ");
     for (int col = 0; col < LARGURA_VISIVEL && (scrollColuna + col) < m->C; col++) {
         int x = colunaOffset + 3 + col * 2;
         
-        // Primeiro imprime um espaço com cor
+        // imprime um espaço
         mvprintw(linhaOffset, x, " ");
         
-        // Depois imprime a letra por cima (também com a mesma cor)
+        // imprime a letra por cima 
         mvprintw(linhaOffset, x + 1, "%c", letraColuna + col);
     }
     

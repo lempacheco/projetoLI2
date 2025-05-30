@@ -39,11 +39,11 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
             mvprintw((*linha)++, 0,
                 "As posições estão brancas duplicadas na mesma linha/coluna:");
 
-            // imprime a cabeça com indentação 1x
+            // imprime a cabeça na coluna 3
             mvprintw((*linha)++, 3, "(%c,%d)",
                 atualGrupo->cabeca->p.l + 'a', atualGrupo->cabeca->p.c);
 
-            // imprime a cauda com indentação 2x
+            // imprime a cauda na coluna 3
             NodePosicao* atual = atualGrupo->cabeca->prox;
             while (atual != NULL) {
                 mvprintw((*linha)++, 3, "(%c,%d)", atual->p.l + 'a', atual->p.c);
@@ -61,52 +61,62 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
 
 
 int mostraTutorial() {
-    clear();
-    attron(COLOR_PAIR(1));
-    mvprintw(1, 0, "TUTORIAL");
-    mvprintw(3, 0, "Comandos:");
-    attroff(COLOR_PAIR(1));
 
-    const char *linhas[] = {
-        "g (ficheiro) -> gravar o estado atual do jogo num ficheiro",
-        "l (ficheiro) -> ler o estado do jogo de um ficheiro",
+    clear();
+
+    attron(COLOR_PAIR(1));
+    attron(A_BOLD);
+    mvprintw(1, 0, "TUTORIAL");
+    mvprintw(3, 0, "COMANDOS:");
+    attroff(COLOR_PAIR(1));
+    attroff(A_BOLD);
+
+    char *linhas[] = {
+        "g (ficheiro) -> grava o estado atual do jogo num ficheiro",
+        "l (ficheiro) -> lê um jogo guardado em um ficheiro",
         "b <letra><número> -> coloca a coordenada em maiúscula",
-        "r <letra><número> -> coloca a coordenada riscada",
-        "v -> verificar restrições",
+        "r <letra><número> -> risca a coordenada",
+        "v -> verifica restrições",
         "a -> ajuda o jogador",
-        "A -> autoajuda",
-        "R -> resolver jogo",
-        "s -> sair",
-        "d -> desfazer comando"
+        "A -> aplica ajuda enquanto possível",
+        "D -> indica o número de casa incorretas em relação à resolução do tabuleiro", 
+        "H -> ativa ajuda intercalada", 
+        "R -> resolve o tabuleiro",
+        "d -> desfazaz o último comando executado", 
+        "s -> sai do jogo"
     };
 
-    for (int i = 0; i < 10; i++) mvprintw(4 + i, 2, "%s", linhas[i]);
+    for (int i = 0; i < 12; i++) mvprintw(4 + i, 2, "%s", linhas[i]);
 
     attron(COLOR_PAIR(1));
-    mvprintw(14, 0, "Regras do jogo");
+    attron(A_BOLD);
+    mvprintw(16, 0, "REGRAS DO JOGO:");
     attroff(COLOR_PAIR(1));
-    mvprintw(15, 2, "Cada casa contém um símbolo minúsculo;");
-    mvprintw(16, 2, "Apenas uma réplica por linha/coluna pode estar em branco;");
-    mvprintw(17, 2, "Réplica riscada = cardinal;");
-    mvprintw(18, 2, "Casa riscada exige vizinhos ortogonais brancos;");
-    mvprintw(19, 2, "Caminho ortogonal entre todas as casas brancas necessário;");
+    attroff(A_BOLD);
+    mvprintw(17, 2, "Cada casa contém um símbolo (uma letra inicialmente minúscula);");
+    mvprintw(18, 2, "Apenas uma réplica por linha/coluna pode estar em branco;");
+    mvprintw(19, 2, "Todas as outras réplicas desse símbolo têm que ser riscadas (substituídas por um cardinal);");
+    mvprintw(20, 2, "Cada casa riscada exige vizinhos ortogonais brancos;");
+    mvprintw(21, 2, "Caminho ortogonal entre todas as casas brancas é necessário;");
 
     mvprintw(LINES - 2, 0, "ENTER para continuar...");
     refresh();
     while (getch() != '\n');
+
     return RET_OK;
+
 }
 
 int executaComando(char *linha, int r, NodeGrupo *grupos) {
     if (strcmp(linha, "D") == 0) {
-        mvprintw(LINES - 1, 0, "Existem %d casas erradas.", r);
+        mvprintw(LINES - 1, 0, "Existe %d casa(s) errada(s).", r);
         refresh(); napms(1000);
         return RET_OK;
     }
    
     if (strcmp(linha, "v") == 0) {
         clear(); int l = 0;
-        mvprintw(l++, 0, r == 7 ? "Existe caminho ortogonal entre todas as casas brancas." : "Não existe caminho ortogonal entre todas as casas brancas.");
+        mvprintw(l++, 0, r == 7 ? "Existe um caminho ortogonal entre todas as casas brancas." : "Não existe caminho ortogonal entre todas as casas brancas.");
         l++;
         imprimeGruposNcurses(grupos, &l);
         liberaGrupos(grupos);
@@ -132,7 +142,8 @@ int executaComando(char *linha, int r, NodeGrupo *grupos) {
 
 
 int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
-    char linha[100] = ""; int pos = 0;
+    char linha[100] = ""; 
+    int pos = 0;
     NodeGrupo *grupos = NULL;
 
     noecho();

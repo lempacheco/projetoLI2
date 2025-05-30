@@ -31,9 +31,9 @@ typedef struct NodePosicao {
 
 // Lista externa: lista de posições
 typedef struct NodeGrupo {
-    int m; 
-    NodePosicao* cabeca;       // Cabeça da sublista
-    struct NodeGrupo* prox;      // Próximo grupo
+    int m;                     // mensagem 
+    NodePosicao* cabeca;       // cabeça da sublista
+    struct NodeGrupo* prox;      // próximo grupo
 } NodeGrupo;
 
 typedef struct queue { 

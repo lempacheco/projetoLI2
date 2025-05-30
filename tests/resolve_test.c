@@ -52,32 +52,6 @@ void testar_resolve(){
     liberaMatriz(&m2Fin);
     liberaMatriz(&m2Inicial);
     liberaQueue(&q2);
-
-    //3 matriz impossivel
-    /*
-    int r3;
-    char matriz3[5][5] = {
-        "aaaba",
-        "aabaa",
-        "abaaa",
-        "babab",
-        "babab"
-    };
-    Matriz m3In = criaMatriz(5, 5, matriz3);
-    Matriz m3Fin = criaMatriz(5, 5, matriz3);
-    Matriz m3Inicial = criaMatriz(5,5,matriz3);
-
-    Queue q3;
-    initQueue(&q3);
-
-    r3 = resolve(&m3In, &m3Inicial, &q3);
-    CU_ASSERT_EQUAL(r3, 0);
-    comparaMatrizes(&m3In,&m3Fin);
-
-    liberaMatriz(&m3In);
-    liberaMatriz(&m3Fin);
-    liberaMatriz(&m3Inicial);
-    liberaQueue(&q3);   */
 }
 
 void testar_resolveAAXA() {

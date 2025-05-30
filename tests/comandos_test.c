@@ -793,7 +793,7 @@ void testar_escolheComandos(){
 
     char *linha14 = "r j 1"; 
     int r14 = escolheComandos(&m14, &s14, &q14, linha14, &grupos14); 
-    CU_ASSERT_EQUAL(r14, 0);
+    CU_ASSERT_EQUAL(r14, -1);
     CU_ASSERT_EQUAL(m14.matriz[0][0], '#');
 
     liberaGrupos(grupos14); 

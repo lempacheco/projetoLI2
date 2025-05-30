@@ -217,7 +217,7 @@ int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho){
 }
 
 int ganhou(Matriz* m){
-    NodeGrupo* grupo;
+    NodeGrupo* grupo=NULL;
     if (!verificar(m, &grupo)) {liberaGrupos(grupo); return 0;}
 
     int r = 1;
@@ -226,7 +226,7 @@ int ganhou(Matriz* m){
             if (m->matriz[i][j] != '#' && !isupper(m->matriz[i][j])) r=0;
         }
     }
-    liberaGrupos(grupo);
+    if (grupo != NULL) liberaGrupos(grupo);
     return r;
 }
 

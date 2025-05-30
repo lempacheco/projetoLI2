@@ -180,7 +180,7 @@ int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
         
         if (pc - 'a' < 0 || pc - 'a' >= m->C || pl <= 0 || pl > m->L) {
             mensagens("Posição inválida.");
-            return RET_OK;
+            return RET_POP;
         }
 
         while (linha[i]!='\0'){

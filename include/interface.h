@@ -11,7 +11,6 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
 void imprimeGruposNcurses(NodeGrupo* grupo, int* linha); 
 void imprimeCabecaNcurses(NodePosicao* lista, int* linha);
 void imprimeCaudaNcurses(NodePosicao* lista, int* linha); 
-void mostraInterface (Matriz *m, char *linha, int pos, int *scrollLinha, int *scrollColuna); 
 int executaComando(char *linha, int r, NodeGrupo *grupos);
 int mostraTutorial();
 Queue copiaQueue(Queue* q);
