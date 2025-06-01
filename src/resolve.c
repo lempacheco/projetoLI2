@@ -35,7 +35,7 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
         resolveABA(m, &caminho);
     }
 
-    while(ajuda(m, q) == 1);
+    while(ajuda(m, q, 0) == 1);
 
     while(!ganhou(m)){
         if (!encontraABA(m, &caminho)){
@@ -53,7 +53,7 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
             resolveABA(m, &caminho);
         }
 
-        while(ajuda(m, q) == 1);
+        while(ajuda(m, q, 0) == 1);
     }
 
     free(caminho.gs);

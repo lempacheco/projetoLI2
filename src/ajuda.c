@@ -1,6 +1,6 @@
 #include "../include/ajuda.h"
 
-int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
+int ajuda(Matriz* m, Queue* q, int mostraMensagem) { //retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
     NodeGrupo* grupos = NULL;
     Matriz t;
     
@@ -22,7 +22,7 @@ int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as f
         liberaGrupos(grupos); grupos = NULL;
 
     } else {
-        mensagens("O tabuleiro atual é inválido.");
+        if (mostraMensagem) mensagens("O tabuleiro atual é inválido.");
         liberaGrupos(grupos); grupos = NULL;
         liberaMatriz(&t);
         return -1;
@@ -31,7 +31,7 @@ int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as f
     
     if (!verificar(m, &grupos)) {
         liberaGrupos(grupos); grupos = NULL;
-        mensagens("O tabuleiro não está de acordo com a solução.");
+        if (mostraMensagem) mensagens("O tabuleiro não está de acordo com a solução.");
         copiaMatriz(m, &t);
         liberaMatriz(&t);
         return -1;
@@ -42,7 +42,7 @@ int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as f
         return 1;
     }else{
         liberaMatriz(&t);
-        mensagens("Já não há mais casas para mudar.");
+        if (mostraMensagem) mensagens("Já não há mais casas para mudar.");
         return 0;
     }
 }
@@ -133,7 +133,7 @@ void tentaPintar(Matriz* m, int i, int j, NodeGrupo** grupos) {
 
 int ajudaSempre(Matriz* m, Queue* q){
     int c = 0; 
-    while (ajuda(m, q) == 1) c++;
+    while (ajuda(m, q, 1) == 1) c++;
     if (c == 0) return -1; 
 
     return 0; 
