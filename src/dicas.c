@@ -1,5 +1,6 @@
 #include "../include/dicas.h"
 
+
 int dicas (Matriz* m, Matriz* mInicial,  Queue* q){
     Matriz m1;
     initMatriz(&m1);

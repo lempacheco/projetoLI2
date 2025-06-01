@@ -108,6 +108,10 @@ NodeGrupo* adicionarLista (NodeGrupo* grupo, NodePosicao* lista, int mensagem) {
     return grupo; 
 }
 
+/*
+    Libera toda a memória alocada para uma lista encadeada de grupos (`NodeGrupo`).
+*/
+
 void liberaGrupos(NodeGrupo* lista) {
     while (lista != NULL) {
         NodeGrupo* grupoAtual = lista;
@@ -124,6 +128,10 @@ void liberaGrupos(NodeGrupo* lista) {
         free(grupoAtual);
     }
 }
+
+/*
+    Libera toda a memória alocada para uma lista encadeada de posições (`NodePosicao`).
+*/
 
 void liberaListaPos(NodePosicao* lista) {
     while (lista != NULL) {

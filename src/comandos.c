@@ -1,9 +1,8 @@
 #include "../include/comandos.h"
 
-// Problema com a posição (+1)
-
-/* Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
-   Isto é, coloca o caracter em maiúsculas. 
+/* 
+    Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
+    Isto é, coloca o caracter em maiúsculas. 
 */
 
 int branco (Matriz *m, Pos p, Matriz* mInicial){
@@ -23,8 +22,9 @@ int branco (Matriz *m, Pos p, Matriz* mInicial){
     return 0; 
 }
 
-/* Recebe como argumentos uma matriz, e uma posição, e risca o elemento que esta na posição. 
-   Isto é, substitui o caracter para '#'. 
+/* 
+    Recebe como argumentos uma matriz, e uma posição, e risca o elemento que esta na posição. 
+    Isto é, substitui o caracter para '#'. 
 */
 
 int riscar (Matriz *m, Pos p){
@@ -41,15 +41,23 @@ int riscar (Matriz *m, Pos p){
     return 0; 
 }
 
-/* Interpreta comandos inseridos pelo utilizador via stdin
-  e executa a ação correspondente sobre a matriz fornecida.
+/* 
+    Interpreta comandos inseridos pelo utilizador via stdin
+    e executa a ação correspondente sobre a matriz fornecida.
   
-  Comandos suportados:
-  - 's': Sai do jogo (imprime mensagem e retorna 1).
-  - 'l <nome>': Lê um ficheiro e carrega o conteúdo na matriz.
-  - 'g <nome>': Grava o conteúdo atual da matriz num ficheiro.
-  - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
-  - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
+    Comandos suportados:
+    - 's': Sai do jogo (imprime mensagem e retorna 1).
+    - 'l <nome>': Lê um ficheiro e carrega o conteúdo na matriz.
+    - 'g <nome>': Grava o conteúdo atual da matriz num ficheiro.
+    - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
+    - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
+    - 'd' : retrocede o último comando executado. 
+    - 'v' : verifica o estado do jogo.
+    - 'a' : ajuda o jogador. 
+    - 'A' : Ajuda o jogador, até não ser mais possíveil. 
+    - 'R' : resolve o jogo. 
+    - 'D' : Indica o número de casas que não estão de acordo com a solução.
+    - 'H' : Ajuda o jogador intercaladamente. 
 */
 
 int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** grupos) {
@@ -77,6 +85,11 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
 
 }
 
+/* 
+    Tenta recuperar o último estado salvo da matriz a partir da pilha 'StackMat'.  
+    Caso a pilha esteja vazia, exibe uma mensagem de erro informando que não há comandos para desfazer.
+*/
+
 int comandoD (Matriz* m, StackMat* s){
 
     if (isEmpty(s)) mensagens ("Não há mais comandos para retroceder."); 
@@ -85,6 +98,13 @@ int comandoD (Matriz* m, StackMat* s){
     } 
     return 0;
 }
+
+/* 
+    Verifica o estado atual da matriz e valida se há um caminho possível. 
+    Resultados da verificação:
+    - 7: Caminho válido foi encontrado na matriz
+    - 8: Nenhum caminho válido foi encontrado
+*/
 
 int comandoV (Matriz* m, Queue* q, NodeGrupo** grupos){
     int r=0; 
@@ -96,6 +116,14 @@ int comandoV (Matriz* m, Queue* q, NodeGrupo** grupos){
  
         return r;
 }
+
+/* 
+    Executa os comandos de leitura ('l') ou gravação ('g') de ficheiros para a matriz ; 
+
+    Exemplo de uso: 
+    - "l exemplo.txt" → carrega dados de "lib/exemplo.txt" e "lib/history/exemplo.txt"
+    - "g exemplo.txt" → grava dados em "lib/exemplo.txt" e "lib/history/exemplo.txt"
+*/
 
 int comandosLG (Matriz* m, StackMat* s, char* linha){
     int r=0; 
@@ -131,7 +159,10 @@ int comandosLG (Matriz* m, StackMat* s, char* linha){
     return r;
 }
 
-// comando 'a'
+/* 
+    Executa o comando de ajuda, sugerindo uma jogada válida ao jogador.
+*/
+
 int comandoA (Matriz* m, StackMat* s, Queue* q, char* linha){
     int r=0; 
     char c = linha[0]; 
@@ -145,6 +176,9 @@ int comandoA (Matriz* m, StackMat* s, Queue* q, char* linha){
     else
         return r;
 }
+/*
+    Executa o comando de resolução automática da matriz.
+*/
 
 int comandoR (Matriz* m, StackMat* s, Queue* q, char* linha){
     int r=0; 
@@ -155,6 +189,14 @@ int comandoR (Matriz* m, StackMat* s, Queue* q, char* linha){
     if (r==1) r=0;
     return r;
 }
+
+/* 
+    Executa os comandos de riscar ('r') ou pintar de branco ('b') uma posição na matriz.
+
+    Exemplo de entrada válida:
+    - r c 3  Risca a casa da coluna 'c' e linha 3
+    - b a 1  Pinta de branco a casa da coluna 'a' e linha 1
+*/
 
 int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
     int i=0; 

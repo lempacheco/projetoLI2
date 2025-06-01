@@ -1,5 +1,11 @@
 #include "../include/interface.h"
 
+/*
+    Imprime a *cauda* (demais elementos) de uma lista de posições na interface `ncurses`.
+
+    Esta função ignora o primeiro elemento da lista e imprime todas as demais posições
+    no formato `(letra, número)`
+*/
 void imprimeCaudaNcurses(NodePosicao* lista, int* linha) {
     if (lista == NULL || lista->prox == NULL) {
         mvprintw((*linha)++, 3, "(nenhuma posição)");
@@ -13,11 +19,32 @@ void imprimeCaudaNcurses(NodePosicao* lista, int* linha) {
     }
 }
 
+/*
+    Imprime a *cabeça* de uma lista de posições na interface `ncurses`, usando coordenadas no formato `(letra, número)`. 
+
+*/
+
 void imprimeCabecaNcurses(NodePosicao* lista, int* linha) {
     if (lista != NULL) {
         mvprintw((*linha)++, 3, "(%c, %d)", lista->p.l + 'a', lista->p.c);
     }
 }
+
+/*
+    Imprime os grupos de posições inválidas na matriz usando a interface `ncurses`.
+
+    Esta função percorre uma lista de grupos (`NodeGrupo*`) que representam violações às regras do jogo. 
+    Para cada grupo, imprime uma descrição com base no tipo:
+    
+    - `m == 0`: Grupo de posições riscadas (`#`) conectadas ortogonalmente — imprime a posição principal (cabeça)
+    e as demais posições relacionadas (cauda).
+    - `m == 1`: Grupo de posições com letras maiúsculas repetidas na mesma linha ou coluna — imprime todas
+    as posições envolvidas.
+    - Outro valor de `m`: Considerado tipo desconhecido.
+ 
+    As posições são exibidas no formato `(letra, número)`
+ 
+*/
 
 void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
     if (grupo == NULL) {
@@ -59,6 +86,11 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
     }
 }
 
+/*
+    Exibe um tutorial interativo com comandos e regras do jogo usando `ncurses`.
+
+    Limpa a tela e apresenta uma lista de comandos disponíveis no jogo, bem como as principais regras de funcionamento do tabuleiro.
+*/
 
 int mostraTutorial() {
 
@@ -106,6 +138,20 @@ int mostraTutorial() {
     return 0;
 
 }
+/*
+    Executa ações no terminal com base no comando inserido e no valor do resultado `r`.
+
+    valores de retorno:
+    -  1: Indica que o jogo deve ser encerrado.
+    - -1: Indica que a matriz não deve ser adicionado a stack.
+    -  0: Comando tratado normalmente.
+
+    Também lida com mensagens associadas aos valores de retorno:
+    -  1: Exibe mensagem de saída.
+    -  2: Exibe mensagem de "desfazendo".
+    -  3: Informa comando desconhecido.
+    - -1: Representa erro genérico, retornado diretamente.
+*/
 
 int executaComando(char *linha, int r, NodeGrupo *grupos) {
     if (strcmp(linha, "D") == 0) {
@@ -140,6 +186,11 @@ int executaComando(char *linha, int r, NodeGrupo *grupos) {
     return (r == -1) ? -1 : 0;
 }
 
+/*
+    Esta função exibe a matriz do jogo e permite ao jogador digitar comandos,
+    que são interpretados e executados. Também permite navegar na matriz com as setas
+    do teclado e acessar o tutorial com o comando `t`.
+*/
 
 int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
     char linha[100] = ""; 
@@ -179,7 +230,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
             pos = 0; linha[0] = '\0';
 
         } 
-        else if (pos < 99) linha[pos++] = ch, linha[pos] = '\0';
+        else if (isprint(ch) && pos < 99) linha[pos++] = ch, linha[pos] = '\0';
     }
     return 0;
 }

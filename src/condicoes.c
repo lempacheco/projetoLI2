@@ -1,6 +1,13 @@
 #include <stdlib.h>
 #include "../include/condicoes.h"
 
+/*
+    Verifica se as casas que estão ortogonalmente ligadas com a posição '(J, I)' da matriz 'm' 
+    (cima, baixo, esquerda, direita) estão riscadas ('#'). Se sim, adiciona a posição
+    atual e as casas ortogonais à lista de posições e, em seguida:
+       - Verifica se esse conjunto de posições já pertence a um grupo existente.
+       - Se não pertencer, cria um novo grupo adicionando a lista.
+*/
 
 int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
     NodePosicao* lista = NULL;
@@ -31,6 +38,14 @@ int verifRiscadaOrt(Matriz *m, int J, int I, NodeGrupo** grupo) {
 
     return 1;
 }
+
+/*
+    Analisa a casa na posição `(J, I)` da matriz `m`. Caso existam outras casas com o mesmo
+    valor na mesma coluna ou mesma linha, ela agrupa essas posições (incluindo a casa atual) em uma lista.
+    Em seguida:
+       - Se a lista ainda não pertence a um grupo já existente, ela é adicionada como um novo grupo.
+       - Caso já pertença, a lista é descartada.
+*/
 
 int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
     int r = 1;
@@ -76,6 +91,13 @@ int verifBranco(Matriz *m, int J, int I, NodeGrupo** grupo) {
     return r;
 }
 
+/*
+    Percorre toda a matriz `m`, verificando para cada casa: 
+        - Se contiver uma letra maiúscula, chama `verifBranco` para verificar se existe outro caractere igual
+        na mesma linha ou coluna.
+        - Se contiver o caractere `#`, chama `verifRiscadaOrt` para verificar se há casas ricadas na ortogonal.
+ 
+*/
 
 int verificar(Matriz *m, NodeGrupo** grupo) {
     int valido = 1;  
@@ -101,6 +123,15 @@ int verificar(Matriz *m, NodeGrupo** grupo) {
 
     return valido;
 }
+
+/*
+    A função realiza uma busca a partir da primeira casa livre encontrada, usando uma fila (`Queue`). 
+    Conta quantas casas livres foram visitadas e compara com o total de casas livres existentes na matriz. 
+    Caso todas as casas livres sejam alcançáveis a partir de um único ponto, considera que existe um *caminho contínuo* entre todas elas.
+ 
+    Casas com valor `#` são consideradas *bloqueadas* e não fazem parte do caminho.
+    As demais são consideradas *livres*.
+*/
 
 int verificaCaminho (Matriz *m, Queue *q){
     int casasVisitadas = 0;
