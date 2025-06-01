@@ -4,7 +4,7 @@
     Imprime a *cauda* (demais elementos) de uma lista de posições na interface `ncurses`.
 
     Esta função ignora o primeiro elemento da lista e imprime todas as demais posições
-    no formato `(letra, número)`
+    no formato `(letra, número)`.
 */
 void imprimeCaudaNcurses(NodePosicao* lista, int* linha) {
     if (lista == NULL || lista->prox == NULL) {
@@ -34,15 +34,15 @@ void imprimeCabecaNcurses(NodePosicao* lista, int* linha) {
     Imprime os grupos de posições inválidas na matriz usando a interface `ncurses`.
 
     Esta função percorre uma lista de grupos (`NodeGrupo*`) que representam violações às regras do jogo. 
-    Para cada grupo, imprime uma descrição com base no tipo:
+    Para cada grupo, imprime uma descrição com base no tipo de restrição:
     
-    - `m == 0`: Grupo de posições riscadas (`#`) conectadas ortogonalmente — imprime a posição principal (cabeça)
+    - m == 0: Grupo de posições riscadas (`#`) ligadas ortogonalmente — imprime a posição principal (cabeça)
     e as demais posições relacionadas (cauda).
-    - `m == 1`: Grupo de posições com letras maiúsculas repetidas na mesma linha ou coluna — imprime todas
+    - m == 1: Grupo de posições com letras maiúsculas repetidas na mesma linha ou coluna — imprime todas
     as posições envolvidas.
-    - Outro valor de `m`: Considerado tipo desconhecido.
+    - Outro valor de m: Considerado tipo desconhecido.
  
-    As posições são exibidas no formato `(letra, número)`
+    As posições são exibidas no formato `(letra, número)`.
  
 */
 
@@ -87,9 +87,9 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
 }
 
 /*
-    Exibe um tutorial interativo com comandos e regras do jogo usando `ncurses`.
+    Exibe um tutorial com comandos e regras do jogo usando `ncurses`.
 
-    Limpa a tela e apresenta uma lista de comandos disponíveis no jogo, bem como as principais regras de funcionamento do tabuleiro.
+    Limpa a tela e apresenta uma lista de comandos disponíveis no jogo, bem como as principais regras de funcionamento.
 */
 
 int mostraTutorial() {
@@ -125,6 +125,7 @@ int mostraTutorial() {
     mvprintw(16, 0, "REGRAS DO JOGO:");
     attroff(COLOR_PAIR(1));
     attroff(A_BOLD);
+
     mvprintw(17, 2, "Cada casa contém um símbolo (uma letra inicialmente minúscula);");
     mvprintw(18, 2, "Apenas uma réplica por linha/coluna pode estar em branco;");
     mvprintw(19, 2, "Todas as outras réplicas desse símbolo têm que ser riscadas (substituídas por um cardinal);");
@@ -148,9 +149,9 @@ int mostraTutorial() {
 
     Também lida com mensagens associadas aos valores de retorno:
     -  1: Exibe mensagem de saída.
-    -  2: Exibe mensagem de "desfazendo".
-    -  3: Informa comando desconhecido.
-    - -1: Representa erro genérico, retornado diretamente.
+    -  2: Exibe a mensagem "desfazendo...".
+    -  3: Exibe a mensagem "comando desconhecido".
+    - -1: Representa erro.
 */
 
 int executaComando(char *linha, int r, NodeGrupo *grupos) {
@@ -201,6 +202,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
     keypad(stdscr, TRUE);
 
     while (1) {
+        
         clear();
         mostraMatriz(m, *scrollLinha, *scrollColuna);
         mvprintw(LINES - 3, 0, "Digite o comando (ENTER para confirmar, 't' para tutorial): ");

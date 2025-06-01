@@ -6,4 +6,3 @@
 #include "../include/dataStructs.h"
 
 void mensagens(char s[]); 
-void limpaMensagens ();

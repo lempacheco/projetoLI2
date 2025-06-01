@@ -2,7 +2,10 @@
 #include <ncurses.h>
 
 /*
-    Guarda o estado de um jogo em ficheiros com os nomes dados, usando as funções gravaMatriz e gravaStack, criando dois ficheiros: um que contém a matriz do jogo atual na diretoria lib e outro que contém o histórico dos comandos na diretoria lib/history.
+    Guarda o estado de um jogo em ficheiros com os nomes dados, usando as funções `gravaMatriz` e `gravaStack`, 
+    criando dois ficheiros: 
+        - um que contém a matriz do jogo atual na diretoria 'lib'; 
+        - outro que contém o histórico dos comandos na diretoria 'lib/history'.
 */
 
 int gravaFicheiro(char* nomeM, char* nomeS, Matriz* m, StackMat* s){
@@ -25,10 +28,11 @@ int gravaFicheiro(char* nomeM, char* nomeS, Matriz* m, StackMat* s){
     return r; 
 }
 
-/* Guarda a matriz fornecida num ficheiro. Escreve no seguinte formato:
+/* 
+    Guarda a matriz fornecida num ficheiro. Escreve no seguinte formato:
    
-   - Primeira linha: <L> <C> (número de linhas e colunas).
-   - Linhas seguintes: conteúdo da matriz, linha a linha. 
+    - Primeira linha: <L> <C> (número de linhas e colunas).
+    - Linhas seguintes: conteúdo da matriz, linha a linha. 
 */
 
 int gravaMatriz(Matriz* m, FILE* fp){
@@ -49,10 +53,10 @@ int gravaMatriz(Matriz* m, FILE* fp){
 
 /* Guarda a stackMat fornecida num ficheiro. Escreve no seguinte formato:
    
-   - Primeira linha: <cabeça> <tamanho> (cabeça e tamanho da stackMat).
+   - Primeira linha: <cabeça> <tamanho> (cabeça e tamanho da `stackMat`).
    - Linhas seguintes:
         - caracter a representar o comando utilizado
-        - conteúdo da stackMat, matriz a matriz, usando a função gravaMatriz.
+        - conteúdo da `stackMat`, matriz a matriz, usando a função `gravaMatriz`.
 */
 
 int gravaStackMat(StackMat* s, FILE* fp){

@@ -1,9 +1,9 @@
 #include "../include/leFicheiro.h"
 #include <ncurses.h>
 
-/*  Lê o conteúdo de ficheiros relativos a um jogo e carrega-o na matriz e na stackMat fornecida.
+/*  Lê o conteúdo de ficheiros relativos a um jogo e carrega-o na matriz e na `stackMat` fornecida.
 
-  O formato esperado do ficheiro são:
+  Os formatos esperados do ficheiro são:
   - Primeira linha: dois dígitos separados por espaço, representando o número de linhas (L) e colunas (C) da matriz.
   - Linhas seguintes: caracteres da matriz, linha a linha.
 */
@@ -87,8 +87,8 @@ void leMatriz(Matriz* m, FILE* fp){
   O formato esperado do ficheiro é:
   - Primeira linha: dois dígitos separados por espaço, representando a cabeça e o tamanho da stackMat.
   - Linhas seguintes:
-        - caracter a representar o comando utilizado
-        - conteúdo da stackMat, matriz a matriz, lido usando a função leMatriz.
+        - caracter a representar o comando utilizado; 
+        - conteúdo da `stackMat`, matriz a matriz, lido usando a função `leMatriz`.
 */
 
 void leStackMat(StackMat* s, FILE* fp){
@@ -119,7 +119,7 @@ void leStackMat(StackMat* s, FILE* fp){
 }
 
 /*
-Lê um número qualquer de um ficheiro e guarda-o no int fornecido.
+Lê um número qualquer de um ficheiro e guarda-o no 'int' fornecido.
 */
 
 void leNumero(int *x, FILE* fp) {

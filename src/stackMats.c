@@ -32,7 +32,7 @@ int isEmpty(StackMat *s){
     return s->cabeca == -1;  
 }
 
-/* LIbera corretamente uma matriz. */
+/* Libera corretamente uma matriz. */
 
 void liberaMatriz(Matriz *m){
     for (int i = 0; i < m->L; i++) {
@@ -72,7 +72,7 @@ void push(StackMat *s, Matriz *m, char comando){
     copiaMatriz(&s->dados[s->cabeca], m);
 }
 
-/* Retiraa um valor dentro da StackMat */
+/* Retira um valor dentro da StackMat */
 
 int pop(StackMat *s, Matriz* m){
     if (isEmpty(s)) {

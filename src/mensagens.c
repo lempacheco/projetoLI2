@@ -10,13 +10,3 @@ void mensagens(char s[]){
     napms(1000);
 
 }
-
-/* 
-    Limpa qualquer mensagem exibida anteriormente no rodapé da tela (`ncurses`).
-*/
-
-void limpaMensagens (){
-    move(LINES-1, 0);
-    clrtoeol();
-    refresh();
-}

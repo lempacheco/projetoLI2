@@ -19,17 +19,17 @@ typedef struct StackMat{
     char *comandos;
     int cabeca;
     int tam;
-    Matriz mInicial;
-    int ajuda; 
+    Matriz mInicial; // estado inicial da matriz
+    int ajuda;  // flag se o modo de ajuda automática está ativado
 } StackMat;
 
-// Lista interna: posições
+// lista interna: posições
 typedef struct NodePosicao {
     Pos p;
     struct NodePosicao* prox;
 } NodePosicao;
 
-// Lista externa: lista de posições
+// lista externa: lista de posições
 typedef struct NodeGrupo {
     int m;                     // mensagem 
     NodePosicao* cabeca;       // cabeça da sublista

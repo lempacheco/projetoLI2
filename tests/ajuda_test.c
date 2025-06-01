@@ -15,7 +15,7 @@ void testar_ajuda(){
 
     Matriz m1 = criaMatriz(5, 5, matrizExpected1);
     int r1;
-    r1 = ajuda(&m1, &q1);
+    r1 = ajuda(&m1, &q1, 0);
     comparaMatrizes(&m1, &m1Expected);
     CU_ASSERT_EQUAL(r1, 0);
 
@@ -35,7 +35,7 @@ void testar_ajuda(){
 
     Matriz m2 = criaMatriz(5, 5, matrizExpected2);
     int r2;
-    r2 = ajuda(&m2, &q2);
+    r2 = ajuda(&m2, &q2, 0);
     comparaMatrizes(&m2, &m2Expected);
     CU_ASSERT_EQUAL(r2, -1);
 
@@ -61,7 +61,7 @@ void testar_ajuda(){
 
     Matriz m3 = criaMatriz(5, 5, matrizActual3);
     int r3;
-    r3 = ajuda(&m3, &q3);
+    r3 = ajuda(&m3, &q3, 0);
     comparaMatrizes(&m3, &m3Expected);
     CU_ASSERT_EQUAL(r3, 1);
 
@@ -87,7 +87,7 @@ void testar_ajuda(){
 
     Matriz m4 = criaMatriz(5, 5, matrizActual4);
     int r4;
-    r4 = ajuda(&m4, &q4);
+    r4 = ajuda(&m4, &q4, 0);
     comparaMatrizes(&m4, &m4Expected);
     CU_ASSERT_EQUAL(r4, 1);
 

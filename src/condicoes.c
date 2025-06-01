@@ -125,9 +125,9 @@ int verificar(Matriz *m, NodeGrupo** grupo) {
 }
 
 /*
-    A função realiza uma busca a partir da primeira casa livre encontrada, usando uma fila (`Queue`). 
+    A função realiza uma busca a partir da primeira casa livre encontrada, usando uma fila `Queue`. 
     Conta quantas casas livres foram visitadas e compara com o total de casas livres existentes na matriz. 
-    Caso todas as casas livres sejam alcançáveis a partir de um único ponto, considera que existe um *caminho contínuo* entre todas elas.
+    Caso todas as casas livres sejam alcançáveis a partir de um único ponto, considera que existe um caminho contínuo entre todas elas.
  
     Casas com valor `#` são consideradas *bloqueadas* e não fazem parte do caminho.
     As demais são consideradas *livres*.
@@ -138,6 +138,7 @@ int verificaCaminho (Matriz *m, Queue *q){
     int casasLivres = 0;  
     Pos temp; 
     
+    // cria matriz de visita
     m->visitada = malloc(sizeof(int*)*m->L); 
     for(int i=0; i<m->L; i++){
         m->visitada[i] = malloc(sizeof(int)*m->C); 

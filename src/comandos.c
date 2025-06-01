@@ -1,8 +1,8 @@
 #include "../include/comandos.h"
 
 /* 
-    Recebe como argumentos uma matriz, e uma posição, e põe o elemento que esta na posição a branco. 
-    Isto é, coloca o caracter em maiúsculas. 
+    Recebe como argumentos uma matriz, e uma posição, e pinta o elemento que está na posição de branco. 
+    Isto é, coloca o caracter em maiúscula. 
 */
 
 int branco (Matriz *m, Pos p, Matriz* mInicial){
@@ -23,7 +23,7 @@ int branco (Matriz *m, Pos p, Matriz* mInicial){
 }
 
 /* 
-    Recebe como argumentos uma matriz, e uma posição, e risca o elemento que esta na posição. 
+    Recebe como argumentos uma matriz, e uma posição, e risca o elemento que está na posição. 
     Isto é, substitui o caracter para '#'. 
 */
 
@@ -51,11 +51,11 @@ int riscar (Matriz *m, Pos p){
     - 'g <nome>': Grava o conteúdo atual da matriz num ficheiro.
     - 'b <linha><coluna>': Coloca a posição especificada em branco (maiúscula).
     - 'r <linha><coluna>': Risca a posição especificada (coloca '#').
-    - 'd' : retrocede o último comando executado. 
-    - 'v' : verifica o estado do jogo.
-    - 'a' : ajuda o jogador. 
+    - 'd' : Retrocede o último comando executado. 
+    - 'v' : Verifica o estado do jogo.
+    - 'a' : Ajuda o jogador. 
     - 'A' : Ajuda o jogador, até não ser mais possíveil. 
-    - 'R' : resolve o jogo. 
+    - 'R' : Resolve o jogo. 
     - 'D' : Indica o número de casas que não estão de acordo com a solução.
     - 'H' : Ajuda o jogador intercaladamente. 
 */
@@ -86,8 +86,8 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
 }
 
 /* 
-    Tenta recuperar o último estado salvo da matriz a partir da pilha 'StackMat'.  
-    Caso a pilha esteja vazia, exibe uma mensagem de erro informando que não há comandos para desfazer.
+    Tenta recuperar o último estado salvo da matriz a partir da stack `StackMat`.  
+    Caso a stack esteja vazia, exibe uma mensagem de erro informando que não há comandos para desfazer.
 */
 
 int comandoD (Matriz* m, StackMat* s){
@@ -118,11 +118,11 @@ int comandoV (Matriz* m, Queue* q, NodeGrupo** grupos){
 }
 
 /* 
-    Executa os comandos de leitura ('l') ou gravação ('g') de ficheiros para a matriz ; 
+    Executa os comandos de leitura ('l') ou gravação ('g') de ficheiros para a matriz; 
 
     Exemplo de uso: 
-    - "l exemplo.txt" → carrega dados de "lib/exemplo.txt" e "lib/history/exemplo.txt"
-    - "g exemplo.txt" → grava dados em "lib/exemplo.txt" e "lib/history/exemplo.txt"
+    - "l exemplo.txt" -> carrega dados de "lib/exemplo.txt" e "lib/history/exemplo.txt"
+    - "g exemplo.txt" -> grava dados em "lib/exemplo.txt" e "lib/history/exemplo.txt"
 */
 
 int comandosLG (Matriz* m, StackMat* s, char* linha){
@@ -135,7 +135,7 @@ int comandosLG (Matriz* m, StackMat* s, char* linha){
 
     while (linha[i] == ' ') i++;
     int len = strlen(&linha[i]);
-    if (len == 0) return 3;
+    if (len == 0) return 3; 
 
     nomeFile = malloc(len + 1);
     strcpy(nomeFile, &linha[i]);
@@ -160,7 +160,7 @@ int comandosLG (Matriz* m, StackMat* s, char* linha){
 }
 
 /* 
-    Executa o comando de ajuda, sugerindo uma jogada válida ao jogador.
+    Executa o comando de ajuda, realizando jogadas válidas, que podem ser inferidas pelo tabuleiro atual.
 */
 
 int comandoA (Matriz* m, StackMat* s, Queue* q, char* linha){
@@ -214,7 +214,7 @@ int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
 
         while (linha[i] == ' ') i++;
 
-        while (linha[i] >= '0' && linha[i] <= '9') {
+        while (linha[i] >= '0' && linha[i] <= '9') { // converte o caractere para seu valor numérico
             pl = (pl * 10) + (linha[i] - '0');
             i++;
         }
