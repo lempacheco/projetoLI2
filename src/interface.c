@@ -92,7 +92,7 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha) {
     Limpa a tela e apresenta uma lista de comandos disponíveis no jogo, bem como as principais regras de funcionamento.
 */
 
-int mostraTutorial() {
+void mostraTutorial() {
 
     clear();
 
@@ -135,8 +135,6 @@ int mostraTutorial() {
     mvprintw(LINES - 2, 0, "ENTER para continuar...");
     refresh();
     while (getch() != '\n');
-
-    return 0;
 
 }
 /*
@@ -196,12 +194,13 @@ int executaComando(char *linha, int r, NodeGrupo *grupos) {
 int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, int *scrollColuna) {
     char linha[100] = ""; 
     int pos = 0;
+    int r1=42; 
     NodeGrupo *grupos = NULL;
 
     noecho();
     keypad(stdscr, TRUE);
 
-    while (1) {
+    while (r1==42) {
         
         clear();
         mostraMatriz(m, *scrollLinha, *scrollColuna);
@@ -223,16 +222,21 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
             linha[pos] = '\0';
         } else if (ch == '\n') {
             linha[pos] = '\0'; 
-            if (strcmp(linha, "t") == 0) return mostraTutorial();
-
-            int r = escolheComandos(m, s, q, linha, &grupos);
-            int resultado = executaComando(linha, r, grupos);
-            if (resultado != 0) return resultado;
-
-            pos = 0; linha[0] = '\0';
+            if (strcmp(linha, "t") == 0) {
+                mostraTutorial();
+                r1=0; 
+            }
+            else {
+                int r = escolheComandos(m, s, q, linha, &grupos);
+                int resultado = executaComando(linha, r, grupos);
+                if (resultado != 0) r1 = resultado; 
+                else {
+                    pos = 0; linha[0] = '\0';
+                }
+            }
 
         } 
         else if (isprint(ch) && pos < 99) linha[pos++] = ch, linha[pos] = '\0';
     }
-    return 0;
+    return r1;
 }

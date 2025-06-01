@@ -12,5 +12,5 @@ void imprimeGruposNcurses(NodeGrupo* grupo, int* linha);
 void imprimeCabecaNcurses(NodePosicao* lista, int* linha);
 void imprimeCaudaNcurses(NodePosicao* lista, int* linha); 
 int executaComando(char *linha, int r, NodeGrupo *grupos);
-int mostraTutorial();
+void mostraTutorial();
 Queue copiaQueue(Queue* q);

@@ -5,15 +5,14 @@
  Verifica se se uma determindada posição pertence a lista. 
 */
 int posPertence (NodePosicao* lista, int linha, int coluna){
-    
-    while(lista != NULL) {
-        if (lista->p.l == linha && lista->p.c == coluna + 1) {
-            return 1; 
-        }
+    int r=0; 
 
-        lista=lista->prox; 
+    while(lista != NULL && r!=1) {
+        if (lista->p.l == linha && lista->p.c == coluna + 1) {
+            r=1; 
+        } else lista=lista->prox; 
     }
-    return 0; 
+    return r; 
 }
 
 /*
@@ -22,22 +21,27 @@ int posPertence (NodePosicao* lista, int linha, int coluna){
 
 int listasIguais(NodePosicao* a, NodePosicao* b) {
     int cA = 0, cB = 0;
+    int r=42; 
 
     NodePosicao* pa = a;
-    while (pa != NULL) {
+    while (pa != NULL && r== 42) {
         cA++;
-        if (!posPertence(b, pa->p.l , pa->p.c - 1)) return 0;
-        pa = pa->prox;
+        if (!posPertence(b, pa->p.l , pa->p.c - 1)) r= 0;
+        else pa = pa->prox;
     }
 
-    NodePosicao* pb = b;
-    while (pb != NULL) {
-        cB++;
-        if (!posPertence(a, pb->p.l, pb->p.c - 1)) return 0;
-        pb = pb->prox;
+    if (r==42){
+ 
+        NodePosicao* pb = b;
+        while (pb != NULL && r==42) {
+            cB++;
+            if (!posPertence(a, pb->p.l, pb->p.c - 1)) r= 0;
+            else pb = pb->prox;
+        }    
     }
 
-    return cA == cB;  // 1 se são iguais, 0 se diferentes
+    if (r!=42) return 0;  
+    else return cA==cB; // 1 se são iguais, 0 se diferentes
 }
 
 /*
@@ -45,11 +49,12 @@ int listasIguais(NodePosicao* a, NodePosicao* b) {
 */
 
 int pertenceAoGrupo(NodePosicao* lista, NodeGrupo* grupo) {
+    int r=0; 
     while (grupo != NULL) {
-        if (listasIguais(grupo->cabeca, lista)) return 1;
+        if (listasIguais(grupo->cabeca, lista)) r= 1;
         grupo = grupo->prox;
     }
-    return 0;
+    return r;
 }
 
 

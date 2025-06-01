@@ -225,13 +225,15 @@ int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
             return -1;
         }
 
-        while (linha[i]!='\0'){
+        while (r!=-1  && linha[i]!='\0'){
             if (linha[i] != ' ') {
                 mensagens ("Comando inválido."); 
-                return -1; 
+                r = -1; 
             } 
             i++; 
         }
+        if (r==-1) return r; 
+        
         Pos p = {pl, pc - 'a' + 1};
         if (c == 'b') {
             r = branco(m, p, &s->mInicial);

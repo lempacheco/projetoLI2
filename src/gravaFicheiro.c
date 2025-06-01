@@ -36,19 +36,19 @@ int gravaFicheiro(char* nomeM, char* nomeS, Matriz* m, StackMat* s){
 */
 
 int gravaMatriz(Matriz* m, FILE* fp){
-    int i, j;
+    int i, j, r=0;
 
     if (fprintf(fp, "%d %d\n", m->L, m->C) < 0) return 1; 
 
-    for (i=0; i<m->L; i++){
-        for (j=0; j<m->C; j++){
-            if (fputc(m->matriz[i][j], fp) == EOF) return 1;
+    for (i=0; i<m->L && r!=1; i++){
+        for (j=0; j<m->C && r!=1; j++){
+            if (fputc(m->matriz[i][j], fp) == EOF) r = 1;
         }
         if (i != m->L-1)
-            if (fputc('\n', fp) == EOF) return 1;
+            if (fputc('\n', fp) == EOF) r=1;
     }
 
-    return 0;
+    return r;
 }
 
 /* Guarda a stackMat fornecida num ficheiro. Escreve no seguinte formato:
@@ -60,21 +60,21 @@ int gravaMatriz(Matriz* m, FILE* fp){
 */
 
 int gravaStackMat(StackMat* s, FILE* fp){
-    int i;
+    int i, r=0;
 
     //s->cabeca e s->tam
     if (fprintf (fp, "%d %d\n", s->cabeca, s->tam) < 0) return 1;
 
-    for (i=0; i <= s->cabeca; i++){
+    for (i=0; i <= s->cabeca && r!=1; i++){
         //comando
-        if (fputc(s->comandos[i], fp) == EOF) return 1;
+        if (fputc(s->comandos[i], fp) == EOF) r= 1;
 
         //matriz
-        if (fputc('\n', fp) == EOF) return 1;
-        if (gravaMatriz(&s->dados[i], fp)) return 1;
+        if (fputc('\n', fp) == EOF) r= 1;
+        if (gravaMatriz(&s->dados[i], fp)) r= 1;
 
-        if (fputc('\n', fp) == EOF) return 1;
+        if (fputc('\n', fp) == EOF) r=1;
     }
 
-    return 0;
+    return r;
 } 

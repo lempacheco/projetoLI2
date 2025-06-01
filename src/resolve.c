@@ -14,6 +14,7 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
     caminho.gs = malloc(sizeof(Grupo));
     caminho.tam=1;
     caminho.cab=-1;
+    int r=1; 
 
     if (ganhou(m)){
         mensagens("O tabuleiro já está resolvido.");
@@ -45,14 +46,14 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
 
     while(ajuda(m, q, 0) == 1);
 
-    while(!ganhou(m)){
+    while(!ganhou(m) && r==1){
         if (!encontraABA(m, &caminho)){
             if (!encontraAAXA(m, &caminho)){
                 if (retrocedeCaminho(m, mInicial, &caminho) == -1){
                     mensagens("Tabuleiro é impossível.");
 
                     free(caminho.gs);
-                    return 0;
+                    r = 0;
                 }
             }else{
                 resolveAAXA(m, &caminho);
@@ -66,7 +67,7 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
 
     free(caminho.gs);
 
-    return 1;
+    return r;
 }
 
 /* Recebe a matriz e uma stack com os grupos de padrões. 
@@ -77,9 +78,10 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
 */
 
 int encontraABA(Matriz* m, Grupos* caminho){
+    int r=0; 
     // Verifica padrões horizontais
-    for (int i = 0; i < m->L; i++) {
-        for (int j = 0; j < m->C - 2; j++) {
+    for (int i = 0; i < m->L && r==0; i++) {
+        for (int j = 0; j < m->C - 2 && r==0; j++) {
             if (m->matriz[i][j] == m->matriz[i][j + 2] && m->matriz[i][j] != m->matriz[i][j + 1]) {
                 (caminho->cab)++;
                 caminho->gs[caminho->cab].p1.l = i;
@@ -90,14 +92,14 @@ int encontraABA(Matriz* m, Grupos* caminho){
                 caminho->gs[caminho->cab].p3.c = j+2;
                 caminho->gs[caminho->cab].b = 1;
                 caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
-                return 1;
+                r= 1;
             }
         }
     }
 
     // Verifica padrões verticais
-    for (int j = 0; j < m->C; j++) {
-        for (int i = 0; i < m->L - 2; i++) {
+    for (int j = 0; j < m->C && r==0; j++) {
+        for (int i = 0; i < m->L - 2 && r==0; i++) {
             if (m->matriz[i][j] == m->matriz[i + 2][j] && m->matriz[i][j] != m->matriz[i + 1][j]) {
                 (caminho->cab)++;
                 caminho->gs[caminho->cab].p1.l = i;
@@ -108,12 +110,12 @@ int encontraABA(Matriz* m, Grupos* caminho){
                 caminho->gs[caminho->cab].p3.c = j;
                 caminho->gs[caminho->cab].b = 1;
                 caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
-                return 1;
+                r=1;
             }
         }
     }
 
-    return 0;
+    return r;
 }
 
 /* Recebe a matriz e uma stack com os grupos de padrões. 
@@ -124,9 +126,10 @@ int encontraABA(Matriz* m, Grupos* caminho){
 */
 
 int encontraAAXA(Matriz* m, Grupos* caminho){
+    int r=0; 
     // Verifica padrões horizontais
-    for (int i = 0; i < m->L; i++) {
-        for (int j = 0; j < m->C - 3; j++) { // Começa verificando as duas primeiras letras
+    for (int i = 0; i < m->L && r==0; i++) {
+        for (int j = 0; j < m->C - 3 && r==0; j++) { // Começa verificando as duas primeiras letras
             if (m->matriz[i][j] == m->matriz[i][j + 1]) { // As duas primeiras letras são iguais (XX)
                 int k = j + 2;
                 // Verifica letras intermediárias diferentes de X
@@ -144,15 +147,15 @@ int encontraAAXA(Matriz* m, Grupos* caminho){
                     caminho->gs[caminho->cab].p3.c = k;
                     caminho->gs[caminho->cab].b = 0;
                     caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
-                    return 1;
+                    r = 1;
                 }
             }
         }
     }
 
     // Verifica padrões verticais
-    for (int j = 0; j < m->C; j++) {
-        for (int i = 0; i < m->L - 3; i++) { // Começa verificando as duas primeiras letras
+    for (int j = 0; j < m->C && r==0; j++) {
+        for (int i = 0; i < m->L - 3 && r==0; i++) { // Começa verificando as duas primeiras letras
             if (m->matriz[i][j] == m->matriz[i + 1][j]) { // As duas primeiras letras são iguais (XX)
                 int k = i + 2;
                 // Verifica letras intermediárias diferentes de X
@@ -170,13 +173,13 @@ int encontraAAXA(Matriz* m, Grupos* caminho){
                     caminho->gs[caminho->cab].p3.c = j;
                     caminho->gs[caminho->cab].b = 0;
                     caminho->gs = realloc(caminho->gs, sizeof(Grupo)*((caminho->cab)+2));
-                    return 1;
+                    r = 1;
                 }
             }
         }
     }
 
-    return 0;
+    return r;
 }
 
 /* Recebe a matriz e uma stack com os grupos de padrões. 
