@@ -137,7 +137,7 @@ int comandoA (Matriz* m, StackMat* s, Queue* q, char* linha){
     char c = linha[0]; 
 
     push(s, m, c);
-    r = ajuda(m, q);
+    r = ajuda(m, q, 1);
     if (r == 1)
         return 0;
     else if (r == 0)
@@ -193,10 +193,10 @@ int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
         Pos p = {pl, pc - 'a' + 1};
         if (c == 'b') {
             r = branco(m, p, &s->mInicial);
-            if (s->ajuda == 1) ajuda(m, q);
+            if (s->ajuda == 1) ajuda(m, q, 1);
         } else {
             r = riscar(m, p);
-            if (s->ajuda == 1) ajuda(m, q);
+            if (s->ajuda == 1) ajuda(m, q, 1);
         }
 
         return r;

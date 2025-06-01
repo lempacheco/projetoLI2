@@ -8,7 +8,7 @@
 #include "../include/resolve.h"
 #include "../include/stackMats.h"
 
-int ajuda(Matriz* m, Queue* q);
+int ajuda(Matriz* m, Queue* q, int mostraMensagem);
 void riscarIguaisDeLetraBranca(Matriz* m, NodeGrupo** grupos);
 void pintarVizinhosDeRiscadas(Matriz* m, NodeGrupo** grupos);
 void manterCaminho(Matriz* m, Queue* q, NodeGrupo** grupos);
