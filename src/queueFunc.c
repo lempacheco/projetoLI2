@@ -1,5 +1,7 @@
 #include "../include/queueFunc.h"
 
+/* Inicializa corretamente a queue. */
+
 void initQueue (Queue *dq){
     int tamanhoInicial = 10; 
     dq->inicio = 0;
@@ -8,10 +10,14 @@ void initQueue (Queue *dq){
     dq->valores = malloc(tamanhoInicial*sizeof(Pos)); 
 }
 
+/* Verifica se não há nenhum valor dentro da queue. */
+
 int isEmptyQ (Queue* dq){
     if(dq->tam == 0) return 1; 
     else return 0; 
 }
+
+/* Coloca um valor no final da queue. */
 
 void enqueue(Queue *q, Pos p) {
     if (q->tam == q->cap) {
@@ -37,6 +43,7 @@ void enqueue(Queue *q, Pos p) {
     q->tam++;
 }
 
+/* Retira o valor no inicio da queue. */
 
 int dequeue(Queue *q, Pos *x) {
     if (q->tam == 0) return 1; // Fila vazia
@@ -50,6 +57,8 @@ int dequeue(Queue *q, Pos *x) {
     return 0;
 }
 
+/* Libera corretamente uma queue. */
+
 void liberaQueue (Queue *q){
     free(q->valores); 
     q->cap=0; 
@@ -57,6 +66,10 @@ void liberaQueue (Queue *q){
     q->tam=0; 
 
 }
+
+/* Recebe uma queue e copia-a para uma queue nova,
+   e retorna essa queue.
+*/
 
 Queue copiaQueue(Queue* q) {
     Queue nova;

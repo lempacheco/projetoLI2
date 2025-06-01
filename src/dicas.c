@@ -1,5 +1,10 @@
 #include "../include/dicas.h"
 
+/* Recebe a matriz do jogo a matriz Inicial e a queue.
+   Verifica qual das casas da matriz em jogo não estão
+   de acordo com a resolução da matriz. 
+*/
+
 int dicas (Matriz* m, Matriz* mInicial,  Queue* q){
     Matriz m1;
     initMatriz(&m1);

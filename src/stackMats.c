@@ -1,5 +1,7 @@
 #include "../include/stackMats.h"
 
+/* Inicializa corretamente uma StackMat. */
+
 void initStackMat(StackMat *s){
     s->tam = 1;
     s->dados = malloc(sizeof(Matriz) * s->tam);
@@ -10,19 +12,27 @@ void initStackMat(StackMat *s){
     s->ajuda = 0; 
 }
 
+/* Inicializa corretamente uma matriz. */
+
 void initMatriz(Matriz* m){
     m->L = 0;
     m->C = 0;
     m->matriz = NULL;
 }
 
+/* Verifica se a StackMat está cheia. */
+
 int isFull(StackMat *s){
     return s->cabeca == s->tam - 1;
 }
 
+/* Verifica se não há nenhum valor na StackMat. */
+
 int isEmpty(StackMat *s){
     return s->cabeca == -1;  
 }
+
+/* LIbera corretamente uma matriz. */
 
 void liberaMatriz(Matriz *m){
     for (int i = 0; i < m->L; i++) {
@@ -31,6 +41,8 @@ void liberaMatriz(Matriz *m){
     free(m->matriz); 
     initMatriz(m);
 }
+
+/* Libera corretamente uma StackMat. */
 
 void liberaStackMat(StackMat *s){
     for (int i = 0; i <= s->cabeca; i++) {
@@ -43,6 +55,8 @@ void liberaStackMat(StackMat *s){
     s->tam = 0;
     liberaMatriz(&s->mInicial);
 }
+
+/* Coloca um valor dentro da StackMat. */
 
 void push(StackMat *s, Matriz *m, char comando){
     if (s->cabeca + 1 >= s->tam) {
@@ -58,6 +72,8 @@ void push(StackMat *s, Matriz *m, char comando){
     copiaMatriz(&s->dados[s->cabeca], m);
 }
 
+/* Retiraa um valor dentro da StackMat */
+
 int pop(StackMat *s, Matriz* m){
     if (isEmpty(s)) {
         return -1;
@@ -69,6 +85,10 @@ int pop(StackMat *s, Matriz* m){
     s->cabeca--;
     return 0;
 }
+
+/* Recebe duas matrizes a matriz para onde vai ser copiada,
+   e a matriz que vai ser copiada. Copia uma matriz para a outra.
+*/
 
 void copiaMatriz(Matriz *dest, Matriz *src){
 

@@ -1,5 +1,13 @@
 #include "../include/resolve.h"
 
+/* Recebe a matriz em jogo a matriz inicial e uma queue
+   Resolve o tabuleiro seguindo padrões ABA ou AAXA presentes nele.
+   Pode retornar:
+    - 1 se o tabuleiro foi resolvido com sucesso;
+    - 0 se o tabuleiro é impossível;
+    - -1 se já estava resolvido.
+*/
+
 int resolve(Matriz* m, Matriz* mInicial, Queue* q){
     
     Grupos caminho;
@@ -61,6 +69,13 @@ int resolve(Matriz* m, Matriz* mInicial, Queue* q){
     return 1;
 }
 
+/* Recebe a matriz e uma stack com os grupos de padrões. 
+   Procura pelo padrão ABA ao longo da linha ou coluna e adiciona o grupo correspondente na stack.
+   Pode retornar:
+    - 1 se encontrou um padrão ABA.
+    - 0 caso contrário. 
+*/
+
 int encontraABA(Matriz* m, Grupos* caminho){
     // Verifica padrões horizontais
     for (int i = 0; i < m->L; i++) {
@@ -100,6 +115,13 @@ int encontraABA(Matriz* m, Grupos* caminho){
 
     return 0;
 }
+
+/* Recebe a matriz e uma stack com os grupos de padrões. 
+   Procura pelo padrão AAXA ao longo da linha ou coluna e adiciona o grupo correspondente na stack.
+   Pode retornar:
+    - 1 se encontrou um padrão AAXA.
+    - 0 caso contrário. 
+*/
 
 int encontraAAXA(Matriz* m, Grupos* caminho){
     // Verifica padrões horizontais
@@ -157,15 +179,29 @@ int encontraAAXA(Matriz* m, Grupos* caminho){
     return 0;
 }
 
+/* Recebe a matriz e uma stack com os grupos de padrões. 
+   Tenta resolver grupos do tipo ABA, risca o primeiro caractere e pinta o do meio de branco. */
+
 void resolveABA(Matriz* m, Grupos* caminho){
     m->matriz[caminho->gs[caminho->cab].p1.l][caminho->gs[caminho->cab].p1.c] = '#';
     m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = toupper(m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c]);
 }
 
+/* Recebe a matriz e uma stack com os grupos de padrões. 
+   Tenta resolver grupos do tipo AAXA, risca os caracteres A do meio e do fim. */
+
 void resolveAAXA(Matriz* m, Grupos* caminho){
     m->matriz[caminho->gs[caminho->cab].p2.l][caminho->gs[caminho->cab].p2.c] = '#';
     m->matriz[caminho->gs[caminho->cab].p3.l][caminho->gs[caminho->cab].p3.c] = '#';
 }
+
+/* Recebe a matriz com alterações feitas pela retroceder, a matriz inicial e uma stack 
+   com os grupos de padrões.
+   Retrocede de uma jogada anterior com base na Stack.
+   Pode retornar:
+     - 1 se conseguiu retroceder nesta iteração.
+     - 0 se precisou voltar mais.
+     - -1 se não há mais movimentos para voltar. */
 
 int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho){
     if (caminho->cab == -1) return -1;
@@ -216,6 +252,15 @@ int retrocedeCaminho(Matriz* m, Matriz* mInicial, Grupos* caminho){
     return 1;
 }
 
+/* Recebe uma matriz.
+   Verifica se essa matriz ganhou o jogo, ou seja, há caminho ortogonal entre
+   as casas brancas e não há infingimentos de regras e todas as casas estão ou
+   riscadas ou pintadas de branco.
+   Pode retornar:
+    - 1 se ganhou;
+    - 0 se não;
+*/
+
 int ganhou(Matriz* m){
     NodeGrupo* grupo=NULL;
     if (!verificar(m, &grupo)) {liberaGrupos(grupo); return 0;}
@@ -229,6 +274,10 @@ int ganhou(Matriz* m){
     if (grupo != NULL) liberaGrupos(grupo);
     return r;
 }
+
+/* Recebe uma matriz.
+   Pinta todas as letras minusculas peresntes na matriz de branco.
+*/
 
 void tudoBranco(Matriz* m){
     for (int i=0; i<m->L; i++){
