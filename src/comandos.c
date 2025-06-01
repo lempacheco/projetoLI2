@@ -58,9 +58,9 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     while (linha[i] == ' ') i++; 
     char c = linha[i++]; 
      
-    if (c == '\0') return RET_COMANDO_DESCONHECIDO;
+    if (c == '\0') return 3;
 
-    if (strcmp(linha, "s") == 0) return RET_SAIR; 
+    if (strcmp(linha, "s") == 0) return 1; 
     if (strcmp(linha, "d") == 0) return comandoD(m, s);
     if (strcmp(linha, "v") == 0) return comandoV(m, q, grupos);
     if (c == 'l' || c == 'g') return comandosLG(m, s, linha);
@@ -73,7 +73,7 @@ int escolheComandos(Matriz *m, StackMat *s, Queue *q, char *linha, NodeGrupo** g
     if (strcmp(linha, "D") == 0) return dicas(m, &s->mInicial, q);
     if (c == 'b' || c == 'r') return comandoRB(m, s, q, linha); 
 
-    return RET_COMANDO_DESCONHECIDO; 
+    return 3; 
 
 }
 
@@ -81,7 +81,7 @@ int comandoD (Matriz* m, StackMat* s){
 
     if (isEmpty(s)) mensagens ("Não há mais comandos para retroceder."); 
     if (!pop(s, m)){
-        return RET_DESFAZ;
+        return 2;
     } 
     return 0;
 }
@@ -107,7 +107,7 @@ int comandosLG (Matriz* m, StackMat* s, char* linha){
 
     while (linha[i] == ' ') i++;
     int len = strlen(&linha[i]);
-    if (len == 0) return RET_COMANDO_DESCONHECIDO;
+    if (len == 0) return 3;
 
     nomeFile = malloc(len + 1);
     strcpy(nomeFile, &linha[i]);
@@ -180,7 +180,7 @@ int comandoRB (Matriz* m, StackMat* s, Queue* q, char* linha){
         
         if (pc - 'a' < 0 || pc - 'a' >= m->C || pl <= 0 || pl > m->L) {
             mensagens("Posição inválida.");
-            return RET_POP;
+            return -1;
         }
 
         while (linha[i]!='\0'){

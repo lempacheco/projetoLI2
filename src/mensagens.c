@@ -7,3 +7,9 @@ void mensagens(char s[]){
     napms(1000);
 
 }
+
+void limpaMensagens (){
+    move(LINES-1, 0);
+    clrtoeol();
+    refresh();
+}

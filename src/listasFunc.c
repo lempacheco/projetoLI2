@@ -1,8 +1,6 @@
 #include "../include/listasFunc.h"
 
 
-//TODO: verificar se o elemento já esta na lista, e não adicionar.
-
 /*
  Verifica se se uma determindada posição pertence a lista. 
 */

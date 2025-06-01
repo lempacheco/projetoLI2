@@ -103,7 +103,7 @@ int mostraTutorial() {
     refresh();
     while (getch() != '\n');
 
-    return RET_OK;
+    return 0;
 
 }
 
@@ -111,7 +111,7 @@ int executaComando(char *linha, int r, NodeGrupo *grupos) {
     if (strcmp(linha, "D") == 0) {
         mvprintw(LINES - 1, 0, "Existe %d casa(s) errada(s).", r);
         refresh(); napms(1000);
-        return RET_OK;
+        return 0;
     }
    
     if (strcmp(linha, "v") == 0) {
@@ -122,22 +122,22 @@ int executaComando(char *linha, int r, NodeGrupo *grupos) {
         liberaGrupos(grupos);
         mvprintw(LINES - 2, 0, "ENTER para continuar...");
         refresh(); while (getch() != '\n');
-        return RET_OK;
+        return 0;
     }
    
-    if (r == RET_SAIR) {
+    if (r == 1) {
         clear(); mvprintw(LINES - 1, 0, "Saindo do jogo...");
         refresh(); napms(1000);
         return 1;
     }
    
-    if (r == RET_DESFAZ) {
+    if (r == 2) {
         mvprintw(LINES - 1, 0, "Desfazendo..."); refresh(); napms(500);
-    } else if (r == RET_COMANDO_DESCONHECIDO) {
+    } else if (r == 3) {
         mvprintw(LINES - 1, 0, "Comando desconhecido."); refresh(); napms(500);
     }
    
-    return (r == RET_POP) ? RET_POP : RET_OK;
+    return (r == -1) ? -1 : 0;
 }
 
 
@@ -159,11 +159,11 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
 
         if (ch == KEY_UP && *scrollLinha > 0) {
             (*scrollLinha)--;
-        } else if (ch == KEY_DOWN && *scrollLinha + ALTURA_VISIVEL < m->L) {
+        } else if (ch == KEY_DOWN && *scrollLinha + 15 < m->L) {
             (*scrollLinha)++;
         } else if (ch == KEY_LEFT && *scrollColuna > 0) {
             (*scrollColuna)--;
-        } else if (ch == KEY_RIGHT && *scrollColuna + LARGURA_VISIVEL < m->C) {
+        } else if (ch == KEY_RIGHT && *scrollColuna + 15 < m->C) {
             (*scrollColuna)++;
         } else if ((ch == KEY_BACKSPACE || ch == 127 || ch == '\b') && pos > 0) {
             pos--;
@@ -174,7 +174,7 @@ int escolheComandosNcurses(Matriz *m, StackMat *s, Queue *q, int *scrollLinha, i
 
             int r = escolheComandos(m, s, q, linha, &grupos);
             int resultado = executaComando(linha, r, grupos);
-            if (resultado != RET_OK) return resultado;
+            if (resultado != 0) return resultado;
 
             pos = 0; linha[0] = '\0';
 

@@ -18,12 +18,6 @@
 #include "../include/interface.h"
 #include "../include/dicas.h"
 
-#define RET_POP -1
-#define RET_OK 0
-#define RET_SAIR 1
-#define RET_DESFAZ 2
-#define RET_COMANDO_DESCONHECIDO 3
-
 
 int branco (Matriz *, Pos, Matriz*);
 int riscar (Matriz *, Pos);
@@ -35,4 +29,3 @@ int comandoA(Matriz* m, StackMat* s, Queue* q, char* linha);
 int comandoR(Matriz* m, StackMat* s, Queue* q, char* linha);
 int comandoRB(Matriz* m, StackMat* s, Queue* q, char* linha);
 
-/* int retroceder(Matriz *, StackMat *);  */

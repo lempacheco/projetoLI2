@@ -24,7 +24,7 @@ void mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
     attron(COLOR_PAIR(4));
 
     mvprintw(linhaOffset, colunaOffset, "   ");
-    for (int col = 0; col < LARGURA_VISIVEL && (scrollColuna + col) < m->C; col++) {
+    for (int col = 0; col < 15 && (scrollColuna + col) < m->C; col++) {
         int x = colunaOffset + 3 + col * 2;
         
         // imprime um espaço
@@ -38,12 +38,12 @@ void mostraMatriz(Matriz *m, int scrollLinha, int scrollColuna) {
     attroff(COLOR_PAIR(4));
 
     // Corpo da matriz
-    for (int i = 0; i < ALTURA_VISIVEL && (scrollLinha + i) < m->L; i++) {
+    for (int i = 0; i < 15 && (scrollLinha + i) < m->L; i++) {
         attron(COLOR_PAIR(4));
         mvprintw(linhaOffset + 1 + i, colunaOffset, "%2d ", scrollLinha + i + 1);
         attroff(COLOR_PAIR(4));
 
-        for (int j = 0; j < LARGURA_VISIVEL && (scrollColuna + j) < m->C; j++) {
+        for (int j = 0; j < 15 && (scrollColuna + j) < m->C; j++) {
             char valor = m->matriz[scrollLinha + i][scrollColuna + j];
 
             if (valor == '#') attron(COLOR_PAIR(1));

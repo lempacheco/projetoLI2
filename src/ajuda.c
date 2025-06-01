@@ -31,8 +31,7 @@ int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as f
     
     if (!verificar(m, &grupos)) {
         liberaGrupos(grupos); grupos = NULL;
-        //mensagens("O tabuleiro não está de acordo com a solução.");
-
+        mensagens("O tabuleiro não está de acordo com a solução.");
         copiaMatriz(m, &t);
         liberaMatriz(&t);
         return -1;
@@ -46,14 +45,6 @@ int ajuda(Matriz* m, Queue* q) { //retorna -1 se o tabuleiro for inválido (as f
         mensagens("Já não há mais casas para mudar.");
         return 0;
     }
-
-    //int mudou = !saoIguais(m, &t);
-
-    /* liberaMatriz(&t);
-    liberaGrupos(grupos); */
-
-    /* if (mudou) return 1;
-    return 0; */
 }
 
 
