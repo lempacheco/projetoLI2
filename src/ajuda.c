@@ -14,8 +14,7 @@
     - 1 se houve alterações na matriz.
 */
 
-int ajuda(Matriz* m, Queue* q) {
-int ajuda(Matriz* m, Queue* q, int mostraMensagem) { //retorna -1 se o tabuleiro for inválido (as funções nem correm), 0 se as funções correm mas n muda nada, 1 se mudou alguma coisa
+int ajuda(Matriz* m, Queue* q, int mostraMensagem) { 
     NodeGrupo* grupos = NULL;
     Matriz t;
     
